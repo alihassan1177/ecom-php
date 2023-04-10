@@ -1,0 +1,6 @@
+DB_USER="ali"
+DB_PASSWORD="ali"
+DB_HOST="ali"
+DB_NAME="ali"
+DB_PORT="ali"
+SITE_NAME="Next Sportswear"

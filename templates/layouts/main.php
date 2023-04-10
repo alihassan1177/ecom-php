@@ -19,13 +19,6 @@
 
 <body style="min-height: 100vh;">
     <header>
-        <?php 
-        
-        echo "<pre>";
-
-        print_r($_ENV);
-
-        ?>
         <h3>Header</h3>
     </header>
     
