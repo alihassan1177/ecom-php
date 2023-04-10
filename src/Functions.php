@@ -77,5 +77,22 @@ class Functions
 
 
     echo "</ol></nav>";
-  }  
+  }
+  
+  public static function PageHead(array $data)
+  {
+    $pageTitle = $data["page-info"]["title"] ?? $_ENV["SITE_NAME"];
+    $pageDesc = $data["page-info"]["description"] ?? "";
+    $pageAuthor = $data["page-info"]["author"] ?? $_ENV["SITE_NAME"];
+    $siteName = $_ENV["SITE_NAME"];
+
+    echo <<<HTML
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="$pageDesc">
+    <meta name="author" content="$pageAuthor">
+    <title>$pageTitle - $siteName</title>
+    HTML;
+  }
 }
