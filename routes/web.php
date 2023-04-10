@@ -7,9 +7,16 @@ use App\HomeController;
 
 $router = new Router();
 
+if ($_SESSION["admin"] == true) {
+    $router->get("/admin", [AdminController::class, "index"]);
+    $router->get("/admin/logout", [AdminController::class, "logout"]);
+} else {
+    $router->get("/admin", [AdminController::class, "login"]);
+    $router->post("/admin/signin", [AdminController::class, "signin"]);
+}
+
 $router->get("/", [HomeController::class, "index"]);
-$router->get("/admin", [AdminController::class, "index"]);
-$router->get("/login", [AdminController::class, "login"]);
+
 
 // 404 Page
 $router->addNotFoundCallback(function () {

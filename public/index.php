@@ -7,6 +7,7 @@ use App\Database;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
 $dotenv->load();
 
+Database::connect();
 
 session_start();
 

@@ -7,9 +7,9 @@
 <html lang="en">
 
 <head>
-<?php 
-    
-    use App\Functions;
+<?php
+
+use App\Functions;
 
     Functions::PageHead($data);
     Functions::Scripts();
