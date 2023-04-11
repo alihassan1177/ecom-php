@@ -213,7 +213,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <?php 
+                    if ($_SERVER["REQUEST_URI"] != "/admin") {
+                        Functions::Breadcrumbs();    
+                    }
+                     ?>
                     {{content}}
 
                 </div>

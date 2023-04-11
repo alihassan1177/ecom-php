@@ -1,3 +1,9 @@
+<?php
+
+$categories = $data["data"]["categories"];
+
+?>
+
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -26,15 +32,24 @@
                 </thead>
                 <tbody>
 
-                    <?php for ($i = 0; $i < 100; $i++) : ?>
+                    <?php foreach ($categories as $category) : $i = 0 ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
                             <td style="max-width: max-content;"><img style="object-fit: cover;" width="100" height="100" src="/img/product-placeholder.png" /></td>
-                            <td>Football Kits</td>
-                            <td>Sportswear</td>
-                            <td>20</td>
+                            <td style="text-transform:capitalize"><?= $category["name"] ?></td>
+                            <td><?php
+                                foreach ($categories as $item) {
+                                    if ($category["parent"] == $item["id"]) {
+                                        echo $item["name"];
+                                    } else {
+                                        echo "None";
+                                    }
+                                }
+                                ?></td>
                         </tr>
-                    <?php endfor; ?>
+                    <?php
+                        $i++;
+                    endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr>

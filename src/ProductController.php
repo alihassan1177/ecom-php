@@ -11,10 +11,12 @@ class ProductController extends Controller{
         $this->renderView($pageInfo, "admin/products/index", "admin");
     }
 
-    public function categories()
+    public function categories(array $params)
     {
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        $params["categories"] = $categories;
         $pageInfo = ["title"=>"Product Categories","description"=>"Products Page Admin Panel"];
-        $this->renderView($pageInfo, "admin/products/categories/index", "admin");   
+        $this->renderView($pageInfo, "admin/products/categories/index", "admin", $params);   
     }
 
     public function newProduct()
@@ -27,5 +29,13 @@ class ProductController extends Controller{
     {
         $pageInfo = ["title"=>"New Product Category","description"=>"Products Page Admin Panel"];
         $this->renderView($pageInfo, "admin/products/categories/new", "admin");        
+    }
+
+    public function createCategory()
+    {
+
+        print_r($_FILES);
+        print_r($_POST);
+        
     }
 }

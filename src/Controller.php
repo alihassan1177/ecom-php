@@ -5,9 +5,10 @@ namespace App;
 use App\Functions;
 
 class Controller{
-    protected function renderView(array $pageInfo, string $template, string $layout)
+    protected function renderView(array $pageInfo, string $template, string $layout, array $data = [])
     {
         $params["page-info"] = $pageInfo;
+        $params["data"] = $data;
         $template = Functions::getTemplate($template, $params);
         Functions::getLayout($layout, $template, $params);
     }

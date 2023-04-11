@@ -55,8 +55,7 @@ class Functions
     $current_link = "";
 
     echo "<nav aria-label='breadcrumb'>
-    <ol class='breadcrumb'>
-    <li class='breadcrumb-item'><a style='text-transform:capitalize' href='/dashboard'>Dashboard</a></li>";
+    <ol class='breadcrumb'>";
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];

@@ -17,6 +17,8 @@ if ($_SESSION["admin"] == true) {
     $router->get("/admin/products/new", [ProductController::class, "newProduct"]);
     $router->get("/admin/products/categories", [ProductController::class, "categories"]);
     $router->get("/admin/products/categories/new", [ProductController::class, "newCategory"]);
+    $router->post("/admin/products/categories/create", [ProductController::class, "createCategory"]);
+
 
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
