@@ -33,9 +33,17 @@ class ProductController extends Controller{
 
     public function createCategory()
     {
-
-        print_r($_FILES);
-        print_r($_POST);
+        $categoryName = $_POST["name"];
+        $categoryParent = $_POST["parent"];
+        $categoryImage = $_FILES["image"];
         
+        if ($categoryName == "") {
+            $this->response("Category Name is Required", false);
+            return;
+        }
+
+        if (!empty($categoryImage)) {
+
+        }
     }
 }
