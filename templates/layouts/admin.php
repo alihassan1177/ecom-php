@@ -23,6 +23,16 @@
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script defer src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script defer src="/js/sb-admin-2.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -60,8 +70,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/products">All Products</a>
-                        <a class="collapse-item" href="#">Add New Product</a>
-                        <a class="collapse-item" href="#">Product Categories</a>
+                        <a class="collapse-item" href="/admin/products/new">Add New Product</a>
+                        <a class="collapse-item" href="/admin/products/categories">Product Categories</a>
                     </div>
                 </div>
             </li>
@@ -258,24 +268,18 @@
             const response = await fetch("/admin/logout")
             window.location.href = "/admin"
         })
+
+        const navItems = document.querySelectorAll(".nav-item")
+        // console.log(navItems)
+        navItems.forEach(item => {
+            const links = item.querySelectorAll(".nav-link, .collapse-item")
+            links.forEach(link => {
+                if (window.location.href == link.href) {
+                    item.classList.add("active")
+                }
+            })
+        })
     </script>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

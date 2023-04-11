@@ -8,6 +8,6 @@ class HomeController extends Controller{
     public function index()
     {
         $pageInfo = ["title"=>"Home"];
-        $this->renderView($pageInfo, "home/index", "main");   
+        $this->renderView($pageInfo, "client/home/index", "main");   
     }
 }
