@@ -4,12 +4,18 @@ use App\AdminController;
 use App\Router;
 use App\Functions;
 use App\HomeController;
+use App\ProductController;
 
 $router = new Router();
 
 if ($_SESSION["admin"] == true) {
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
+
+    // Product Routes
+    $router->get("/admin/products", [ProductController::class, "index"]);
+
+
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
     $router->post("/admin/signin", [AdminController::class, "signin"]);
