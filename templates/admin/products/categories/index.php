@@ -1,6 +1,9 @@
 <?php
 
+use App\ProductController;
+
 $categories = $data["data"]["categories"];
+$products = $data["data"]["products"];
 
 ?>
 
@@ -20,7 +23,7 @@ $categories = $data["data"]["categories"];
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="category-table" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -32,23 +35,19 @@ $categories = $data["data"]["categories"];
                 </thead>
                 <tbody>
 
-                    <?php foreach ($categories as $category) : $i = 0 ?>
+                    <?php 
+                    $placeholderImage = "/img/product-placeholder.png";
+                    foreach ($categories as $category) : $i = 0; $i++; ?>
                         <tr>
-                            <td><?= $i + 1 ?></td>
-                            <td style="max-width: max-content;"><img style="object-fit: cover;" width="100" height="100" src="/img/product-placeholder.png" /></td>
+                            <td><?= $i ?></td>
+                            <td style="max-width: max-content;"><img style="object-fit: cover; width:100%; min-width:150px; max-width:300px" height="150" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" /></td>
                             <td style="text-transform:capitalize"><?= $category["name"] ?></td>
-                            <td><?php
-                                foreach ($categories as $item) {
-                                    if ($category["parent"] == $item["id"]) {
-                                        echo $item["name"];
-                                    } else {
-                                        echo "None";
-                                    }
-                                }
-                                ?></td>
+                            <td><?php echo ProductController::getCategoryParentName($categories, $category["parent"]) ?></td>
+                            <td><?php echo count(ProductController::getProductsByCategory($products, $category["id"])) ?></td>
+
                         </tr>
                     <?php
-                        $i++;
+                        
                     endforeach; ?>
                 </tbody>
                 <tfoot>
@@ -65,7 +64,10 @@ $categories = $data["data"]["categories"];
     </div>
 </div>
 
-
 <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="/js/demo/datatables-demo.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#category-table').DataTable();
+    });
+</script>
