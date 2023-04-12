@@ -8,7 +8,7 @@ use App\ProductController;
 
 $router = new Router();
 
-if ($_SESSION["admin"] == true) {
+if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
 
@@ -19,8 +19,6 @@ if ($_SESSION["admin"] == true) {
     $router->get("/admin/products/categories/new", [ProductController::class, "newCategory"]);
     $router->post("/admin/products/categories/create", [ProductController::class, "createCategory"]);
     $router->post("/admin/products/create", [ProductController::class, "createProduct"]);
-
-
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
     $router->post("/admin/signin", [AdminController::class, "signin"]);

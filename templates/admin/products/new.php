@@ -77,11 +77,11 @@ $categories = $data["data"]["categories"];
     const productForm = document.querySelector("#product-form")
     const inputs = productForm.querySelectorAll(".form-control")
     const submitBtn = document.querySelector("#submit-btn")
-    
+
     const alert = document.querySelector("#alert")
 
 
-    submitBtn.addEventListener("click", async(e) => {
+    submitBtn.addEventListener("click", async (e) => {
         alert.classList.add("d-none")
         const summerNote = document.querySelector(".note-editable")
         e.preventDefault()
@@ -89,16 +89,16 @@ $categories = $data["data"]["categories"];
         inputs.forEach(input => {
             console.log(input.type)
             if (input.type == "file") {
-                formData.append(input.name, input.files[0])                
-            }else{
+                formData.append(input.name, input.files[0])
+            } else {
                 formData.append(input.name, input.value)
             }
         })
         formData.append("description", summerNote.innerHTML.toString())
 
         const response = await fetch("/admin/products/create", {
-            method : "POST",
-            body : formData
+            method: "POST",
+            body: formData
         })
 
         const result = await response.json()
@@ -108,7 +108,7 @@ $categories = $data["data"]["categories"];
         if (result.status == true) {
             alert.classList.add("alert-success")
             alert.classList.remove("alert-danger")
-            window.location.href = "/admin/products"
+            //            window.location.href = "/admin/products"
         } else {
             alert.classList.add("alert-danger")
             alert.classList.remove("alert-success")
@@ -119,5 +119,4 @@ $categories = $data["data"]["categories"];
     productForm.addEventListener("submit", (e) => {
         e.preventDefault()
     })
-
 </script>

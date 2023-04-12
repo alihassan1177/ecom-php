@@ -1,3 +1,12 @@
+<?php
+
+use App\ProductController;
+
+$products = $data["data"]["products"];
+$categories = $data["data"]["categories"];
+
+?>
+
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -27,16 +36,21 @@
                 </thead>
                 <tbody>
 
-                    <?php for ($i = 0; $i < 100; $i++) : ?>
+                    <?php
+                    $i = 0;
+                    foreach ($products as $product) :
+                        $i++;
+                        $categoryName = ProductController::getCategoryName($categories, $product["category_id"]);
+                    ?>
                         <tr>
-                            <td><?= $i + 1 ?></td>
+                            <td><?= $i ?></td>
                             <td style="max-width: max-content;"><img style="object-fit: cover;" width="100" height="100" src="/img/product-placeholder.png" /></td>
-                            <td>Lord of Rings</td>
-                            <td>Books</td>
-                            <td>$20</td>
-                            <td>10</td>
+                            <td><?= $product["name"] ?></td>
+                            <td><?= $categoryName ?></td>
+                            <td><?= $product["price"] ?></td>
+                            <td><?= $product["quantity"] ?></td>
                         </tr>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr>

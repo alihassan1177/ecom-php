@@ -6,10 +6,15 @@ use App\Controller;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(array $params)
     {
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        $products = Database::getResultsByQuery("SELECT * FROM `products`");
+        $params["categories"] = $categories;
+        $params["products"] = $products;
+
         $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
-        $this->renderView($pageInfo, "admin/products/index", "admin");
+        $this->renderView($pageInfo, "admin/products/index", "admin", $params);
     }
 
     public function categories(array $params)
@@ -41,9 +46,9 @@ class ProductController extends Controller
 
     public function createCategory()
     {
-        $categoryName = $_POST["name"];
-        $categoryParent = $_POST["parent"];
-        $categoryImage = $_FILES["image"];
+        $categoryName = isset($_POST["name"]) ? $_POST["name"] : null;
+        $categoryParent = isset($_POST["parent"]) ? $_POST["parent"] : null;
+        $categoryImage = isset($_FILES["image"]) ? $_FILES["image"] : null;
 
         if ($categoryName == "") {
             $this->response("Category Name is Required", false);
@@ -53,7 +58,7 @@ class ProductController extends Controller
         $this->validateCategory($categoryParent);
 
         $imageURL = "";
-        if (!empty($categoryImage)) {
+        if (!empty($categoryImage) && $categoryImage != null) {
             $imageURL .= $this->imageUpload($categoryImage);
             if (!$imageURL) {
                 $this->response("FileType not Allowed : " . $categoryImage["type"], false);
@@ -72,7 +77,7 @@ class ProductController extends Controller
         } elseif ($categoryID !== 0) {
             $availableCategories = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $categoryID;");
             if (count($availableCategories) == 0) {
-                $this->response("Selected Category not Available", false);
+                $this->response("Selected Category not Available : " . $categoryID, false);
                 return;
             }
         }
@@ -98,7 +103,7 @@ class ProductController extends Controller
         }
     }
 
-    public static function getCategoryParentName(array $categories, int $id)
+    public static function getCategoryName(array $categories, int $id)
     {
         foreach ($categories as $category) {
             if ($category["id"] == $id) {
@@ -109,25 +114,30 @@ class ProductController extends Controller
         return "None";
     }
 
-    public static function getProductsByCategory(array $products, int $categoryID)
+    public static function getProductsByCategory(array $products, array $categories, int $categoryID)
     {
-        return array_filter($products, function ($product) {
-            global $categoryID;
+        $productsByCategory = [];
+
+        foreach ($categories as $category) {
+        }
+
+        foreach ($products as $product) {
             if ($product["category_id"] == $categoryID) {
-                return $product;
+                array_push($productsByCategory, $product);
             }
-        });
+        }
+        return $productsByCategory;
     }
 
     public function createProduct()
     {
-        $productImage = $_FILES["image"];
-        $productCategory = $_POST["category_id"];
-        $productName = $_POST["name"];
-        $productQuantity = $_POST["quantity"];
-        $productShortDescription = htmlentities($_POST["short_description"]);
-        $productDescription = htmlentities($_POST["description"]);
-        $productPrice = $_POST["price"];
+        $productImage = isset($_FILES["image"]) ? $_FILES["image"] : null;
+        $productCategory = isset($_POST["category_id"]) ? $_POST["category_id"] : null;
+        $productName = isset($_POST["name"]) ? $_POST["name"] : null;
+        $productQuantity = isset($_POST["quantity"]) ? $_POST["quantity"] : null;
+        $productShortDescription = isset($_POST["short_description"]) ? htmlentities($_POST["short_description"]) : null;
+        $productDescription = isset($_POST["description"]) ? htmlentities($_POST["description"]) : null;
+        $productPrice = isset($_POST["price"]) ? $_POST["price"] : null;
 
         $this->validateCategory($productCategory);
 
@@ -145,8 +155,42 @@ class ProductController extends Controller
             }
         }
 
-        Database::onlyExecuteQuery("INSERT INTO `products`(`name`, `image`, `short_description`, `description`, `category_id`, `quantity`, `price`) VALUES ('$productName','$imageURL','$productShortDescription','$productDescription',$productCategory,$productQuantity,$productPrice)");
-        
+        // Fix the query to skip null variables
+
+        $queryParams = [
+            "name" => $productName,
+            "image" => $imageURL,
+            "short_description" => $productShortDescription,
+            "description" => $productDescription,
+            "category_id" => $productCategory,
+            "quantity" => $productQuantity,
+            "price" => $productPrice
+        ];
+
+        $this->insertData($queryParams, "products");
+
         $this->response("New Product Created Succesfully", true);
+    }
+
+    private function insertData(array $queryParams, string $table)
+    {
+        $tableColumnNames = "";
+        $values = "";
+        foreach ($queryParams as $key => $value) {
+            if ($value != null) {
+                $tableColumnNames .= "`$key`,";
+                if (is_string($value)) {
+                    $values .= "'$value',";
+                } else {
+                    $values .= "$value,";
+                }
+            }
+        }
+
+        $tableColumnNames = rtrim($tableColumnNames, ",");
+        $values = rtrim($values, ",");
+
+        $sql = sprintf("INSERT INTO `%s`(%s) VALUES (%s);", $table, $tableColumnNames, $values);
+        Database::onlyExecuteQuery($sql);
     }
 }

@@ -35,19 +35,24 @@ $products = $data["data"]["products"];
                 </thead>
                 <tbody>
 
-                    <?php 
+                    <?php
                     $placeholderImage = "/img/product-placeholder.png";
-                    foreach ($categories as $category) : $i = 0; $i++; ?>
+                    $i = 0;
+                    foreach ($categories as $category) :
+                        $i++;
+                        $parentCategoryName = ProductController::getCategoryName($categories, $category["parent"]);
+                        $productsCount = count(ProductController::getProductsByCategory($products, $categories, $category["id"]));
+                    ?>
                         <tr>
                             <td><?= $i ?></td>
                             <td style="max-width: max-content;"><img style="object-fit: cover; width:100%; min-width:100px; max-width:300px" height="100" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" /></td>
                             <td style="text-transform:capitalize"><?= $category["name"] ?></td>
-                            <td><?php echo ProductController::getCategoryParentName($categories, $category["parent"]) ?></td>
-                            <td><?php echo count(ProductController::getProductsByCategory($products, $category["id"])) ?></td>
+                            <td><?= $parentCategoryName ?></td>
+                            <td><?= $productsCount  ?></td>
 
                         </tr>
                     <?php
-                        
+
                     endforeach; ?>
                 </tbody>
                 <tfoot>
