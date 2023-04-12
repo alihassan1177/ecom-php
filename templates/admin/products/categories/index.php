@@ -40,7 +40,7 @@ $products = $data["data"]["products"];
                     foreach ($categories as $category) : $i = 0; $i++; ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <td style="max-width: max-content;"><img style="object-fit: cover; width:100%; min-width:150px; max-width:300px" height="150" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" /></td>
+                            <td style="max-width: max-content;"><img style="object-fit: cover; width:100%; min-width:100px; max-width:300px" height="100" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" /></td>
                             <td style="text-transform:capitalize"><?= $category["name"] ?></td>
                             <td><?php echo ProductController::getCategoryParentName($categories, $category["parent"]) ?></td>
                             <td><?php echo count(ProductController::getProductsByCategory($products, $category["id"])) ?></td>
