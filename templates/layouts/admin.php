@@ -35,13 +35,13 @@
 
 </head>
 
-<body id="page-top">
+<body class="overflow-hidden" id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -135,7 +135,7 @@
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div style="height:100vh; overflow-y:scroll" id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
@@ -213,11 +213,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <?php 
+                    <?php
                     if ($_SERVER["REQUEST_URI"] != "/admin") {
-                        Functions::Breadcrumbs();    
+                        Functions::Breadcrumbs();
                     }
-                     ?>
+                    ?>
                     {{content}}
 
                 </div>
