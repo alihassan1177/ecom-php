@@ -26,21 +26,8 @@ class Functions
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <script defer src="/assets/js/bootstrap.min.js"></script>
-        <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- Datatables -->
-    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
-    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    <!-- Custom JS -->
-    <script defer src="/assets/js/sidebar.js"></script>
-    <!-- Fontawesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->
     <link rel="shortcut icon" href="/assets/images/fav-icon.png" type="image/x-icon">
     HTML;
