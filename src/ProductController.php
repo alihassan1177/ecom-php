@@ -50,7 +50,7 @@ class ProductController extends Controller
           $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
           $products = Database::getResultsByQuery("SELECT * FROM `products`");
           $productsByCategory = self::getProductsByCategory($products, $categories, $id);
-          
+
           $params["categories"] = $categories;
           $params["products"] = $products;
           $params["productsByCategory"] = $productsByCategory;
@@ -257,13 +257,10 @@ class ProductController extends Controller
     foreach ($categories as $category) {
       if ($category["parent"] == $categoryID) {
         $childCategories[] = $category;
-        $grandChildCategories = self::categoryHasChildren($categories, $category["id"]);
-        if ($grandChildCategories != false) {
-          self::categoryHasChildren($categories, $category["id"], array_merge($grandChildCategories, $childCategories));
-        }
+        return self::categoryHasChildren($categories, $category["id"], $childCategories);
       }
     }
-  
+
     if (count($childCategories) > 0) {
       return $childCategories;
     } else {
