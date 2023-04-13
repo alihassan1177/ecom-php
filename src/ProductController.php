@@ -251,13 +251,13 @@ class ProductController extends Controller
     Database::onlyExecuteQuery($sql);
   }
 
-  public static function categoryHasChildren(array $categories, int $categoryID, array $foundCategories = [])
+  public static function categoryHasChildren(array $categories, int $id, array $foundCategories = [])
   {
     $childCategories = $foundCategories;
+
     foreach ($categories as $category) {
-      if ($category["parent"] == $categoryID) {
+      if ($category["parent"] == $id) {
         $childCategories[] = $category;
-        return self::categoryHasChildren($categories, $category["id"], $childCategories);
       }
     }
 
