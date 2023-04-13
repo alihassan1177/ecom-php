@@ -23,14 +23,14 @@ $categories = $data["data"]["categories"];
     </div>
     <div class="card-body">
         <div style="row-gap: 20px;" class="row flex-row-reverse">
-        <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="mb-3">
                     <p class="mb-1"><strong>Product Name:</strong></p>
                     <p><?= $product["name"] ?></p>
                 </div>
                 <div class="mb-3">
                     <p class="mb-1"><strong>Product Category:</strong></p>
-                    <p><?php echo ProductController::getCategoryName($categories, $product["category_id"]) ?></p>
+                    <a href="/admin/products/categories/details?id=<?= $product["category_id"]; ?>"><?php echo ProductController::getCategoryName($categories, $product["category_id"]) ?></a>
                 </div>
                 <div>
                     <p class="mb-1"><strong>Product Short Description:</strong></p>
@@ -42,17 +42,17 @@ $categories = $data["data"]["categories"];
                 </div>
                 <div>
                     <p class="mb-1"><strong>Product Price:</strong></p>
-                    <p><?= "$".$product["quantity"] ?></p>
+                    <p><?= "$" . $product["quantity"] ?></p>
                 </div>
-            </div>    
-        <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
                 <div class="mb-3">
                     <p class="mb-3"><strong>Product Image:</strong></p>
                     <img style="width:100%; max-width: 400px; height:400px; object-fit:cover" src="<?php echo ($product["image"] != "") ? $product["image"] : $placeholderImage;  ?>" alt="<?= $product["name"] ?>">
                 </div>
 
             </div>
-            
+
             <div class="col-12">
                 <p class="mb-1"><strong>Product Description:</strong></p>
                 <div class="bg-white p-3 border rounded">

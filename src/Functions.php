@@ -42,7 +42,7 @@ class Functions
     $current_link = "";
 
     echo "<nav aria-label='breadcrumb'>
-    <ol class='breadcrumb'>";
+    <ol style='border:1px solid #e3e6f0' class='breadcrumb bg-white'>";
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
@@ -64,7 +64,7 @@ class Functions
 
     echo "</ol></nav>";
   }
-  
+
   public static function PageHead(array $data)
   {
     $pageTitle = $data["page-info"]["title"] ?? $_ENV["SITE_NAME"];
