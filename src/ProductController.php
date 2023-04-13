@@ -258,6 +258,7 @@ class ProductController extends Controller
     foreach ($categories as $category) {
       if ($category["parent"] == $id) {
         $childCategories[] = $category;
+        $childCategories = self::categoryHasChildren($categories, $category["id"], $childCategories);
       }
     }
 
