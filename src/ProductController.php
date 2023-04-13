@@ -64,7 +64,7 @@ class ProductController extends Controller
       }
     }
 
-    header("location:/admin/products");
+    header("location:/admin/products/categories");
   }
 
   public function categories(array $params)
@@ -184,6 +184,7 @@ class ProductController extends Controller
         array_push($productsByCategory, $product);
       }
     }
+
     return $productsByCategory;
   }
 
@@ -250,7 +251,6 @@ class ProductController extends Controller
     Database::onlyExecuteQuery($sql);
   }
 
-  // Fix Parent, Child and GrandChild Relation
   public static function categoryHasChildren(array $categories, int $categoryID, array $foundCategories = [])
   {
     $childCategories = $foundCategories;
@@ -266,5 +266,32 @@ class ProductController extends Controller
     } else {
       return false;
     }
+  }
+
+  public function deleteCategory()
+  {
+    if (isset($_POST["id"]) && $_POST["id"] != "") {
+      $id = $_POST["id"];
+      if (is_int(intval($id))) {
+        $category = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $id");
+        $products = Database::getResultsByQuery("SELECT * FROM `products`");
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        if (count($category) > 0) {
+          $category = array_shift($category);
+          $categoryHasProducts = self::getProductsByCategory($products, $categories, $category["id"]);
+          $categoryHasChildren = self::categoryHasChildren($categories, $category["id"]);
+          if (count($categoryHasProducts) > 0 || $categoryHasChildren != false) {
+            $this->response("Unable to Delete Category : " . $category["name"] . " has data", false);
+            return;
+          }
+          Database::onlyExecuteQuery("DELETE FROM `categories` WHERE `id` = $id;");
+          $this->response("Category Deleted Successfully", true);
+          return;
+        }
+      }
+    }
+
+    $this->response("Invalid Category ID Provided", false);
+    return;
   }
 }
