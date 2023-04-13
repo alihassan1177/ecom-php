@@ -44,8 +44,10 @@ $categories = $data["data"]["categories"];
                     ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <td style="max-width: max-content;"><img style="object-fit: cover;" width="100" height="100" src="/img/product-placeholder.png" /></td>
-                            <td><?= $product["name"] ?></td>
+                            <td style="max-width: max-content;">
+                            <img style="object-fit: cover;" width="100" height="100" src="/img/product-placeholder.png" />
+                        </td>
+                            <td><a href="/admin/products/details?id=<?= $product["id"] ?>"><?= $product["name"] ?></a></td>
                             <td><?= $categoryName ?></td>
                             <td><?= $product["price"] ?></td>
                             <td><?= $product["quantity"] ?></td>

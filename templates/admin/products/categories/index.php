@@ -45,8 +45,12 @@ $products = $data["data"]["products"];
                     ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <td style="max-width: max-content;"><img style="object-fit: cover; width:100%; min-width:100px; max-width:300px" height="100" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" /></td>
-                            <td style="text-transform:capitalize"><?= $category["name"] ?></td>
+                            <td style="max-width: max-content;">
+                                <img style="object-fit: cover; width:50px;" height="50" src="<?php echo ($category["image"] != "") ? $category["image"] : $placeholderImage;  ?>" />
+                            </td>
+                            <td style="text-transform:capitalize"><a href="/admin/products/categories/details?id=<?= $category["id"] ?>">
+                                    <?= $category["name"] ?></a>
+                            </td>
                             <td><?= $parentCategoryName ?></td>
                             <td><?= $productsCount  ?></td>
 
