@@ -108,7 +108,7 @@ $categories = $data["data"]["categories"];
         if (result.status == true) {
             alert.classList.add("alert-success")
             alert.classList.remove("alert-danger")
-            //            window.location.href = "/admin/products"
+            window.location.href = "/admin/products"
         } else {
             alert.classList.add("alert-danger")
             alert.classList.remove("alert-success")

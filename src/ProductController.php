@@ -118,7 +118,15 @@ class ProductController extends Controller
     {
         $productsByCategory = [];
 
-        foreach ($categories as $category) {
+        $childCategories = self::categoryHasChildren($categories, $categoryID);
+
+        if ($childCategories != false) {
+            $productsInChild = [];
+            foreach ($childCategories as $childCategory) {
+                $result = self::getProductsByCategory($products, $categories, $childCategory["id"]);
+                $productsInChild = array_merge($result, $productsInChild);
+            }
+            $productsByCategory = array_merge($productsByCategory, $productsInChild);
         }
 
         foreach ($products as $product) {
@@ -155,8 +163,6 @@ class ProductController extends Controller
             }
         }
 
-        // Fix the query to skip null variables
-
         $queryParams = [
             "name" => $productName,
             "image" => $imageURL,
@@ -192,5 +198,19 @@ class ProductController extends Controller
 
         $sql = sprintf("INSERT INTO `%s`(%s) VALUES (%s);", $table, $tableColumnNames, $values);
         Database::onlyExecuteQuery($sql);
+    }
+
+    public static function categoryHasChildren(array $categories, int $categoryID){
+        $childCategories = [];
+        foreach($categories as $category){
+            if ($category["parent"] == $categoryID) {
+                $childCategories[] = $category;
+            }
+        }
+        if (count($childCategories) > 0) {
+            return $childCategories;
+        }else{
+            return false;
+        }
     }
 }
