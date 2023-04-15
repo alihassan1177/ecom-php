@@ -12,9 +12,9 @@ $categories = $data["data"]["categories"];
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 flex-fill">Products</h1>
     <a href="/admin/products/categories" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
-        <i class="fas fa-download fa-sm text-white-50"></i> Product Categories</a>
+        <i class="fas fa-filter fa-sm text-white-50"></i> Product Categories</a>
     <a href="/admin/products/new" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-download fa-sm text-white-50"></i> Add new Product</a>
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add new Product</a>
 </div>
 
 <div class="card shadow mb-4">

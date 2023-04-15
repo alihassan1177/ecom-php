@@ -3,9 +3,9 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 flex-fill">Categories</h1>
     <a href="/admin/posts" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
-        <i class="fas fa-download fa-sm text-white-50"></i> Posts</a>
+        <i class="fas fa-filter fa-sm text-white-50"></i> Posts</a>
     <a href="/admin/posts/categories/new" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-download fa-sm text-white-50"></i> Add new Category</a>
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add new Category</a>
 </div>
 
 <div class="card shadow mb-4">
