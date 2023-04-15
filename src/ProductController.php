@@ -160,4 +160,23 @@ class ProductController extends Controller
     $this->response("Invalid Product ID Provided", false);
     return;
   }
+
+  public function editProduct(array $params)
+  {
+      if (isset($_GET["id"]) && $_GET["id"] != "") {
+          $id = $_GET["id"];
+          if (is_int(intval($id))) {
+              $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+              $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+              $params["product"] = $product;
+              $params["categories"] = $categories;
+              $pageInfo = ["title" => "Edit Category"];
+              $this->renderView($pageInfo, "admin/products/edit", "admin", $params);
+              return;
+          }
+      }
+
+      header("location:/admin/products");
+      return;
+  }
 }
