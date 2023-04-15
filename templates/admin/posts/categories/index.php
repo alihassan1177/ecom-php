@@ -18,7 +18,6 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
                         <th>Name</th>
                         <th>Parent</th>
                         <th>Post Quantity</th>
@@ -31,7 +30,6 @@
                 <tfoot>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
                         <th>Name</th>
                         <th>Parent</th>
                         <th>Post Quantity</th>

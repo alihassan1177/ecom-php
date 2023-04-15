@@ -47,6 +47,7 @@ function PostCategoryRoutes()
 {
     global $router;
     $router->get("/admin/posts/categories", [PostCategoryController::class, "index"]);
+    $router->get("/admin/posts/categories/new", [PostCategoryController::class, "newCategory"]);
 }
 
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
