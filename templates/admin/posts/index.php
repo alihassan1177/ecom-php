@@ -18,24 +18,20 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
                         <th>Name</th>
                         <th>Category</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Short Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                   
+
                 </tbody>
                 <tfoot>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
                         <th>Name</th>
                         <th>Category</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Short Description</th>
                     </tr>
                 </tfoot>
             </table>

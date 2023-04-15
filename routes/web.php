@@ -6,7 +6,8 @@ use App\Functions;
 use App\HomeController;
 use App\ProductController;
 use App\ProductCategoryController;
-
+use App\PostController;
+use App\PostCategoryController;
 
 $router = new Router();
 
@@ -35,13 +36,27 @@ function ProductCategoryRoutes(){
     $router->post("/admin/products/categories/delete", [ProductCategoryController::class, "deleteCategory"]);
 }
 
+function PostRoutes(){
+    global $router;
+    $router->get("/admin/posts", [PostController::class, "index"]);
+    $router->get("/admin/posts/new", [PostController::class, "newProduct"]);
+
+}
+
+function PostCategoryRoutes()
+{
+    global $router;
+    $router->get("/admin/posts/categories", [PostCategoryController::class, "index"]);
+}
+
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
 
     ProductRoutes();
     ProductCategoryRoutes();
-    
+    PostRoutes();
+    PostCategoryRoutes();
 
 } else {
     $router->get("/admin", [AdminController::class, "login"]);

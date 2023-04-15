@@ -84,9 +84,9 @@
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">All Posts</a>
-                        <a class="collapse-item" href="#">Add new Post</a>
-                        <a class="collapse-item" href="#">Post Categories</a>
+                        <a class="collapse-item" href="/admin/posts">All Posts</a>
+                        <a class="collapse-item" href="/admin/posts/new">Add new Post</a>
+                        <a class="collapse-item" href="/admin/posts/categories">Post Categories</a>
                     </div>
                 </div>
             </li>
