@@ -19,6 +19,7 @@ function ProductRoutes(){
     $router->post("/admin/products/create", [ProductController::class, "createProduct"]);
     $router->post("/admin/products/delete", [ProductController::class, "deleteProduct"]);    
     $router->get("/admin/products/edit", [ProductController::class, "editProduct"]);    
+    $router->post("/admin/products/update", [ProductController::class, "updateProduct"]);    
 
 }
 

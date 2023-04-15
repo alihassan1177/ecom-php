@@ -109,7 +109,6 @@ $categories = $data["data"]["categories"];
         const summerNote = document.querySelector(".note-editable")
         const formData = new FormData()
         inputs.forEach(input => {
-            console.log(input.type)
             if (input.type == "file") {
                 formData.append(input.name, input.files[0])
             } else {
@@ -119,7 +118,7 @@ $categories = $data["data"]["categories"];
         formData.append("id", <?= $product["id"] ?>)
         formData.append("description", summerNote.innerHTML.toString())
 
-        const response = await fetch("/admin/products/create", {
+        const response = await fetch("/admin/products/update", {
             method: "POST",
             body: formData
         })

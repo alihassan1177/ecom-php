@@ -163,20 +163,90 @@ class ProductController extends Controller
 
   public function editProduct(array $params)
   {
-      if (isset($_GET["id"]) && $_GET["id"] != "") {
-          $id = $_GET["id"];
-          if (is_int(intval($id))) {
-              $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
-              $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
-              $params["product"] = $product;
-              $params["categories"] = $categories;
-              $pageInfo = ["title" => "Edit Category"];
-              $this->renderView($pageInfo, "admin/products/edit", "admin", $params);
-              return;
-          }
+    if (isset($_GET["id"]) && $_GET["id"] != "") {
+      $id = $_GET["id"];
+      if (is_int(intval($id))) {
+        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        $params["product"] = $product;
+        $params["categories"] = $categories;
+        $pageInfo = ["title" => "Edit Category"];
+        $this->renderView($pageInfo, "admin/products/edit", "admin", $params);
+        return;
       }
+    }
 
-      header("location:/admin/products");
-      return;
+    header("location:/admin/products");
+    return;
+  }
+
+
+  private function updateData(array $queryParams, string $table, int $id)
+  {
+    $pairs = "";
+    foreach ($queryParams as $key => $value) {
+      if ($value != null) {
+        if (is_string($value)) {
+          $pairs .= "`$key`='$value',";
+        } else {
+          $pairs .= "`$key`=$value,";
+        }
+      }
+    }
+
+    $pairs = rtrim($pairs, ",");
+    
+    $sql = sprintf("UPDATE `%s` SET %s WHERE `id` = $id;", $table, $pairs);
+    Database::onlyExecuteQuery($sql);
+  }
+
+  public function updateProduct()
+  {
+    if (isset($_POST["id"]) && $_POST["id"] != "") {
+      $id = $_POST["id"];
+      if (is_int(intval($id))) {
+
+        $productImage = isset($_FILES["image"]) ? $_FILES["image"] : null;
+        $productCategory = isset($_POST["category_id"]) ? $_POST["category_id"] : null;
+        $productName = isset($_POST["name"]) ? $_POST["name"] : null;
+        $productQuantity = isset($_POST["quantity"]) ? $_POST["quantity"] : null;
+        $productShortDescription = isset($_POST["short_description"]) ? htmlentities($_POST["short_description"]) : null;
+        $productDescription = isset($_POST["description"]) ? htmlentities($_POST["description"]) : null;
+        $productPrice = isset($_POST["price"]) ? $_POST["price"] : null;
+
+        $this->validateCategory($productCategory);
+
+        if (empty($productName)) {
+          $this->response("Product Name is Required", false);
+          return;
+        }
+
+        $imageURL = "";
+        if (!empty($productImage)) {
+          $imageURL .= $this->imageUpload($productImage);
+          if (!$imageURL) {
+            $this->response("FileType not Allowed : " . $productImage["type"], false);
+            return;
+          }
+        }
+
+        $queryParams = [
+          "name" => $productName,
+          "image" => $imageURL,
+          "short_description" => $productShortDescription,
+          "description" => $productDescription,
+          "category_id" => $productCategory,
+          "quantity" => $productQuantity,
+          "price" => $productPrice
+        ];
+
+        $this->updateData($queryParams, "products", $id);
+
+        $this->response("Product Updated Succesfully", true);
+        return;
+      }
+    }
+    $this->response("Invalid Product ID Provided", false);
+    return;
   }
 }
