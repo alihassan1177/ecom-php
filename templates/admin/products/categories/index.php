@@ -1,6 +1,6 @@
 <?php
 
-use App\ProductController;
+use App\ProductCategoryController;
 
 $categories = $data["data"]["categories"];
 $products = $data["data"]["products"];
@@ -40,8 +40,8 @@ $products = $data["data"]["products"];
                     $i = 0;
                     foreach ($categories as $category) :
                         $i++;
-                        $parentCategoryName = ProductController::getCategoryName($categories, $category["parent"]);
-                        $productsCount = count(ProductController::getProductsByCategory($products, $categories, $category["id"]));
+                        $parentCategoryName = ProductCategoryController::getCategoryName($categories, $category["parent"]);
+                        $productsCount = count(ProductCategoryController::getProductsByCategory($products, $categories, $category["id"]));
                     ?>
                         <tr>
                             <td><?= $i ?></td>

@@ -1,6 +1,6 @@
 <?php
 
-use App\ProductController;
+use App\ProductCategoryController;
 
 $products = $data["data"]["products"];
 $categories = $data["data"]["categories"];
@@ -40,7 +40,7 @@ $categories = $data["data"]["categories"];
                     $placeholderImage = "/img/product-placeholder.png";
                     foreach ($products as $product) :
                         $i++;
-                        $categoryName = ProductController::getCategoryName($categories, $product["category_id"]);
+                        $categoryName = ProductCategoryController::getCategoryName($categories, $product["category_id"]);
                         $productImage = $product["image"] != "" ? $product["image"] : $placeholderImage;
                     ?>
                         <tr>

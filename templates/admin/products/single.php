@@ -1,6 +1,6 @@
 <?php
 
-use App\ProductController;
+use App\ProductCategoryController;
 
 $product = $data["data"]["product"];
 $placeholderImage = "/img/product-placeholder.png";
@@ -30,7 +30,7 @@ $categories = $data["data"]["categories"];
                 </div>
                 <div class="mb-3">
                     <p class="mb-1"><strong>Product Category:</strong></p>
-                    <a href="/admin/products/categories/details?id=<?= $product["category_id"]; ?>"><?php echo ProductController::getCategoryName($categories, $product["category_id"]) ?></a>
+                    <a href="/admin/products/categories/details?id=<?= $product["category_id"]; ?>"><?php echo ProductCategoryController::getCategoryName($categories, $product["category_id"]) ?></a>
                 </div>
                 <div>
                     <p class="mb-1"><strong>Product Short Description:</strong></p>
