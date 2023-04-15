@@ -16,6 +16,7 @@ class ProductController extends Controller
     $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
     $this->renderView($pageInfo, "admin/products/index", "admin", $params);
   }
+
   public function singleProduct(array $params)
   {
     if (isset($_GET["id"]) && $_GET["id"] != "") {
@@ -141,5 +142,22 @@ class ProductController extends Controller
 
     $sql = sprintf("INSERT INTO `%s`(%s) VALUES (%s);", $table, $tableColumnNames, $values);
     Database::onlyExecuteQuery($sql);
+  }
+
+  public function deleteProduct()
+  {
+    if (isset($_POST["id"]) && $_POST["id"] != "") {
+      $id = $_POST["id"];
+      if (is_int(intval($id))) {
+        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id;");
+        if (count($product) > 0) {
+          Database::onlyExecuteQuery("DELETE FROM `products` WHERE `id` = $id;");
+          $this->response("Product Deleted Successfully", true);
+          return;
+        }
+      }
+    }
+    $this->response("Invalid Product ID Provided", false);
+    return;
   }
 }
