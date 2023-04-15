@@ -17,12 +17,17 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     $router->get("/admin/products/details", [ProductController::class, "singleProduct"]);
     $router->get("/admin/products/new", [ProductController::class, "newProduct"]);
     $router->post("/admin/products/create", [ProductController::class, "createProduct"]);
+    $router->post("/admin/products/delete", [ProductController::class, "deleteProduct"]);    
+
     // Product Category Routes
     $router->get("/admin/products/categories", [ProductController::class, "categories"]);
     $router->get("/admin/products/categories/details", [ProductController::class, "singleCategory"]);
     $router->get("/admin/products/categories/new", [ProductController::class, "newCategory"]);
+    $router->get("/admin/products/categories/edit", [ProductController::class, "editCategory"]);
+    $router->post("/admin/products/categories/update", [ProductController::class, "updateCategory"]);
     $router->post("/admin/products/categories/create", [ProductController::class, "createCategory"]);
     $router->post("/admin/products/categories/delete", [ProductController::class, "deleteCategory"]);
+
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
     $router->post("/admin/signin", [AdminController::class, "signin"]);

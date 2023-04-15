@@ -41,7 +41,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul style="transition: width 300ms ease-in-out;" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+        <ul style="transition: width 200ms ease-in-out;" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">

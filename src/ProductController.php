@@ -16,7 +16,6 @@ class ProductController extends Controller
     $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
     $this->renderView($pageInfo, "admin/products/index", "admin", $params);
   }
-
   public function singleProduct(array $params)
   {
     if (isset($_GET["id"]) && $_GET["id"] != "") {
@@ -294,5 +293,56 @@ class ProductController extends Controller
 
     $this->response("Invalid Category ID Provided", false);
     return;
+  }
+
+  public function editCategory(array $params)
+  {
+    if (isset($_GET["id"]) && $_GET["id"] != "") {
+      $id = $_GET["id"];
+      if (is_int(intval($id))) {
+        $category = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $id");
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        $params["category"] = $category;
+        $params["categories"] = $categories;
+        $pageInfo = ["title"=>"Edit Category"];
+        $this->renderView($pageInfo,"admin/products/categories/edit", "admin", $params);
+        return;
+      }
+    }
+
+    header("location:/admin/products/categories");
+    return;    
+  }
+
+  public function updateCategory()
+  {
+    $categoryID = isset($_POST["id"]) ? $_POST["id"] : null;
+    $categoryName = isset($_POST["name"]) ? $_POST["name"] : null;
+    $categoryParent = isset($_POST["parent"]) ? $_POST["parent"] : null;
+    $categoryImage = isset($_FILES["image"]) ? $_FILES["image"] : null;
+
+    if (!is_int(intval($categoryID))) {
+      $this->response("Category ID is Required", false);
+      return;
+    }
+
+    if ($categoryName == "") {
+      $this->response("Category Name is Required", false);
+      return;
+    }
+
+    $this->validateCategory($categoryParent);
+
+    $imageURL = "";
+    if (!empty($categoryImage) && $categoryImage != null) {
+      $imageURL .= $this->imageUpload($categoryImage);
+      if (!$imageURL) {
+        $this->response("FileType not Allowed : " . $categoryImage["type"], false);
+        return;
+      }
+    }
+
+    Database::onlyExecuteQuery("UPDATE `categories` SET `name` = '$categoryName', `parent` = $categoryParent, `image` = '$imageURL' WHERE `id` = $categoryID");
+    $this->response("Category Updated Successfully", true);    
   }
 }
