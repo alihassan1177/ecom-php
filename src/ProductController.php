@@ -68,7 +68,7 @@ class ProductController extends Controller
 
     $doesFileExtensionMatches = array_search($fileExtension, $allowedFileExtensions);
 
-    if (!empty($doesFileExtensionMatches)) {
+    if (is_int($doesFileExtensionMatches)) {
       $imageName = time();
       $imageName .= pathinfo($image["name"])["basename"];
       if (!file_exists(__DIR__ . "/../public/uploads")) {
@@ -195,7 +195,7 @@ class ProductController extends Controller
     }
 
     $pairs = rtrim($pairs, ",");
-    
+
     $sql = sprintf("UPDATE `%s` SET %s WHERE `id` = $id;", $table, $pairs);
     Database::onlyExecuteQuery($sql);
   }

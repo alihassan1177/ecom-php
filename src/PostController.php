@@ -130,7 +130,7 @@ class PostController extends Controller
 
     $doesFileExtensionMatches = array_search($fileExtension, $allowedFileExtensions);
 
-    if (!empty($doesFileExtensionMatches)) {
+    if (is_int($doesFileExtensionMatches)) {
       $imageName = time();
       $imageName .= pathinfo($image["name"])["basename"];
       if (!file_exists(__DIR__ . "/../public/uploads")) {
