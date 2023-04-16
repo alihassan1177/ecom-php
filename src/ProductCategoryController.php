@@ -158,13 +158,14 @@ class ProductCategoryController extends Controller
                 $products = Database::getResultsByQuery("SELECT * FROM `products`");
                 $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
                 if (count($category) > 0) {
-                    $category = array_shift($category);
+                    $category = $category[0];
                     $categoryHasProducts = self::getProductsByCategory($products, $categories, $category["id"]);
                     $categoryHasChildren = self::categoryHasChildren($categories, $category["id"]);
                     if (count($categoryHasProducts) > 0 || $categoryHasChildren != false) {
                         $this->response("Unable to Delete Category : " . $category["name"] . " has data", false);
                         return;
                     }
+                    unlink(__DIR__ . "/../public" . $category["image"]);
                     Database::onlyExecuteQuery("DELETE FROM `categories` WHERE `id` = $id;");
                     $this->response("Category Deleted Successfully", true);
                     return;

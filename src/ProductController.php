@@ -150,7 +150,9 @@ class ProductController extends Controller
       $id = $_POST["id"];
       if (is_int(intval($id))) {
         $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id;");
+        $product = $product[0];
         if (count($product) > 0) {
+          unlink(__DIR__ . "/../public" . $product["image"]);
           Database::onlyExecuteQuery("DELETE FROM `products` WHERE `id` = $id;");
           $this->response("Product Deleted Successfully", true);
           return;
