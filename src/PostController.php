@@ -74,8 +74,12 @@ class PostController extends Controller
       $id = $_POST["id"];
       if (is_int(intval($id))) {
         $product = Database::getResultsByQuery("SELECT * FROM `posts` WHERE `id` = $id;");
+        $product = $product[0];
         if (count($product) > 0) {
-          unlink(__DIR__ . "/../public" . $product["image"]);
+          $oldImagePath = __DIR__ . "/../public" . $product["image"];
+          if (file_exists($oldImagePath) && $product["image"] != "") {
+            unlink($oldImagePath);
+          }
           Database::onlyExecuteQuery("DELETE FROM `posts` WHERE `id` = $id;");
           $this->response("Post Deleted Successfully", true);
           return;

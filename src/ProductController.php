@@ -152,7 +152,10 @@ class ProductController extends Controller
         $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id;");
         $product = $product[0];
         if (count($product) > 0) {
-          unlink(__DIR__ . "/../public" . $product["image"]);
+          $oldImagePath = __DIR__ . "/../public" . $product["image"];
+          if (file_exists($oldImagePath) && $product["image"] != "") {
+            unlink($oldImagePath);
+          }
           Database::onlyExecuteQuery("DELETE FROM `products` WHERE `id` = $id;");
           $this->response("Product Deleted Successfully", true);
           return;

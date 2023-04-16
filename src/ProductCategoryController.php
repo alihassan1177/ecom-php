@@ -165,7 +165,10 @@ class ProductCategoryController extends Controller
                         $this->response("Unable to Delete Category : " . $category["name"] . " has data", false);
                         return;
                     }
-                    unlink(__DIR__ . "/../public" . $category["image"]);
+                    $oldImagePath = __DIR__ . "/../public" . $category["image"];
+                    if (file_exists($oldImagePath) && $category["image"] != "") {
+                        unlink($oldImagePath);
+                    }
                     Database::onlyExecuteQuery("DELETE FROM `categories` WHERE `id` = $id;");
                     $this->response("Category Deleted Successfully", true);
                     return;
