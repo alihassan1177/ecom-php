@@ -1,13 +1,14 @@
 <?php
 
-use App\AdminController;
 use App\Router;
+use App\AdminController;
 use App\Functions;
 use App\HomeController;
 use App\ProductController;
 use App\ProductCategoryController;
 use App\PostController;
 use App\PostCategoryController;
+use App\TestController;
 
 $router = new Router();
 
@@ -69,6 +70,9 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     ProductCategoryRoutes();
     PostRoutes();
     PostCategoryRoutes();
+
+
+    $router->get("/test", [TestController::class, "categoryName"]);
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
     $router->post("/admin/signin", [AdminController::class, "signin"]);
