@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2023 at 12:30 PM
+-- Generation Time: Apr 16, 2023 at 06:12 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -75,8 +75,16 @@ CREATE TABLE `posts` (
   `name` varchar(255) NOT NULL,
   `short_description` mediumtext DEFAULT NULL,
   `description` longtext DEFAULT NULL,
-  `category_id` int(255) NOT NULL
+  `category_id` int(255) NOT NULL,
+  `image` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `name`, `short_description`, `description`, `category_id`, `image`) VALUES
+(2, 'This is a Updated Post', 'This is a Post', '&lt;p&gt;This is a Post&lt;br&gt;&lt;/p&gt;', 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -180,7 +188,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `post_categories`
