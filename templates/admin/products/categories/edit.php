@@ -20,36 +20,35 @@ $categories = $data["data"]["categories"];
     <div class="col-md-6">
         <label for="parent" class="form-label">Parent Category</label>
         <select class="form-control" id="parent">
-            <option 
-            <?php echo $category["parent"] == 0 ? "selected" : "" ?>
-            value="0">None</option>
-            <?php 
-                foreach ($categories as $data){
-                    $categoryID = $data["id"];
-                    $categoryName = $data["name"];
-                    if ($category["parent"] == $data["id"]) {
-                        echo "<option selected value='$categoryID'>$categoryName</option>";
-                    }else{
-                        echo "<option value='$categoryID'>$categoryName</option>";
-                    }
-                } 
+            <option <?php echo $category["parent"] == 0 ? "selected" : "" ?> value="0">None</option>
+            <?php
+            foreach ($categories as $data) {
+                $categoryID = $data["id"];
+                $categoryName = $data["name"];
+                if ($category["parent"] == $data["id"]) {
+                    echo "<option selected value='$categoryID'>$categoryName</option>";
+                } elseif ($category["id"] == $data["id"] || $data["parent"] == $category["id"]) {
+                } else {
+                    echo "<option value='$categoryID'>$categoryName</option>";
+                }
+            }
             ?>
         </select>
     </div>
     <div class="col-md-6">
         <label for="image" class="form-label">Category Image</label>
-        <?php 
-        
+        <?php
+
         if ($category["image"] != "") {
             $path = $category["image"];
             $name = $category["name"];
             echo "<img src='$path' alt='$name' />";
-        }else{
+        } else {
             echo "<p class='text-danger'>Category has no Image</p>";
         }
 
         ?>
-        
+
         <input type="file" class="form-control" name="image" id="image">
     </div>
     <div class="col-12">

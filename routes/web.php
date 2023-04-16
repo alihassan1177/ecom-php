@@ -11,20 +11,21 @@ use App\PostCategoryController;
 
 $router = new Router();
 
-function ProductRoutes(){
+function ProductRoutes()
+{
     // Product Routes
     global $router;
     $router->get("/admin/products", [ProductController::class, "index"]);
     $router->get("/admin/products/details", [ProductController::class, "singleProduct"]);
     $router->get("/admin/products/new", [ProductController::class, "newProduct"]);
     $router->post("/admin/products/create", [ProductController::class, "createProduct"]);
-    $router->post("/admin/products/delete", [ProductController::class, "deleteProduct"]);    
-    $router->get("/admin/products/edit", [ProductController::class, "editProduct"]);    
-    $router->post("/admin/products/update", [ProductController::class, "updateProduct"]);    
-
+    $router->post("/admin/products/delete", [ProductController::class, "deleteProduct"]);
+    $router->get("/admin/products/edit", [ProductController::class, "editProduct"]);
+    $router->post("/admin/products/update", [ProductController::class, "updateProduct"]);
 }
 
-function ProductCategoryRoutes(){
+function ProductCategoryRoutes()
+{
     global $router;
     // Product Category Routes
     $router->get("/admin/products/categories", [ProductCategoryController::class, "categories"]);
@@ -36,11 +37,11 @@ function ProductCategoryRoutes(){
     $router->post("/admin/products/categories/delete", [ProductCategoryController::class, "deleteCategory"]);
 }
 
-function PostRoutes(){
+function PostRoutes()
+{
     global $router;
     $router->get("/admin/posts", [PostController::class, "index"]);
     $router->get("/admin/posts/new", [PostController::class, "newProduct"]);
-
 }
 
 function PostCategoryRoutes()
@@ -48,6 +49,11 @@ function PostCategoryRoutes()
     global $router;
     $router->get("/admin/posts/categories", [PostCategoryController::class, "index"]);
     $router->get("/admin/posts/categories/new", [PostCategoryController::class, "newCategory"]);
+    $router->post("/admin/posts/categories/create", [PostCategoryController::class, "createCategory"]);
+    $router->get("/admin/posts/categories/details", [PostCategoryController::class, "singleCategory"]);
+    $router->post("/admin/posts/categories/delete", [PostCategoryController::class, "deleteCategory"]);
+    $router->get("/admin/posts/categories/edit", [PostCategoryController::class, "editCategory"]);
+    $router->post("/admin/posts/categories/update", [PostCategoryController::class, "updateCategory"]);
 }
 
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
@@ -58,7 +64,6 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     ProductCategoryRoutes();
     PostRoutes();
     PostCategoryRoutes();
-
 } else {
     $router->get("/admin", [AdminController::class, "login"]);
     $router->post("/admin/signin", [AdminController::class, "signin"]);

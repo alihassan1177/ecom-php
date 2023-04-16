@@ -1,11 +1,12 @@
 <?php
 
+$category = $data["data"]["category"][0];
 $categories = $data["data"]["categories"];
 
 ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800 flex-fill">New Post Category</h1>
+    <h1 class="h3 mb-0 text-gray-800 flex-fill">Edit Category : <?= $category["name"] ?></h1>
 </div>
 
 <div id="alert" class="alert d-none" role="alert">
@@ -14,19 +15,29 @@ $categories = $data["data"]["categories"];
 <form id="category-form" method="POST" style="gap:30px" enctype="multipart/form-data" class="row">
     <div class="col-md-6">
         <label for="name" class="form-label">Category Name</label>
-        <input name="name" type="text" id="name" class="form-control form-control-user">
+        <input name="name" value="<?= $category["name"] ?>" type="text" id="name" class="form-control form-control-user">
     </div>
     <div class="col-md-6">
         <label for="parent" class="form-label">Parent Category</label>
         <select class="form-control" id="parent">
-            <option value="0">None</option>
-            <?php foreach ($categories as $category) : ?>
-                <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
-            <?php endforeach; ?>
+            <option <?php echo $category["parent"] == 0 ? "selected" : "" ?> value="0">None</option>
+            <?php
+            foreach ($categories as $data) {
+                $categoryID = $data["id"];
+                $categoryName = $data["name"];
+                if ($category["parent"] == $data["id"]) {
+                    echo "<option selected value='$categoryID'>$categoryName</option>";
+                } elseif ($category["id"] == $data["id"] || $data["parent"] == $category["id"]) {
+                } else {
+                    echo "<option value='$categoryID'>$categoryName</option>";
+                }
+            }
+            ?>
         </select>
     </div>
+
     <div class="col-12">
-        <button id="submit-btn" class="btn btn-primary">Add new Category</button>
+        <button id="submit-btn" class="btn btn-primary">Update Category</button>
     </div>
 </form>
 
@@ -46,12 +57,13 @@ $categories = $data["data"]["categories"];
         const data = new FormData()
         const input = {
             name: nameInp.value,
-            parent: parentInp.value
+            parent: parentInp.value,
         }
         data.append("name", input.name)
         data.append("parent", input.parent)
+        data.append("id", <?= $category["id"] ?>)
 
-        const response = await fetch("/admin/posts/categories/create", {
+        const response = await fetch("/admin/posts/categories/update", {
             method: "POST",
             body: data
         })
