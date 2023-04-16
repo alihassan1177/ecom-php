@@ -41,7 +41,12 @@ function PostRoutes()
 {
     global $router;
     $router->get("/admin/posts", [PostController::class, "index"]);
-    $router->get("/admin/posts/new", [PostController::class, "newProduct"]);
+    $router->get("/admin/posts/new", [PostController::class, "newPost"]);
+    $router->post("/admin/posts/create", [PostController::class, "createPost"]);
+    $router->get("/admin/posts/details", [PostController::class, "singlePost"]);
+    $router->post("/admin/posts/delete", [PostController::class, "deletePost"]);
+    $router->get("/admin/posts/edit", [PostController::class, "editPost"]);
+    $router->post("/admin/posts/update", [PostController::class, "updatePost"]);
 }
 
 function PostCategoryRoutes()

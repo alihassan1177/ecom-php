@@ -1,3 +1,12 @@
+<?php
+
+use App\PostCategoryController;
+
+$categories = $data["data"]["categories"];
+$posts = $data["data"]["posts"];
+
+?>
+
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -24,6 +33,27 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    <?php
+
+                    $i = 0;
+                    foreach ($posts as $post) :
+                        $i++;
+                        $categoryName = PostCategoryController::getCategoryName($categories, $post["category_id"]);
+                    ?>
+                        <tr>
+                            <td><?= $i ?></td>
+                            <td style="text-transform:capitalize"><a href="/admin/posts/details?id=<?= $post["id"] ?>">
+                                    <?= $post["name"] ?></a>
+                            </td>
+                            <td><?= $categoryName ?></td>
+                            <td><?= $post["short_description"]  ?></td>
+
+                        </tr>
+                    <?php
+
+                    endforeach; ?>
+
 
                 </tbody>
                 <tfoot>

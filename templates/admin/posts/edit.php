@@ -1,6 +1,7 @@
 <?php
 
 $categories = $data["data"]["categories"];
+$post = $data["data"]["post"];
 
 ?>
 
@@ -14,31 +15,52 @@ $categories = $data["data"]["categories"];
 <form id="post-form" method="POST" style="gap:30px;" enctype="multipart/form-data" class="row mb-3">
     <div class="col-md-6">
         <label for="name" class="form-label">Post Name</label>
-        <input name="name" type="text" id="name" class="form-control form-control-user">
+        <input name="name" value="<?= $post["name"] ?>" type="text" id="name" class="form-control form-control-user">
     </div>
     <div class="col-md-6">
         <label for="parent" class="form-label">Post Category</label>
         <select name="category_id" class="form-control" id="parent">
-            <option value="0">Uncategorized</option>
-            <?php foreach ($categories as $category) : ?>
-                <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
-            <?php endforeach; ?>
+            <option <?php echo $product["category_id"] == 0 ? "selected" : "" ?> value="0">Uncategorized</option>
+            <?php
+            foreach ($categories as $data) {
+                $categoryID = $data["id"];
+                $categoryName = $data["name"];
+                if ($post["category_id"] == $data["id"]) {
+                    echo "<option selected value='$categoryID'>$categoryName</option>";
+                } else {
+                    echo "<option value='$categoryID'>$categoryName</option>";
+                }
+            }
+            ?>
+
         </select>
     </div>
     <div class="col-md-6">
         <label for="parent" class="form-label">Post Featured Image</label>
+        <?php
+
+        if ($post["image"] != "") {
+            $path = $post["image"];
+            $name = $post["name"];
+            echo "<img src='$path' alt='$name' />";
+        } else {
+            echo "<p class='text-danger'>Post has no Image</p>";
+        }
+
+        ?>
+
         <input type="file" name="image" class="form-control">
     </div>
     <div class="col-md-6">
         <label for="parent" class="form-label">Post Short Description</label>
-        <textarea name="short_description" class="form-control" cols="30" rows="5"></textarea>
+        <textarea name="short_description" class="form-control" cols="30" rows="5"><?= $post["short_description"] ?></textarea>
     </div>
     <div class="col-md-6">
         <label for="parent" class="form-label">Post Details</label>
         <div class="summernote"></div>
     </div>
     <div class="col-12">
-        <button id="submit-btn" class="btn btn-primary">Add new Post</button>
+        <button id="submit-btn" class="btn btn-primary">Update Post</button>
     </div>
 </form>
 
@@ -60,6 +82,7 @@ $categories = $data["data"]["categories"];
 <script>
     $(document).ready(function() {
         $('.summernote').summernote();
+        $('.note-editable').html(`<?= html_entity_decode($post["description"]) ?>`);
     });
 
     const postForm = document.querySelector("#post-form")
@@ -82,8 +105,9 @@ $categories = $data["data"]["categories"];
             }
         })
         formData.append("description", summerNote.innerHTML.toString())
+        formData.append("id", <?= $post["id"] ?>)
 
-        const response = await fetch("/admin/posts/create", {
+        const response = await fetch("/admin/posts/update", {
             method: "POST",
             body: formData
         })
