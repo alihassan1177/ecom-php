@@ -214,8 +214,12 @@ class ProductCategoryController extends Controller
 
         $this->validateCategory($categoryParent);
 
+        $category = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $categoryID;");
+        $category = $category[0];
+
         $imageURL = "";
         if (!empty($categoryImage) && $categoryImage != null) {
+            unlink(__DIR__ . "/../public" . $category["image"]);
             $imageURL .= $this->imageUpload($categoryImage);
             if (!$imageURL) {
                 $this->response("FileType not Allowed : " . $categoryImage["type"], false);

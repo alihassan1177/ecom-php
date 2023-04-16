@@ -221,8 +221,11 @@ class ProductController extends Controller
           return;
         }
 
+        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+        $product  = $product[0];
         $imageURL = "";
         if (!empty($productImage)) {
+          unlink(__DIR__ . "/../public" . $product["image"]);
           $imageURL .= $this->imageUpload($productImage);
           if (!$imageURL) {
             $this->response("FileType not Allowed : " . $productImage["type"], false);

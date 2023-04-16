@@ -182,8 +182,12 @@ class PostController extends Controller
           return;
         }
 
+        $post = Database::getResultsByQuery("SELECT * FROM `posts` WHERE `id` = $id");
+        $post = $post[0];
+
         $imageURL = "";
         if (!empty($postImage)) {
+          unlink(__DIR__ . "/../public" . $post["image"]);
           $imageURL .= $this->imageUpload($postImage);
           if (!$imageURL) {
             $this->response("FileType not Allowed : " . $postImage["type"], false);
