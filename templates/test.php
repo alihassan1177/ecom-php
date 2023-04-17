@@ -9,13 +9,8 @@ $products = $data["data"]["products"];
 $foundCat = ProductCategoryController::getProductsByCategory($products, $categories, 33);
 $children = ProductCategoryController::categoryHasChildren($categories, 33);
 
-// $products = [];
-// foreach ($children as $child) {
-//     $foundProds = getProductsByCategory($products, $child["id"]);
-//     $products = array_merge($products, $foundProds);
-// }
-
-function getProductsByCategory($products , $id, $foundProds = []){
+function getProductsByCategory($products, $id)
+{
     $foundProducts = [];
     foreach ($products as $product) {
         if ($product["category_id"] == $id) {
@@ -28,7 +23,24 @@ function getProductsByCategory($products , $id, $foundProds = []){
 
 echo "<pre>";
 
-foreach($children as $child){
-    $foundProds = getProductsByCategory($products, $child["id"], $foundProds);
-    print_r($foundProds);
+//print_r($children);
+
+function getProducts($children, $products, $foundProds = [])
+{
+    $result[] = $foundProds;
+    foreach ($children as $child) {
+        $result[] = getProductsByCategory($products, $child["id"], $result);
+    }
+    return $result;
 }
+
+function getCategoryProducts($children, $products)
+{
+    $products = getProducts($children, $products);
+    $products = array_merge(...$products);
+    return $products;
+}
+
+$data = getCategoryProducts($children, $products);
+print_r($data);
+print_r($foundCat);

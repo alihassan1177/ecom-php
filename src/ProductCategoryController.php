@@ -124,30 +124,35 @@ class ProductCategoryController extends Controller
         }
     }
 
-    public static function getProductsByCategory(array $products, array $categories, int $categoryID, array $foundProducts = [])
+    private static function prodsByCategory($products, $id)
     {
-        $productsByCategory = $foundProducts;
-
-        $childCategories = self::categoryHasChildren($categories, $categoryID);
-
-        if ($childCategories != false) {
-            $productsInChild = [];
-            foreach ($childCategories as $childCategory) {
-                $result = self::getProductsByCategory($products, $categories, $childCategory["id"], $productsByCategory);
-                $productsInChild = array_merge($result, $productsInChild);
-            }
-            $productsByCategory = array_merge($productsByCategory, $productsInChild);
-        }
-
+        $foundProducts = [];
         foreach ($products as $product) {
-            if ($product["category_id"] == $categoryID) {
-                array_push($productsByCategory, $product);
+            if ($product["category_id"] == $id) {
+                $foundProducts[] = $product;
             }
         }
-
-        return $productsByCategory;
+        return $foundProducts;
     }
 
+    private static function getProducts($children, $products, $foundProds = [])
+    {
+        $result[] = $foundProds;
+        if (is_array($children)) {
+            foreach ($children as $child) {
+                $result[] = self::prodsByCategory($products, $child["id"]);
+            }
+        }
+        return $result;
+    }
+
+    public static function getProductsByCategory(array $products, array $categories, int $categoryID)
+    {
+        $children = self::categoryHasChildren($categories, $categoryID);
+        $products = self::getProducts($children, $products);
+        $products = array_merge(...$products);
+        return $products;
+    }
 
     public function deleteCategory()
     {
