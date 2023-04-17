@@ -136,13 +136,13 @@
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div style="height:100vh; overflow-y:scroll" id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -213,7 +213,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div style="overflow-y: scroll; height: calc(100vh - 70px)" class="container-fluid pt-4">
                     <?php
                     if ($_SERVER["REQUEST_URI"] != "/admin") {
                         Functions::Breadcrumbs();
