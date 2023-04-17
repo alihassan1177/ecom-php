@@ -4,6 +4,7 @@ namespace App;
 
 class Category
 {
+    public static $categorySeprator = " > ";
     public static function getCategoryFullName(array $categories, int $id, array $foundName = [])
     {
         $name = $foundName;

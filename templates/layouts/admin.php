@@ -33,6 +33,7 @@
     <!-- Custom scripts for all pages-->
     <script defer src="/js/sb-admin-2.min.js"></script>
 
+    <link rel="shortcut icon" href="/assets/images/fav-icon.png" type="image/x-icon">
 </head>
 
 <body class="overflow-hidden" id="page-top">
@@ -284,6 +285,7 @@
             })
         })
     </script>
+
 
 </body>
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 $product = $data["data"]["product"][0];
 $categories = $data["data"]["categories"];
 
@@ -27,7 +29,9 @@ $categories = $data["data"]["categories"];
                 <?php 
                     foreach ($categories as $data){
                         $categoryID = $data["id"];
-                        $categoryName = $data["name"];
+                        $fullCatname = Category::getCategoryFullName($categories, $categoryID);
+                        $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+                       
                         if ($product["category_id"] == $data["id"]) {
                             echo "<option selected value='$categoryID'>$categoryName</option>";
                         }else{

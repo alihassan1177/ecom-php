@@ -15,6 +15,14 @@ class Router
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $requestPath = $requestURI["path"];
 
+        $lastIdx = strlen($requestPath) - 1;
+        if (strlen($requestPath) > 1) {
+            if ($requestPath[$lastIdx] == "/") {
+                $requestPath = rtrim($requestPath, "/");
+                header("location:$requestPath");
+            }
+        }
+
         $callback = null;
 
         foreach ($this->handlers as $handler) {

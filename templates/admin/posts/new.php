@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 $categories = $data["data"]["categories"];
 
 ?>
@@ -20,8 +22,11 @@ $categories = $data["data"]["categories"];
         <label for="parent" class="form-label">Post Category</label>
         <select name="category_id" class="form-control" id="parent">
             <option value="0">Uncategorized</option>
-            <?php foreach ($categories as $category) : ?>
-                <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
+            <?php foreach ($categories as $category) : 
+                    $fullCatname = Category::getCategoryFullName($categories, $category["id"]);
+                ?>
+                
+                <option value="<?= $category["id"] ?>"><?php echo count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0]; ?></option>
             <?php endforeach; ?>
         </select>
     </div>

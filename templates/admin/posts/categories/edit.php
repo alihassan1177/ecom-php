@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 $category = $data["data"]["category"][0];
 $categories = $data["data"]["categories"];
 
@@ -24,7 +26,10 @@ $categories = $data["data"]["categories"];
             <?php
             foreach ($categories as $data) {
                 $categoryID = $data["id"];
-                $categoryName = $data["name"];
+                $fullCatname = Category::getCategoryFullName($categories, $categoryID);
+
+                $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+
                 if ($category["parent"] == $data["id"]) {
                     echo "<option selected value='$categoryID'>$categoryName</option>";
                 } elseif ($category["id"] == $data["id"] || $data["parent"] == $category["id"]) {

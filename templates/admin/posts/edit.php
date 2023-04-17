@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 $categories = $data["data"]["categories"];
 $post = $data["data"]["post"];
 
@@ -24,7 +26,9 @@ $post = $data["data"]["post"];
             <?php
             foreach ($categories as $data) {
                 $categoryID = $data["id"];
-                $categoryName = $data["name"];
+                $fullCatname = Category::getCategoryFullName($categories, $categoryID);
+
+                $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
                 if ($post["category_id"] == $data["id"]) {
                     echo "<option selected value='$categoryID'>$categoryName</option>";
                 } else {
