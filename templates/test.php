@@ -15,7 +15,7 @@ $children = ProductCategoryController::categoryHasChildren($categories, 33);
 //     $products = array_merge($products, $foundProds);
 // }
 
-function getProductsByCategory($products , $id){
+function getProductsByCategory($products , $id, $foundProds = []){
     $foundProducts = [];
     foreach ($products as $product) {
         if ($product["category_id"] == $id) {
@@ -29,6 +29,6 @@ function getProductsByCategory($products , $id){
 echo "<pre>";
 
 foreach($children as $child){
-    $foundProds = getProductsByCategory($products, $child["id"]);
+    $foundProds = getProductsByCategory($products, $child["id"], $foundProds);
     print_r($foundProds);
 }
