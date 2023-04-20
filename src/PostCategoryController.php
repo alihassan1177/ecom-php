@@ -173,31 +173,36 @@ class PostCategoryController extends Controller
         return;
     }
 
-
-    public static function getPostsByCategory(array $products, array $categories, int $categoryID, array $foundProducts = [])
+    private static function postsByCategory($posts, $id)
     {
-        $productsByCategory = $foundProducts;
-
-        $childCategories = self::categoryHasChildren($categories, $categoryID);
-
-        if ($childCategories != false) {
-            $productsInChild = [];
-            foreach ($childCategories as $childCategory) {
-                $result = self::getPostsByCategory($products, $categories, $childCategory["id"], $productsByCategory);
-                $productsInChild = array_merge($result, $productsInChild);
-            }
-            $productsByCategory = array_merge($productsByCategory, $productsInChild);
-        }
-
-        foreach ($products as $product) {
-            if ($product["category_id"] == $categoryID) {
-                array_push($productsByCategory, $product);
+        $foundPosts = [];
+        foreach ($posts as $product) {
+            if ($product["category_id"] == $id) {
+                $foundPosts[] = $product;
             }
         }
-
-        return $productsByCategory;
+        return $foundPosts;
     }
 
+
+    private static function getPosts($children, $Posts, $foundProds = [])
+    {
+        $result[] = $foundProds;
+        if (is_array($children)) {
+            foreach ($children as $child) {
+                $result[] = self::postsByCategory($Posts, $child["id"]);
+            }
+        }
+        return $result;
+    }
+
+    public static function getPostsByCategory(array $posts, array $categories, int $categoryID)
+    {
+        $children = self::categoryHasChildren($categories, $categoryID);
+        $postsByCategory = self::getPosts($children, $posts);
+        $postsByCategory = array_merge(...$postsByCategory);
+        return $postsByCategory;
+    }
 
     public static function getCategoryName(array $categories, int $id)
     {
