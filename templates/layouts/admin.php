@@ -95,7 +95,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/customers">
                     <i class="fas fa-users"></i>
                     <span>Customers</span>
                 </a>
@@ -103,7 +103,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/orders">
                     <i class="fas fa-chart-area"></i>
                     <span>Orders</span>
                 </a>
@@ -113,7 +113,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/site_settings">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Site Settings</span></a>
             </li>

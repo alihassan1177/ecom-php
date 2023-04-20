@@ -2,12 +2,15 @@
 
 use App\Router;
 use App\AdminController;
+use App\CustomerController;
 use App\Functions;
 use App\HomeController;
+use App\OrderController;
 use App\ProductController;
 use App\ProductCategoryController;
 use App\PostController;
 use App\PostCategoryController;
+use App\SiteController;
 use App\TestController;
 
 $router = new Router();
@@ -62,6 +65,24 @@ function PostCategoryRoutes()
     $router->post("/admin/posts/categories/update", [PostCategoryController::class, "updateCategory"]);
 }
 
+function SiteSettingsRoutes()
+{
+    global $router;
+    $router->get("/admin/site_settings", [SiteController::class, "index"]);
+}
+
+function OrdersRoutes()
+{
+    global $router;
+    $router->get("/admin/orders", [OrderController::class, "index"]);
+}
+
+function CustomerRoutes()
+{
+    global $router;
+    $router->get("/admin/customers", [CustomerController::class, "index"]);
+}
+
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
@@ -70,7 +91,9 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     ProductCategoryRoutes();
     PostRoutes();
     PostCategoryRoutes();
-
+    SiteSettingsRoutes();
+    CustomerRoutes();
+    OrdersRoutes();
 
     $router->get("/test", [TestController::class, "categoryName"]);
 } else {

@@ -46,16 +46,17 @@ class Functions
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
+      $linkName = str_replace("_"," ", $item);
       if ($item != "") {
         if ($i == count($items) - 1) {
           $current_link .= "/" . $item;
           echo <<<LINK
-        <li style="text-transform:capitalize" class="breadcrumb-item active">$item</li>
+        <li style="text-transform:capitalize" class="breadcrumb-item active">$linkName</li>
         LINK;
         } else {
           $current_link .= "/" . $item;
           echo <<<LINK
-        <li class="breadcrumb-item"><a style='text-transform:capitalize' href="$current_link">$item</a></li>
+        <li class="breadcrumb-item"><a style='text-transform:capitalize' href="$current_link">$linkName</a></li>
         LINK;
         }
       }
