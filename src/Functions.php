@@ -46,7 +46,8 @@ class Functions
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
-      $linkName = str_replace("_"," ", $item);
+      $linkName = str_replace(["_"],[" "], $item);
+
       if ($item != "") {
         if ($i == count($items) - 1) {
           $current_link .= "/" . $item;
