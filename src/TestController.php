@@ -12,6 +12,10 @@ class TestController extends Controller
         $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
         $params["categories"] = $categories;
 
+        $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories`");
+        $params["postCategories"] = $postCategories;
+
+
         $products = Database::getResultsByQuery("SELECT * FROM `products`");
         $params["products"] = $products;
 

@@ -2,8 +2,10 @@
 
 use App\Category;
 
-$category = $data["data"]["category"][0];
-$categories = $data["data"]["categories"];
+$category = $data["data"]["category"];
+$prodCategories = $data["data"]["categories"];
+
+$categories = Category::getCategoriesExceptChildren($prodCategories, $category["id"]);
 
 ?>
 
@@ -24,19 +26,21 @@ $categories = $data["data"]["categories"];
         <select class="form-control" id="parent">
             <option <?php echo $category["parent"] == 0 ? "selected" : "" ?> value="0">None</option>
             <?php
-            foreach ($categories as $data) {
-                $categoryID = $data["id"];
-                $fullCatname = Category::getCategoryFullName($categories, $category["id"]);
+            if (is_array($categories)) :
+                foreach ($categories as $data) {
+                    $categoryID = $data["id"];
+                    $fullCatname = Category::getCategoryName($categories, $categoryID);
 
-                $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+                    $categoryName = implode(Category::$categorySeprator, $fullCatname);
 
-                if ($category["parent"] == $data["id"]) {
-                    echo "<option selected value='$categoryID'>$categoryName</option>";
-                } elseif ($category["id"] == $data["id"] || $data["parent"] == $category["id"]) {
-                } else {
-                    echo "<option value='$categoryID'>$categoryName</option>";
+                    if ($category["parent"] == $data["id"]) {
+                        echo "<option selected value='$categoryID'>$categoryName</option>";
+                    } elseif ($category["id"] == $data["id"] || $data["parent"] == $category["id"]) {
+                    } else {
+                        echo "<option value='$categoryID'>$categoryName</option>";
+                    }
                 }
-            }
+            endif;
             ?>
         </select>
     </div>

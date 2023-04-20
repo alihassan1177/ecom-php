@@ -25,9 +25,9 @@ $categories = $data["data"]["categories"];
             <select class="form-control" name="category_id">
                 <option value="0">Uncategorized</option>
                 <?php foreach ($categories as $category) :
-                    $fullCatname = Category::getCategoryFullName($categories, $category["id"]);
+                    $fullCatname = Category::getCategoryName($categories, $category["id"]);
                 ?>
-                    <option value="<?= $category["id"] ?>"><?php echo count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0]; ?></option>
+                    <option value="<?= $category["id"] ?>"><?php echo implode(Category::$categorySeprator, $fullCatname) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

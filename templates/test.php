@@ -4,6 +4,8 @@ use App\Category;
 use App\ProductCategoryController;
 
 $categories = $data["data"]["categories"];
+$postCategories = $data["data"]["postCategories"];
+
 $products = $data["data"]["products"];
 
 $foundCat = ProductCategoryController::getProductsByCategory($products, $categories, 33);
@@ -41,6 +43,20 @@ function getCategoryProducts($children, $products)
     return $products;
 }
 
-$data = getCategoryProducts($children, $products);
-print_r($data);
-print_r($foundCat);
+function getCategoriesExceptChildren(array $categories, int $id)
+{
+    $children = Category::categoryHasChildren($categories, $id);
+    for ($i=0; $i < count($children); $i++) { 
+        $child = $children[$i];
+        for ($j=0; $j < count($categories); $j++) { 
+            $category = $categories[$j];
+            if ($category["id"] == $child["id"]) {
+                unset($categories[$j]);
+            }
+        }
+    }
+    return $categories;
+}
+
+print_r(getCategoriesExceptChildren($postCategories, 11));
+print_r(getCategoriesExceptChildren($categories, 37));

@@ -192,7 +192,7 @@ class ProductCategoryController extends Controller
             if (is_int(intval($id))) {
                 $category = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $id");
                 $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
-                $params["category"] = $category;
+                $params["category"] = $category[0];
                 $params["categories"] = $categories;
                 $pageInfo = ["title" => "Edit Category"];
                 $this->renderView($pageInfo, "admin/products/categories/edit", "admin", $params);

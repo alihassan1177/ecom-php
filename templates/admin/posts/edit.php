@@ -26,9 +26,9 @@ $post = $data["data"]["post"];
             <?php
             foreach ($categories as $data) {
                 $categoryID = $data["id"];
-                $fullCatname = Category::getCategoryFullName($categories, $categoryID);
+                $fullCatname = Category::getCategoryName($categories, $categoryID);
 
-                $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+                $categoryName = implode(Category::$categorySeprator, $fullCatname);
                 if ($post["category_id"] == $data["id"]) {
                     echo "<option selected value='$categoryID'>$categoryName</option>";
                 } else {

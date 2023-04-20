@@ -3,7 +3,9 @@
 use App\Category;
 
 $category = $data["data"]["category"][0];
-$categories = $data["data"]["categories"];
+$postCategories = $data["data"]["categories"];
+
+$categories = Category::getCategoriesExceptChildren($postCategories, $category["id"]);
 
 ?>
 
@@ -26,9 +28,9 @@ $categories = $data["data"]["categories"];
             <?php
             foreach ($categories as $data) {
                 $categoryID = $data["id"];
-                $fullCatname = Category::getCategoryFullName($categories, $categoryID);
+                $fullCatname = Category::getCategoryName($categories, $categoryID);
 
-                $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+                $categoryName = implode(Category::$categorySeprator, $fullCatname);
 
                 if ($category["parent"] == $data["id"]) {
                     echo "<option selected value='$categoryID'>$categoryName</option>";

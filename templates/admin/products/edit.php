@@ -29,8 +29,8 @@ $categories = $data["data"]["categories"];
                 <?php 
                     foreach ($categories as $data){
                         $categoryID = $data["id"];
-                        $fullCatname = Category::getCategoryFullName($categories, $categoryID);
-                        $categoryName = count($fullCatname) > 1 ? implode(Category::$categorySeprator, $fullCatname) : $fullCatname[0];
+                        $fullCatname = Category::getCategoryName($categories, $categoryID);
+                        $categoryName = implode(Category::$categorySeprator, $fullCatname);
                        
                         if ($product["category_id"] == $data["id"]) {
                             echo "<option selected value='$categoryID'>$categoryName</option>";
