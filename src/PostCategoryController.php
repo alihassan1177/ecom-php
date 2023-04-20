@@ -185,12 +185,12 @@ class PostCategoryController extends Controller
     }
 
 
-    private static function getPosts($children, $Posts, $foundProds = [])
+    private static function getPosts($children, $posts, $foundProds = [])
     {
         $result[] = $foundProds;
         if (is_array($children)) {
             foreach ($children as $child) {
-                $result[] = self::postsByCategory($Posts, $child["id"]);
+                $result[] = self::postsByCategory($posts, $child["id"]);
             }
         }
         return $result;
