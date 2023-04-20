@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use App\PostCategoryController;
 
 $categories = $data["data"]["categories"];
@@ -39,7 +40,7 @@ $posts = $data["data"]["posts"];
                     $i = 0;
                     foreach ($categories as $category) :
                         $i++;
-                        $parentCategoryName = PostCategoryController::getCategoryName($categories, $category["parent"]);
+                        $parentCategoryName = Category::getCategoryName($categories, $category["parent"]);
                         $productsCount = count(PostCategoryController::getPostsByCategory($posts, $categories, $category["id"]));
                     ?>
                         <tr>
@@ -47,7 +48,7 @@ $posts = $data["data"]["posts"];
                             <td style="text-transform:capitalize"><a href="/admin/posts/categories/details?id=<?= $category["id"] ?>">
                                     <?= $category["name"] ?></a>
                             </td>
-                            <td><?= $parentCategoryName ?></td>
+                            <td><?= implode(Category::$categorySeprator, $parentCategoryName) ?></td>
                             <td><?= $productsCount  ?></td>
 
                         </tr>

@@ -46,17 +46,31 @@ function getCategoryProducts($children, $products)
 function getCategoriesExceptChildren(array $categories, int $id)
 {
     $children = Category::categoryHasChildren($categories, $id);
-    for ($i=0; $i < count($children); $i++) { 
-        $child = $children[$i];
-        for ($j=0; $j < count($categories); $j++) { 
-            $category = $categories[$j];
-            if ($category["id"] == $child["id"]) {
-                unset($categories[$j]);
+    if (is_array($children)) {
+        if (count($children) == (count($categories) - 1)) {
+            return;
+        }
+        for ($i=0; $i <= count($children); $i++) { 
+            $child = $children[$i];
+            for ($j=0; $j <= count($categories); $j++) { 
+                $category = $categories[$j];
+                if ($category["id"] == $child["id"] || $category["id"] == $id) {
+                    unset($categories[$j]);
+                }
             }
         }
+
+        // for ($i=0; $i <= count($categories); $i++) { 
+        //     if ($categories[$i] == null) {
+        //         unset($categories[$i]);
+        //     }
+        // }
+
     }
     return $categories;
 }
-
-print_r(getCategoriesExceptChildren($postCategories, 11));
+// echo "----------------------------- Post Categories except Children ---------------------------------<br>";
+// print_r(getCategoriesExceptChildren($postCategories, 11));
+echo "----------------------------- Categories except Children ---------------------------------<br>";
 print_r(getCategoriesExceptChildren($categories, 37));
+echo "--------------------------------------------------------------<br>";

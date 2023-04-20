@@ -47,17 +47,22 @@ class Category
     public static function getCategoriesExceptChildren(array $categories, int $id)
     {
         $children = self::categoryHasChildren($categories, $id);
-        if (is_array($children)) :
-            for ($i = 0; $i < count($children); $i++) {
+        if (is_array($children)) {
+            if (count($children) == (count($categories) - 1)) {
+                return;
+            }
+            for ($i=0; $i <= count($children); $i++) { 
                 $child = $children[$i];
-                for ($j = 0; $j < count($categories); $j++) {
+                for ($j=0; $j <= count($categories); $j++) { 
                     $category = $categories[$j];
-                    if ($category["id"] == $child["id"]) {
+                    if ($category["id"] == $child["id"] || $category["id"] == $id) {
                         unset($categories[$j]);
                     }
                 }
             }
-        endif;
+    
+    
+        }
         return $categories;
     }
 }
