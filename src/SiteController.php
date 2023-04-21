@@ -8,11 +8,16 @@ use App\Controller;
 class SiteController extends Controller{
     public function index(array $params)
     {
-    //   $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
-    //   $products = Database::getResultsByQuery("SELECT * FROM `products` ORDER BY `id` DESC");
-    //   $params["categories"] = $categories;
-    //   $params["products"] = $products;
-  
+      $settings = Database::getResultsByQuery("SELECT * FROM `site_settings`");
+      
+      if (count($settings) == 0) {
+        $settings["name"] = $_ENV["SITE_NAME"];
+      }else{
+        $settings = $settings[0];
+      }
+
+      $params["settings"] = $settings;
+
       $pageInfo = ["title" => "Site Settings", "description" => "Site Settings Page Admin Panel"];
       $this->renderView($pageInfo, "admin/site/index", "admin", $params);
     }
