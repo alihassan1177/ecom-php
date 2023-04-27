@@ -87,7 +87,8 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
 
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
-    $router->post("/admin/search", [AdminController::class, "search"]);
+    $router->post("/admin/search", [AdminController::class, "suggestions"]);
+    $router->post("/admin/results", [AdminController::class, "results"]);
 
     ProductRoutes();
     ProductCategoryRoutes();

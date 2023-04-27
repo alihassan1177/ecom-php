@@ -44,45 +44,63 @@ class AdminController extends Controller
         $_SESSION["admin_data"] = $adminData[0];
     }
 
-    public function search()
+    public function results(array $params)
     {
         $query = $_POST["query"];
-        if (empty(trim($query))) {
+        if (empty($query)) {
+            header("location:/admin");
             return;
         }
+        $results = $this->searchResults($query);
+        $params["results"] = $results;
+        $pageInfo = ["title" => "Search Results for '$query'"];
+        $this->renderView($pageInfo, "admin/search", "admin", $params);
+    }
 
+    private function searchResults(string $query)
+    {
         $query = htmlentities($query);
-        
+
         if ($query == "products") {
             $products = Database::getResultsByQuery("SELECT * FROM `products`");
-            $results = ["products"=>$products];
-            $this->response(json_encode($results), true);
-            return;
+            $results = ["products" => $products];
+            return $results;
         }
-        
+
         if ($query == "categories") {
             $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
             $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories`");
 
-            $results = ["categories"=>$categories, "postCategories"=>$postCategories];
-            $this->response(json_encode($results), true);
-            return;
+            $results = ["categories" => $categories, "postCategories" => $postCategories];
+            return $results;
         }
 
         if ($query == "posts") {
             $posts = Database::getResultsByQuery("SELECT * FROM `posts`");
 
-            $results = ["posts"=>$posts];
-            $this->response(json_encode($results), true);
-            return;
+            $results = ["posts" => $posts];
+
+            return $results;
         }
 
-        $products = Database::getResultsByQuery("SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $categories = Database::getResultsByQuery("SELECT * FROM `ecom`.`categories` WHERE  (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $postCategories = Database::getResultsByQuery("SELECT * FROM `ecom`.`post_categories` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $posts = Database::getResultsByQuery("SELECT * FROM `ecom`.`posts` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
+        $products = Database::getResultsByQuery("SELECT * FROM `products` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
+        $categories = Database::getResultsByQuery("SELECT * FROM `categories` WHERE  (CONVERT(`name` USING utf8) LIKE '%$query%')");
+        $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
+        $posts = Database::getResultsByQuery("SELECT * FROM `posts` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
 
-        $results = ["products"=>$products, "categories"=>$categories, "postCategories"=>$postCategories, "posts"=>$posts];
+        $results = ["products" => $products, "categories" => $categories, "postCategories" => $postCategories, "posts" => $posts];
+        return $results;
+    }
+
+    public function suggestions()
+    {
+        $query = $_POST["query"];
+        if (empty(trim($query))) {
+            return;
+        }
+        $_SESSION["query"] = $query;
+
+        $results = $this->searchResults($query);
         $this->response(json_encode($results), true);
         return;
     }

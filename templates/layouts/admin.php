@@ -144,11 +144,11 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form id="searchbar-form" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form id="searchbar-form" action="/admin/results" method="POST" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input id="searchbar" list="suggestions" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input id="searchbar" list="suggestions" name="query" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <datalist id="suggestions">
-                                
+
                             </datalist>
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -308,19 +308,10 @@
         const searchbar = document.querySelector("#searchbar")
         const suggestionsList = document.querySelector("#suggestions")
         const searchbarForm = document.querySelector("#searchbar-form")
-        
-        let values = {
-            query : ""
-        }
 
-        searchbarForm.addEventListener("submit", (e)=>{
-            e.preventDefault()
-            if (values.query != "") {
-                let queryString = encodeURIComponent(`${values.query}`)
-                let url = `/admin/search?query=${queryString}`
-                window.location.href = url
-            }
-        })
+        let values = {
+            query: ""
+        }
 
         const getData = debounce(
             async (e) => {
@@ -335,15 +326,15 @@
                     })
                     const data = await response.json()
                     const result = JSON.parse(data.message);
-            
+
                     let optionsHTML = ""
                     for (n in result) {
                         result[n].forEach(item => {
                             optionsHTML += `<option value="${item.name}">${item.name} : ${n}</option>`
-                        })                        
+                        })
                     }
                     suggestionsList.innerHTML = optionsHTML
-                    
+
                 } catch (error) {
 
                 }
@@ -363,7 +354,13 @@
         }
 
         searchbar.addEventListener("input", getData)
-        
+
+        window.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.key == "k") {
+                e.preventDefault()
+                searchbar.focus()
+            }
+        })
     </script>
 </body>
 
