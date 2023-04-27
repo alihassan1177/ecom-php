@@ -42,7 +42,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul style="transition: width 200ms ease-in-out;" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+        <ul style="transition: width 200ms ease-in-out;" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
@@ -188,7 +188,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                
+
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -261,6 +261,28 @@
         logoutBtn.addEventListener("click", async () => {
             const response = await fetch("/admin/logout")
             window.location.href = "/admin"
+        })
+
+        const sidebarToggler = document.querySelector("#sidebarToggle")
+        const sidebar = document.querySelector("#accordionSidebar")
+
+        const key = "TOGGLED"
+
+        const toggled = localStorage.getItem(key) || false
+
+        if (toggled) {
+            sidebar.classList.add("toggled")
+        } else {
+            sidebar.classList.remove("toggled")
+        }
+
+        sidebarToggler.addEventListener("click", () => {
+            localStorage.setItem(key, !toggled)
+            if (toggled) {
+                sidebar.classList.add("toggled")
+            } else {
+                sidebar.classList.remove("toggled")
+            }
         })
 
         const navItems = document.querySelectorAll(".nav-item")
