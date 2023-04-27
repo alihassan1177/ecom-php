@@ -136,7 +136,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+                <nav style="z-index: 10;" class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -270,7 +270,7 @@
 
         const toggled = localStorage.getItem(key) || false
 
-        if (toggled) {
+        if (toggled == true) {
             sidebar.classList.add("toggled")
         } else {
             sidebar.classList.remove("toggled")

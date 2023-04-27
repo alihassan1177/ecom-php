@@ -32,10 +32,15 @@ $settings = $data["data"]["settings"];
         </div>
         <div class="col-md-4">
         </div>
-        <div class="col-md-6">
+        <div class="col-12">
           <label class="form-label">Site Title</label>
-          <input value="<?= $settings["name"] ?>" type="text" class="form-control">
+          <input value="<?= $settings["name"] ?>" type="text" class="form-control col-md-6">
         </div>
+        <div class="col-12">
+          <label class="form-label">Site Description</label>
+          <textarea class="form-control col-md-6" cols="30" rows="10"></textarea>
+        </div>
+        
         <div class="col-12">
           <button class="btn btn-primary">Update Details</button>
         </div>
