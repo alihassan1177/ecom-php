@@ -265,23 +265,24 @@
 
         const sidebarToggler = document.querySelector("#sidebarToggle")
         const sidebar = document.querySelector("#accordionSidebar")
-
         const key = "TOGGLED"
 
-        const toggled = localStorage.getItem(key) || false
+        let data = JSON.parse(localStorage.getItem("TOGGLED")) || {value : false}
 
-        if (toggled == true) {
+        const {value} = data
+
+        if (value == true) {
+            console.log("OK")
             sidebar.classList.add("toggled")
         } else {
             sidebar.classList.remove("toggled")
         }
 
         sidebarToggler.addEventListener("click", () => {
-            localStorage.setItem(key, !toggled)
-            if (toggled) {
-                sidebar.classList.add("toggled")
-            } else {
-                sidebar.classList.remove("toggled")
+            if (value == false) {
+                localStorage.setItem("TOGGLED", JSON.stringify({value : true}))
+            }else{
+                localStorage.setItem("TOGGLED", JSON.stringify({value : false}))
             }
         })
 
