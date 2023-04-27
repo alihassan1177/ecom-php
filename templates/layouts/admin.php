@@ -144,7 +144,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form id="searchbar-form" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input id="searchbar" list="suggestions" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <datalist id="suggestions">
@@ -307,11 +307,26 @@
     <script>
         const searchbar = document.querySelector("#searchbar")
         const suggestionsList = document.querySelector("#suggestions")
+        const searchbarForm = document.querySelector("#searchbar-form")
+        
+        let values = {
+            query : ""
+        }
+
+        searchbarForm.addEventListener("submit", (e)=>{
+            e.preventDefault()
+            if (values.query != "") {
+                let queryString = encodeURIComponent(`${values.query}`)
+                let url = `/admin/search?query=${queryString}`
+                window.location.href = url
+            }
+        })
 
         const getData = debounce(
             async (e) => {
                 try {
                     let value = e.target.value
+                    values.query = value
                     const input = new FormData()
                     input.append("query", value)
                     const response = await fetch("/admin/search", {
@@ -320,6 +335,7 @@
                     })
                     const data = await response.json()
                     const result = JSON.parse(data.message);
+            
                     let optionsHTML = ""
                     for (n in result) {
                         result[n].forEach(item => {
@@ -347,6 +363,7 @@
         }
 
         searchbar.addEventListener("input", getData)
+        
     </script>
 </body>
 

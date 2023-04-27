@@ -69,6 +69,14 @@ class AdminController extends Controller
             return;
         }
 
+        if ($query == "posts") {
+            $posts = Database::getResultsByQuery("SELECT * FROM `posts`");
+
+            $results = ["posts"=>$posts];
+            $this->response(json_encode($results), true);
+            return;
+        }
+
         $products = Database::getResultsByQuery("SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
         $categories = Database::getResultsByQuery("SELECT * FROM `ecom`.`categories` WHERE  (CONVERT(`name` USING utf8) LIKE '%$query%')");
         $postCategories = Database::getResultsByQuery("SELECT * FROM `ecom`.`post_categories` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
