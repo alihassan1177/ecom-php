@@ -269,7 +269,7 @@
 
         let data = JSON.parse(localStorage.getItem("TOGGLED")) || {value : false}
 
-        const {value} = data
+        let {value} = data
 
         if (value == true) {
             console.log("OK")
@@ -279,11 +279,8 @@
         }
 
         sidebarToggler.addEventListener("click", () => {
-            if (value == false) {
-                localStorage.setItem("TOGGLED", JSON.stringify({value : true}))
-            }else{
-                localStorage.setItem("TOGGLED", JSON.stringify({value : false}))
-            }
+            data.value = !value
+            localStorage.setItem("TOGGLED", JSON.stringify(data))
         })
 
         const navItems = document.querySelectorAll(".nav-item")
