@@ -1,7 +1,7 @@
 <?php
 
 $results = $data["data"]["results"];
-
+$query = $data["data"]["query"];
 
 ?>
 
@@ -10,7 +10,7 @@ $results = $data["data"]["results"];
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Search Results for '<?= $_SESSION["query"] ?>'</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Search Results for '<?= $query ?>'</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -55,7 +55,7 @@ $results = $data["data"]["results"];
                                         }
 
                                         ?></td>
-                                    <td><?= $key ?></td>
+                                    <td style="text-transform: capitalize;"><?= $key ?></td>
                                 </tr>
                     <?php
                             endforeach;
