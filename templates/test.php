@@ -1,6 +1,7 @@
 <?php
 
 use App\Category;
+use App\Database;
 use App\ProductCategoryController;
 
 $categories = $data["data"]["categories"];
@@ -71,6 +72,14 @@ function getCategoriesExceptChildren(array $categories, int $id)
 }
 // echo "----------------------------- Post Categories except Children ---------------------------------<br>";
 // print_r(getCategoriesExceptChildren($postCategories, 11));
-echo "----------------------------- Categories except Children ---------------------------------<br>";
-print_r(getCategoriesExceptChildren($categories, 37));
-echo "--------------------------------------------------------------<br>";
+//echo "----------------------------- Categories except Children ---------------------------------<br>";
+//print_r(getCategoriesExceptChildren($categories, 37));
+//echo "--------------------------------------------------------------<br>";
+
+// $conn = mysqli_connect($_ENV["DB_HOST"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"], $_ENV["DB_NAME"]);
+// $query = mysqli_query($conn, "SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%e%')");
+// $results = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+$results = Database::getResultsByQuery("SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%e%')");
+
+print_r($results);

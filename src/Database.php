@@ -13,6 +13,7 @@ class Database
 
     public static function getResultsByQuery(string $query)
     {
+        //echo $query;
         $result = mysqli_query(self::$conn, $query);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }

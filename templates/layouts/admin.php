@@ -146,7 +146,10 @@
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input id="searchbar" list="suggestions" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <datalist id="suggestions">
+                                
+                            </datalist>
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -267,12 +270,15 @@
         const sidebar = document.querySelector("#accordionSidebar")
         const key = "TOGGLED"
 
-        let data = JSON.parse(localStorage.getItem("TOGGLED")) || {value : false}
+        let data = JSON.parse(localStorage.getItem("TOGGLED")) || {
+            value: false
+        }
 
-        let {value} = data
+        let {
+            value
+        } = data
 
         if (value == true) {
-            console.log("OK")
             sidebar.classList.add("toggled")
         } else {
             sidebar.classList.remove("toggled")
@@ -296,6 +302,52 @@
     </script>
 
 
+    <!-- Searchbar -->
+
+    <script>
+        const searchbar = document.querySelector("#searchbar")
+        const suggestionsList = document.querySelector("#suggestions")
+
+        const getData = debounce(
+            async (e) => {
+                try {
+                    let value = e.target.value
+                    const input = new FormData()
+                    input.append("query", value)
+                    const response = await fetch("/admin/search", {
+                        method: "POST",
+                        body: input
+                    })
+                    const data = await response.json()
+                    const result = JSON.parse(data.message);
+                    let optionsHTML = ""
+                    for (n in result) {
+                        result[n].forEach(item => {
+                            optionsHTML += `<option value="${item.name}">${item.name} : ${n}</option>`
+                        })                        
+                    }
+                    suggestionsList.innerHTML = optionsHTML
+                    
+                } catch (error) {
+
+                }
+
+            }, 500)
+
+        function debounce(callback, delay) {
+            let timer
+            return function() {
+                let context = this
+                let args = arguments
+                clearTimeout(timer)
+                timer = setTimeout(() => {
+                    callback.apply(context, args)
+                }, delay)
+            }
+        }
+
+        searchbar.addEventListener("input", getData)
+    </script>
 </body>
 
 </html>

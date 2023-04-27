@@ -84,8 +84,10 @@ function CustomerRoutes()
 }
 
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
+
     $router->get("/admin", [AdminController::class, "index"]);
     $router->get("/admin/logout", [AdminController::class, "logout"]);
+    $router->post("/admin/search", [AdminController::class, "search"]);
 
     ProductRoutes();
     ProductCategoryRoutes();
