@@ -110,6 +110,8 @@ $router->get("/", [HomeController::class, "index"]);
 $router->get("/shop", [ShopController::class, "index"]);
 $router->get("/shop/details", [ShopController::class, "details"]);
 $router->get("/contact", [ContactController::class, "index"]);
+$router->get("/cart", [ShopController::class, "cart"]);
+$router->get("/checkout", [ShopController::class, "checkout"]);
 
 
 // 404 Page

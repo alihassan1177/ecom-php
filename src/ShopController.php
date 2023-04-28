@@ -17,4 +17,16 @@ class ShopController extends Controller{
         $this->renderView($pageInfo, "client/shop/detail", "main");
     }
 
+    public function cart()
+    {
+        $pageInfo = ["title" => "Cart"];
+        $this->renderView($pageInfo, "client/shop/cart", "main");        
+    }
+
+    public function checkout()
+    {
+        $pageInfo = ["title" => "Checkout"];
+        $this->renderView($pageInfo, "client/shop/checkout", "main");        
+    }
+
 }
