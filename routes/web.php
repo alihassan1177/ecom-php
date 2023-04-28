@@ -14,6 +14,7 @@ use App\ShopController;
 use App\SiteController;
 use App\TestController;
 use App\ContactController;
+use App\ClientController;
 
 $router = new Router();
 
@@ -112,6 +113,9 @@ $router->get("/shop/details", [ShopController::class, "details"]);
 $router->get("/contact", [ContactController::class, "index"]);
 $router->get("/cart", [ShopController::class, "cart"]);
 $router->get("/checkout", [ShopController::class, "checkout"]);
+
+$router->get("/login", [ClientController::class, "login"]);
+$router->get("/register", [ClientController::class, "register"]);
 
 
 // 404 Page
