@@ -10,6 +10,7 @@ use App\ProductController;
 use App\ProductCategoryController;
 use App\PostController;
 use App\PostCategoryController;
+use App\ShopController;
 use App\SiteController;
 use App\TestController;
 
@@ -105,6 +106,8 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
 }
 
 $router->get("/", [HomeController::class, "index"]);
+$router->get("/shop", [ShopController::class, "index"]);
+$router->get("/shop/details", [ShopController::class, "details"]);
 
 // 404 Page
 $router->addNotFoundCallback(function () {
