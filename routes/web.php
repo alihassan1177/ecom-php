@@ -15,6 +15,7 @@ use App\SiteController;
 use App\TestController;
 use App\ContactController;
 use App\ClientController;
+use App\MarketingController;
 
 $router = new Router();
 
@@ -86,6 +87,14 @@ function CustomerRoutes()
     $router->get("/admin/customers", [CustomerController::class, "index"]);
 }
 
+function MarketingRoutes(){
+    global $router;
+    $router->get("/admin/banners",[MarketingController::class, "banners"]);
+    $router->get("/admin/banners/new",[MarketingController::class, "newBanner"]);
+    $router->post("/admin/banners/create",[MarketingController::class, "createBanner"]);
+
+}
+
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
 
     $router->get("/admin", [AdminController::class, "index"]);
@@ -100,6 +109,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     SiteSettingsRoutes();
     CustomerRoutes();
     OrdersRoutes();
+    MarketingRoutes();
 
     $router->get("/test", [TestController::class, "categoryName"]);
 } else {

@@ -9,6 +9,8 @@ class HomeController extends Controller{
     public function index(array $params)
     {
         $products = Database::getResultsByQuery("SELECT * FROM `products`");
+        $banners = Database::getResultsByQuery("SELECT * FROM `banners`");
+        $params["banners"] = $banners;
         $params["products"] = $products;
         $pageInfo = ["title"=>"Home"];
         $this->renderView($pageInfo, "client/home/index", "main", $params);   

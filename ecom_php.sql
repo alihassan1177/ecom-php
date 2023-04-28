@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 16, 2023 at 06:12 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 7.4.33
+-- Host: localhost:3306
+-- Generation Time: Apr 28, 2023 at 05:12 PM
+-- Server version: 8.0.31-0ubuntu0.22.04.1
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ecom_php`
+-- Database: `ecom`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -44,14 +44,29 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` int NOT NULL,
+  `heading` text NOT NULL,
+  `sub_heading` text NOT NULL,
+  `image` text NOT NULL,
+  `btn_link` text NOT NULL,
+  `btn_text` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `parent` int(11) DEFAULT NULL,
-  `image` mediumtext DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `parent` int DEFAULT NULL,
+  `image` mediumtext COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -59,10 +74,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `parent`, `image`) VALUES
-(3, 'Sportswear', 0, ''),
-(5, 'Casual Wear', 0, ''),
-(6, 'T Shirts', 5, ''),
-(22, 'Trousers', 5, '');
+(37, 'Sportswear', 0, ''),
+(38, 'Game', 37, ''),
+(39, 'Pubg', 38, '');
 
 -- --------------------------------------------------------
 
@@ -71,12 +85,12 @@ INSERT INTO `categories` (`id`, `name`, `parent`, `image`) VALUES
 --
 
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `short_description` mediumtext DEFAULT NULL,
-  `description` longtext DEFAULT NULL,
-  `category_id` int(255) NOT NULL,
-  `image` longtext DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `short_description` mediumtext COLLATE utf8mb4_general_ci,
+  `description` longtext COLLATE utf8mb4_general_ci,
+  `category_id` int NOT NULL,
+  `image` longtext COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -84,7 +98,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `name`, `short_description`, `description`, `category_id`, `image`) VALUES
-(2, 'This is a Updated Post', 'This is a Post', '&lt;p&gt;This is a Post&lt;br&gt;&lt;/p&gt;', 5, NULL);
+(3, 'asdas', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -93,9 +107,9 @@ INSERT INTO `posts` (`id`, `name`, `short_description`, `description`, `category
 --
 
 CREATE TABLE `post_categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `parent` int(255) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `parent` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -103,8 +117,10 @@ CREATE TABLE `post_categories` (
 --
 
 INSERT INTO `post_categories` (`id`, `name`, `parent`) VALUES
-(5, 'Tech', 6),
-(6, 'IT', 0);
+(11, 'text', 0),
+(12, 'word', 11),
+(13, 'Third', 12),
+(14, 'Gaming', 0);
 
 -- --------------------------------------------------------
 
@@ -113,14 +129,14 @@ INSERT INTO `post_categories` (`id`, `name`, `parent`) VALUES
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `image` longtext DEFAULT NULL,
-  `short_description` mediumtext DEFAULT NULL,
-  `description` longtext DEFAULT NULL,
-  `category_id` int(11) NOT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` longtext COLLATE utf8mb4_general_ci,
+  `short_description` mediumtext COLLATE utf8mb4_general_ci,
+  `description` longtext COLLATE utf8mb4_general_ci,
+  `category_id` int NOT NULL,
+  `quantity` int DEFAULT NULL,
+  `price` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -128,11 +144,21 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `short_description`, `description`, `category_id`, `quantity`, `price`) VALUES
-(2, 'Football Jersey', '/uploads/1681295528video-icon.png', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '&lt;p&gt;&lt;strong&gt;Lorem Ipsum&lt;/strong&gt; is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.&lt;/p&gt;', 3, 10, 10),
-(3, 'Gaming Wear', '/uploads/1681295753video-icon.png', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '&lt;p&gt;&lt;strong&gt;Lorem Ipsum&lt;/strong&gt; is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.&lt;/p&gt;', 6, 10, 20),
-(4, 'Black Trouser', NULL, NULL, NULL, 5, 10, 20),
-(5, 'Red Trousers', NULL, NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 22, NULL, NULL),
-(6, 'Green Trousers', '/uploads/1681323858MAf-MAketting-logo.png', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 22, 6, 10);
+(11, 'Esports Wear', '/uploads/1682057062sublimated-soccer-team-uniform-football-jersey-custom-american-football-jersey.jpg', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 0, NULL, NULL),
+(12, 'Person', NULL, NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_settings`
+--
+
+CREATE TABLE `site_settings` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` longtext NOT NULL,
+  `favicon` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Indexes for dumped tables
@@ -142,6 +168,12 @@ INSERT INTO `products` (`id`, `name`, `image`, `short_description`, `description
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -169,6 +201,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -176,31 +214,43 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `post_categories`
 --
 ALTER TABLE `post_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
