@@ -78,7 +78,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="/" class="nav-item nav-link active">Home</a>
+                            <a href="/" class="nav-item nav-link">Home</a>
                             <a href="/shop" class="nav-item nav-link">Shop</a>
                             <a href="/shop/details" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
@@ -161,10 +161,9 @@
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    &copy; <a class="text-dark font-weight-semi-bold" href="/"><?= $_ENV["SITE_NAME"] ?></a>. All Rights Reserved. Designed
                     by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    <a class="text-dark font-weight-semi-bold" target="_blank" href="https://github.com/alihassan1177">Ali Hassan</a>
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -190,6 +189,16 @@
 
     <!-- Template Javascript -->
     <script src="/client/js/main.js"></script>
+
+    <script>
+        const navLinks = document.querySelectorAll(".nav-link, .dropdown-item")
+
+        navLinks.forEach(link => {
+            if (window.location.href == link.href) {
+                link.classList.add("active")
+            }
+        })
+    </script>
 </body>
 
 </html>
