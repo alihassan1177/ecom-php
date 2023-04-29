@@ -102,7 +102,10 @@
   </div>
 
   <?php
-  Functions::ClientPageHeader($data);
+
+  if ($_SERVER["REQUEST_URI"] != "/") {
+    Functions::ClientPageHeader($data);
+  }
   ?>
 
   <!-- Content Begin -->

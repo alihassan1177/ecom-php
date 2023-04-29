@@ -41,7 +41,9 @@ class Functions
 
     $current_link = "";
 
-    echo "<div class='d-inline-flex'>";
+    echo "<div class='d-inline-flex'>
+    <p class='m-0'><a style='text-transform:capitalize' href='/'>Home</a></p>
+    <p class='m-0 px-2'>-</p>";
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
@@ -57,6 +59,7 @@ class Functions
           $current_link .= "/" . $item;
           echo <<<LINK
         <p class="m-0"><a style='text-transform:capitalize' href="$current_link">$linkName</a></p>
+        <p class="m-0 px-2">-</p>
         LINK;
         }
       }
