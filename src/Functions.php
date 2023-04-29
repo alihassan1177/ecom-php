@@ -33,6 +33,48 @@ class Functions
     HTML;
   }
 
+  public static function ClientBreadcrumbs()
+  {
+
+    $requestURI = parse_url($_SERVER["REQUEST_URI"]);
+    $items = explode("/", $requestURI["path"]);
+
+    $current_link = "";
+
+    echo "<div class='d-inline-flex'>";
+
+    for ($i = 0; $i < count($items); $i++) {
+      $item = $items[$i];
+      $linkName = str_replace(["_"], [" "], $item);
+
+      if ($item != "") {
+        if ($i == count($items) - 1) {
+          $current_link .= "/" . $item;
+          echo <<<LINK
+        <p style="text-transform:capitalize" class="m-0">$linkName</p>
+        LINK;
+        } else {
+          $current_link .= "/" . $item;
+          echo <<<LINK
+        <p class="m-0"><a style='text-transform:capitalize' href="$current_link">$linkName</a></p>
+        LINK;
+        }
+      }
+    }
+    echo "</div>";
+  }
+
+  public static function ClientPageHeader(array $data)
+  {
+    $pageTitle = $data["page-info"]["title"];
+    echo "<div class='container-fluid bg-secondary mb-5'>
+        <div class='d-flex flex-column align-items-center justify-content-center' style='min-height: 300px'>
+            <h1 class='font-weight-semi-bold text-uppercase mb-3'>$pageTitle</h1>";
+    self::ClientBreadcrumbs();
+    echo "    </div>
+    </div>";
+  }
+
   public static function Breadcrumbs()
   {
 
@@ -46,7 +88,7 @@ class Functions
 
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
-      $linkName = str_replace(["_"],[" "], $item);
+      $linkName = str_replace(["_"], [" "], $item);
 
       if ($item != "") {
         if ($i == count($items) - 1) {
