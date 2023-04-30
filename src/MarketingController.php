@@ -15,7 +15,6 @@ class MarketingController extends Controller
     $this->renderView($pageInfo, "admin/marketing/banners/index", "admin", $params);
   }
 
-
   public function newBanner()
   {
     $pageInfo = ["title" => "New Banner"];
@@ -28,9 +27,9 @@ class MarketingController extends Controller
       $id = $_GET["id"];
       if (is_int(intval($id))) {
         $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
-        $params["product"] = $banner[0];
+        $params["banner"] = $banner[0];
         $pageInfo = ["title" => "Edit Banner"];
-        $this->renderView($pageInfo, "admin/banners/edit", "admin", $params);
+        $this->renderView($pageInfo, "admin/marketing/banners/edit", "admin", $params);
         return;
       }
     }
