@@ -93,6 +93,9 @@ function MarketingRoutes(){
     $router->get("/admin/banners/new",[MarketingController::class, "newBanner"]);
     $router->post("/admin/banners/create",[MarketingController::class, "createBanner"]);
     $router->get("/admin/banners/edit",[MarketingController::class, "editBanner"]);
+    $router->get("/admin/banners/details", [MarketingController::class, "singleBanner"]);
+    $router->get("/admin/banners/edit", [MarketingController::class, "editBanner"]);
+    $router->post("/admin/banners/delete", [MarketingController::class, "deleteBanner"]);
 
 }
 
