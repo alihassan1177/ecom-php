@@ -62,9 +62,16 @@ class MarketingController extends Controller
     if (isset($_POST["id"]) && $_POST["id"] != "") {
       $id = $_POST["id"];
       if (is_int(intval($id))) {
-        Database::onlyExecuteQuery("DELETE FROM `banners` WHERE `id` = $id;");
-        $this->response("Product Deleted Successfully", true);
-        return;
+        $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id;");
+        if (count($banner) > 0) {
+          $oldImagePath = __DIR__ . "/../public" . $banner["image"];
+            if (file_exists($oldImagePath) && $banner["image"] != "") {
+              unlink($oldImagePath);
+            }
+          Database::onlyExecuteQuery("DELETE FROM `banners` WHERE `id` = $id;");
+          $this->response("Product Deleted Successfully", true);
+          return;
+        }
       }
     }
     $this->response("Invalid Product ID Provided", false);
