@@ -96,7 +96,7 @@ function MarketingRoutes(){
     $router->get("/admin/banners/details", [MarketingController::class, "singleBanner"]);
     $router->get("/admin/banners/edit", [MarketingController::class, "editBanner"]);
     $router->post("/admin/banners/delete", [MarketingController::class, "deleteBanner"]);
-
+    $router->post("/admin/banners/update", [MarketingController::class, "updateBanner"]);
 }
 
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {

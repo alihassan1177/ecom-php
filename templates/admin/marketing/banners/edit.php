@@ -6,7 +6,7 @@ $banner = $data["data"]["banner"];
 
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800 flex-fill">New Banner</h1>
+    <h1 class="h3 mb-0 text-gray-800 flex-fill">Edit Banner</h1>
 </div>
 
 <div id="alert" class="alert d-none" role="alert">
@@ -36,7 +36,7 @@ $banner = $data["data"]["banner"];
         </div>
 
         <div class="col">
-            <button id="submit-btn" class="btn btn-primary">Add new Banner</button>
+            <button id="submit-btn" class="btn btn-primary">Edit Banner</button>
         </div>
     </form>
 
@@ -63,7 +63,9 @@ $banner = $data["data"]["banner"];
             }
         })
 
-        const response = await fetch("/admin/banners/create", {
+        formData.append("id", <?= $banner["id"] ?>)
+
+        const response = await fetch("/admin/banners/update", {
             method: "POST",
             body: formData
         })
