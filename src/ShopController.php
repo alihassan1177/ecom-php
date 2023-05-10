@@ -38,6 +38,8 @@ class ShopController extends Controller{
             if (count($product) > 0) {
               $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
               $params["categories"] = $categories;
+              $products = Database::getResultsByQuery("SELECT * FROM `products`");
+              $params["related-products"] = $products;
           // Get First Element of Array
               $product = array_shift($product);
               $params["product"] = $product;
