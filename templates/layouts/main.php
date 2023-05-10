@@ -126,9 +126,10 @@
 
   <?php
 
-  if ($_SERVER["REQUEST_URI"] != "/") {
+  if ($_SERVER["REQUEST_URI"] != "/"){
     Functions::ClientPageHeader($data);
   }
+  
   ?>
 
   <!-- Content Begin -->
