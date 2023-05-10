@@ -29,4 +29,25 @@ class ShopController extends Controller{
         $this->renderView($pageInfo, "client/shop/checkout", "main");        
     }
 
+    public function single(array $params)
+    {
+        if (isset($_GET["id"]) && $_GET["id"] != "") {
+          $id = $_GET["id"];
+          if (is_int(intval($id))) {
+            $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+            if (count($product) > 0) {
+              $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+              $params["categories"] = $categories;
+          // Get First Element of Array
+              $product = array_shift($product);
+              $params["product"] = $product;
+              $pageInfo = ["title" => $product["name"], "description" => $product["short_description"]];
+              $this->renderView($pageInfo, "client/shop/single", "main", $params);
+              return;
+          }
+      }
+  }
+
+  header("location:/shop");   
+}
 }

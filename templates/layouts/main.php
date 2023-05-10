@@ -34,7 +34,7 @@
     <div class="row align-items-center py-3 px-xl-5">
       <div class="col-lg-3 d-none d-lg-block">
         <a href="/" class="text-decoration-none">
-          <h1 class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
+          <h1 style="display: inline;" class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
         </a>
       </div>
       <div class="col-lg-6 col-12 text-left">
@@ -186,8 +186,8 @@
 
 
   <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
   <script src="/client/lib/easing/easing.min.js"></script>
   <!-- Contact Javascript File -->

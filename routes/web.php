@@ -32,8 +32,7 @@ function ProductRoutes()
     $router->post("/admin/products/update", [ProductController::class, "updateProduct"]);
 }
 
-function ProductCategoryRoutes()
-{
+function ProductCategoryRoutes(){
     global $router;
     // Product Category Routes
     $router->get("/admin/products/categories", [ProductCategoryController::class, "categories"]);
@@ -124,6 +123,8 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
 $router->get("/", [HomeController::class, "index"]);
 $router->get("/shop", [ShopController::class, "index"]);
 $router->get("/shop/details", [ShopController::class, "details"]);
+$router->get("/shop/details", [ShopController::class, "single"]);
+
 $router->get("/contact", [ContactController::class, "index"]);
 $router->get("/cart", [ShopController::class, "cart"]);
 $router->get("/checkout", [ShopController::class, "checkout"]);
