@@ -67,6 +67,7 @@ public function singleCategory(array $params)
           $params["products"] = $products;
 
           $productsByCategory = ProductCategoryController::getProductsByCategory($products, $categories, $id);
+          print_r($productsByCategory);
           $params["productsByCategory"] = $productsByCategory;
                        // Get First Element of Array
 

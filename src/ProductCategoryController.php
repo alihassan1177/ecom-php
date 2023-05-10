@@ -96,7 +96,7 @@ class ProductCategoryController extends Controller
                     $category = array_shift($category);
                     $params["category"] = $category;
                     $pageInfo = ["title" => $category["name"], "description" => ""];
-                    $this->renderView($pageInfo, "client/shop/category", "main", $params);
+                    $this->renderView($pageInfo, "admin/products/categories/single", "admin", $params);
                     return;
                 }
             }
