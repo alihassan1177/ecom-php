@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Controller;
+use App\Category;
 
 class ProductCategoryController extends Controller
 {
@@ -105,25 +106,6 @@ class ProductCategoryController extends Controller
         header("location:/admin/products/categories");
     }
 
-
-    public static function categoryHasChildren(array $categories, int $id, array $foundCategories = [])
-    {
-        $childCategories = $foundCategories;
-
-        foreach ($categories as $category) {
-            if ($category["parent"] == $id) {
-                $childCategories[] = $category;
-                $childCategories = self::categoryHasChildren($categories, $category["id"], $childCategories);
-            }
-        }
-
-        if (count($childCategories) > 0) {
-            return $childCategories;
-        } else {
-            return false;
-        }
-    }
-
     private static function prodsByCategory($products, $id)
     {
         $foundProducts = [];
@@ -148,10 +130,11 @@ class ProductCategoryController extends Controller
 
     public static function getProductsByCategory(array $products, array $categories, int $categoryID)
     {
-        $children = self::categoryHasChildren($categories, $categoryID);
-        $products = self::getProducts($children, $products);
-        $products = array_merge(...$products);
-        return $products;
+        $children = Category::categoryHasChildren($categories, $categoryID);
+        $selfProducts = self::prodsByCategory($products, $categoryID);
+        $result = self::getProducts($children, $products);
+        $result = array_merge( $selfProducts, ...$result);
+        return $result;
     }
 
     public function deleteCategory()

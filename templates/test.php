@@ -10,7 +10,7 @@ $postCategories = $data["data"]["postCategories"];
 $products = $data["data"]["products"];
 
 $foundCat = ProductCategoryController::getProductsByCategory($products, $categories, 33);
-$children = ProductCategoryController::categoryHasChildren($categories, 33);
+$children = Category::categoryHasChildren($categories, 33);
 
 function getProductsByCategory($products, $id)
 {
@@ -82,4 +82,10 @@ function getCategoriesExceptChildren(array $categories, int $id)
 
 $results = Database::getResultsByQuery("SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%e%')");
 
-print_r($results);
+$productsByCategory = ProductCategoryController::getProductsByCategory($products, $categories, 37);
+
+//$productsByCategory  = getProductsByCategory($products, 37);
+
+print_r($productsByCategory);
+
+//print_r($results);
