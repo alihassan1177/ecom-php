@@ -4,109 +4,108 @@ namespace App;
 
 use App\Controller;
 
-
 class AdminController extends Controller
 {
-    public function index()
-    {
-        $pageInfo = ["title" => "Admin Panel"];
-        $this->renderView($pageInfo, "admin/home/index", "admin");
+  public function index()
+  {
+    $pageInfo = ["title" => "Admin Panel"];
+    $this->renderView($pageInfo, "admin/home/index", "admin");
+  }
+
+  public function login()
+  {
+    $pageInfo = ["title" => "Admin Login"];
+    $this->renderView($pageInfo, "admin/auth/login", "admin-login");
+  }
+
+  public function signIn()
+  {
+    $json = file_get_contents("php://input");
+    $data = json_decode($json);
+
+    if (empty($data->email) || empty($data->password)) {
+      $this->response("All Fields are Required", false);
+      return;
     }
 
-    public function login()
-    {
-        $pageInfo = ["title" => "Admin Login"];
-        $this->renderView($pageInfo, "admin/auth/login", "admin-login");
+    $email = $data->email;
+    $password = $data->password;
+
+    $adminData = Database::getResultsByQuery("SELECT * FROM `admin` WHERE `email` = '$email' AND `password` = '$password'");
+
+    if (count($adminData) <= 0) {
+      $this->response("User Credentials does not Matched", false);
+      return;
     }
 
-    public function signIn()
-    {
-        $json = file_get_contents("php://input");
-        $data = json_decode($json);
+    $this->response("User Login Success", true);
+    $_SESSION["admin"] = true;
+    $_SESSION["admin_data"] = $adminData[0];
+  }
 
-        if (empty($data->email) || empty($data->password)) {
-            $this->response("All Fields are Required", false);
-            return;
-        }
+  public function results(array $params)
+  {
+    $query = $_POST["query"];
+    if (empty($query)) {
+      header("location:/admin");
+      return;
+    }
+    $results = $this->searchResults($query);
+    $params["results"] = $results;
+    $pageInfo = ["title" => "Search Results for '$query'"];
+    $this->renderView($pageInfo, "admin/search", "admin", $params);
+  }
 
-        $email = $data->email;
-        $password = $data->password;
+  private function searchResults(string $query)
+  {
+    $query = htmlentities($query);
 
-        $adminData = Database::getResultsByQuery("SELECT * FROM `admin` WHERE `email` = '$email' AND `password` = '$password'");
-
-        if (count($adminData) <= 0) {
-            $this->response("User Credentials does not Matched", false);
-            return;
-        }
-
-        $this->response("User Login Success", true);
-        $_SESSION["admin"] = true;
-        $_SESSION["admin_data"] = $adminData[0];
+    if ($query == "products") {
+      $products = Database::getResultsByQuery("SELECT * FROM `products`");
+      $results = ["products" => $products];
+      return $results;
     }
 
-    public function results(array $params)
-    {
-        $query = $_POST["query"];
-        if (empty($query)) {
-            header("location:/admin");
-            return;
-        }
-        $results = $this->searchResults($query);
-        $params["results"] = $results;
-        $pageInfo = ["title" => "Search Results for '$query'"];
-        $this->renderView($pageInfo, "admin/search", "admin", $params);
+    if ($query == "categories") {
+      $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+      $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories`");
+
+      $results = ["categories" => $categories, "postCategories" => $postCategories];
+      return $results;
     }
 
-    private function searchResults(string $query)
-    {
-        $query = htmlentities($query);
+    if ($query == "posts") {
+      $posts = Database::getResultsByQuery("SELECT * FROM `posts`");
 
-        if ($query == "products") {
-            $products = Database::getResultsByQuery("SELECT * FROM `products`");
-            $results = ["products" => $products];
-            return $results;
-        }
+      $results = ["posts" => $posts];
 
-        if ($query == "categories") {
-            $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
-            $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories`");
-
-            $results = ["categories" => $categories, "postCategories" => $postCategories];
-            return $results;
-        }
-
-        if ($query == "posts") {
-            $posts = Database::getResultsByQuery("SELECT * FROM `posts`");
-
-            $results = ["posts" => $posts];
-
-            return $results;
-        }
-
-        $products = Database::getResultsByQuery("SELECT * FROM `products` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $categories = Database::getResultsByQuery("SELECT * FROM `categories` WHERE  (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
-        $posts = Database::getResultsByQuery("SELECT * FROM `posts` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
-
-        $results = ["products" => $products, "categories" => $categories, "postCategories" => $postCategories, "posts" => $posts];
-        return $results;
+      return $results;
     }
 
-    public function suggestions()
-    {
-        $query = $_POST["query"];
-        if (empty(trim($query))) {
-            return;
-        }
-        $_SESSION["query"] = $query;
+    $products = Database::getResultsByQuery("SELECT * FROM `products` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
+    $categories = Database::getResultsByQuery("SELECT * FROM `categories` WHERE  (CONVERT(`name` USING utf8) LIKE '%$query%')");
+    $postCategories = Database::getResultsByQuery("SELECT * FROM `post_categories` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
+    $posts = Database::getResultsByQuery("SELECT * FROM `posts` WHERE (CONVERT(`name` USING utf8) LIKE '%$query%')");
 
-        $results = $this->searchResults($query);
-        $this->response(json_encode($results), true);
-        return;
-    }
+    $results = ["products" => $products, "categories" => $categories, "postCategories" => $postCategories, "posts" => $posts];
+    return $results;
+  }
 
-    public function logout()
-    {
-        session_destroy();
+  public function suggestions()
+  {
+    $query = $_POST["query"];
+    if (empty(trim($query))) {
+      return;
     }
+    $_SESSION["query"] = $query;
+
+    $results = $this->searchResults($query);
+    $this->response(json_encode($results), true);
+    return;
+  }
+
+  public function logout()
+  {
+    session_destroy();
+  }
 }
