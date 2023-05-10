@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Controller;
+use App\ProductCategoryController;
 
 class ShopController extends Controller{
     public function index()
@@ -29,7 +30,7 @@ class ShopController extends Controller{
         $this->renderView($pageInfo, "client/shop/checkout", "main");        
     }
 
-    public function single(array $params)
+    public function singleProduct(array $params)
     {
         if (isset($_GET["id"]) && $_GET["id"] != "") {
           $id = $_GET["id"];
@@ -52,4 +53,33 @@ class ShopController extends Controller{
 
   header("location:/shop");   
 }
+
+public function singleCategory(array $params)
+{
+    if (isset($_GET["id"]) && $_GET["id"] != "") {
+      $id = $_GET["id"];
+      if (is_int(intval($id))) {
+        $category = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $id");
+        if (count($category) > 0) {
+          $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+          $params["categories"] = $categories;
+          $products = Database::getResultsByQuery("SELECT * FROM `products`");
+          $params["products"] = $products;
+
+          $productsByCategory = ProductCategoryController::getProductsByCategory($products, $categories, $id);
+          $params["productsByCategory"] = $productsByCategory;
+                       // Get First Element of Array
+
+          $category = $category[0];
+          $params["category"] = $category;
+          $pageInfo = ["title" => $category["name"]];
+          $this->renderView($pageInfo, "client/shop/category", "main", $params);
+          return;
+      }
+  }
+}
+
+header("location:/shop");   
+}
+
 }

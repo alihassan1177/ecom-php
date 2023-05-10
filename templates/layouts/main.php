@@ -6,8 +6,12 @@
   <?php
 
   use App\Functions;
+  use App\Category;
+  use App\Database;
 
   Functions::PageHead($data);
+
+  $categories = Database::getResultsByQuery("SELECT * FROM `categories`;");
 
   ?>
 
@@ -81,6 +85,25 @@
               <a href="/" class="nav-item nav-link">Home</a>
               <a href="/shop" class="nav-item nav-link">Shop</a>
               <a href="/shop/details" class="nav-item nav-link">Shop Detail</a>
+              <?php if ($categories != null && count($categories) > 0): ?>
+              <div class="nav-item dropdown">
+                <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                  <?php 
+
+                  for ($i=0; $i < count($categories); $i++) { 
+                    $category = $categories[$i];
+                    $id = $category["id"];
+                    $categoryName = Category::getCategoryName($categories, $category["id"]);
+                    $fullCatname = implode(Category::$categorySeprator, $categoryName);
+
+                    echo "<a href='/shop/category?id=$id' class='dropdown-item'>$fullCatname</a>";
+                  }
+
+                  ?>
+                </div>
+              </div>
+              <?php  endif; ?>
               <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                 <div class="dropdown-menu rounded-0 m-0">

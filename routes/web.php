@@ -120,10 +120,13 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
     $router->post("/admin/signin", [AdminController::class, "signin"]);
 }
 
+// Client Routes
 $router->get("/", [HomeController::class, "index"]);
 $router->get("/shop", [ShopController::class, "index"]);
 $router->get("/shop/details", [ShopController::class, "details"]);
-$router->get("/shop/details", [ShopController::class, "single"]);
+$router->get("/shop/details", [ShopController::class, "singleProduct"]);
+$router->get("/shop/category", [ShopController::class, "singleCategory"]);
+
 
 $router->get("/contact", [ContactController::class, "index"]);
 $router->get("/cart", [ShopController::class, "cart"]);
