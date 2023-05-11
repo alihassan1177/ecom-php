@@ -12,11 +12,17 @@
   Functions::PageHead($data);
 
   $categories = Database::getResultsByQuery("SELECT * FROM `categories`;");
+  $products = Database::getResultsByQuery("SELECT * FROM `products`;");
+  $productsDataJSON = json_encode($products);
+
+  echo "<script>
+  const productsData = $productsDataJSON
+  </script>";
 
   ?>
 
   <!-- Favicon -->
-  <link href="/client/img/favicon.ico" rel="icon">
+  <link rel="shortcut icon" href="/assets/images/fav-icon.png" type="image/x-icon">
 
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -54,13 +60,9 @@
         </form>
       </div>
       <div class="col-lg-3 col-12 mt-1 mt-lg-0 text-right">
-        <a href="" class="btn border">
-          <i class="fas fa-heart text-primary"></i>
-          <span class="badge">0</span>
-        </a>
-        <a href="" class="btn border">
+        <a href="/cart" class="btn border">
           <i class="fas fa-shopping-cart text-primary"></i>
-          <span class="badge">0</span>
+          <span id="cart-item-count" class="badge">0</span>
         </a>
       </div>
     </div>
@@ -85,25 +87,25 @@
               <a href="/" class="nav-item nav-link">Home</a>
               <a href="/shop" class="nav-item nav-link">Shop</a>
               <a href="/shop/details" class="nav-item nav-link">Shop Detail</a>
-              <?php if ($categories != null && count($categories) > 0): ?>
-              <div class="nav-item dropdown">
-                <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
-                <div class="dropdown-menu rounded-0 m-0">
-                  <?php 
+              <?php if ($categories != null && count($categories) > 0) : ?>
+                <div class="nav-item dropdown">
+                  <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                  <div class="dropdown-menu rounded-0 m-0">
+                    <?php
 
-                  for ($i=0; $i < count($categories); $i++) { 
-                    $category = $categories[$i];
-                    $id = $category["id"];
-                    $categoryName = Category::getCategoryName($categories, $category["id"]);
-                    $fullCatname = implode(Category::$categorySeprator, $categoryName);
+                    for ($i = 0; $i < count($categories); $i++) {
+                      $category = $categories[$i];
+                      $id = $category["id"];
+                      $categoryName = Category::getCategoryName($categories, $category["id"]);
+                      $fullCatname = implode(Category::$categorySeprator, $categoryName);
 
-                    echo "<a href='/shop/category?id=$id' class='dropdown-item'>$fullCatname</a>";
-                  }
+                      echo "<a href='/shop/category?id=$id' class='dropdown-item'>$fullCatname</a>";
+                    }
 
-                  ?>
+                    ?>
+                  </div>
                 </div>
-              </div>
-              <?php  endif; ?>
+              <?php endif; ?>
               <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                 <div class="dropdown-menu rounded-0 m-0">
@@ -126,10 +128,10 @@
 
   <?php
 
-  if ($_SERVER["REQUEST_URI"] != "/"){
+  if ($_SERVER["REQUEST_URI"] != "/") {
     Functions::ClientPageHeader($data);
   }
-  
+
   ?>
 
   <!-- Content Begin -->
@@ -160,7 +162,7 @@
               <a class="text-dark" href="/checkout"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
             </div>
           </div>
-          
+
           <div class="col-md-8 mb-5">
             <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
             <form action="">
@@ -210,6 +212,8 @@
   <!-- Template Javascript -->
   <script src="/client/js/main.js"></script>
 
+  <script src="/assets/js/cart.js"></script>
+  <script src="/assets/js/product.js"></script>
   <script>
     const navLinks = document.querySelectorAll(".nav-link, .dropdown-item")
 

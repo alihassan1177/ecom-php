@@ -6,30 +6,20 @@ const EventListeners = {
   "remove-btn": (id) => removeItemFromCart(id)
 }
 
-const items = [
-  {
-    name: "Esports Sportswear",
-    category: "Sportswear",
-    image: "/client/img/product-1.jpg",
-    price: 200,
-    quantity: 1,
-    id: 1
-  }, {
-    name: "Esports Sportswear",
-    category: "Sportswear",
-    image: "/client/img/product-1.jpg",
-    price: 200,
-    quantity: 1,
-    id: 2
-  }, {
-    name: "Esports Sportswear",
-    category: "Sportswear",
-    image: "/client/img/product-1.jpg",
-    price: 200,
-    quantity: 1,
-    id: 3
-  }
-]
+const items = []
+
+const addToCartBtns = document.querySelectorAll("#add-to-cart")
+
+addToCartBtns.forEach(btn => {
+  const id = btn.dataset.id
+  btn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const product = findProductInProductsData(id)
+    if (product !== false) {
+      addProductInCart(product)
+    }
+  })
+})
 
 const cart = JSON.parse(localStorage.getItem(CART_KEY)) || items
 const cartCountElement = document.querySelector("#cart-item-count")
@@ -40,7 +30,20 @@ updateCartUI()
 
 function attachListener(btn) {
   const id = btn.dataset.id
-  btn.addEventListener("click", ()=>EventListeners[btn.id](id))
+  btn.addEventListener("click", () => EventListeners[btn.id](id))
+}
+
+function findProductInProductsData(id) {
+  if (productsData.length > 0) {
+    for (let i = 0; i < productsData.length; ++i) {
+      if (productsData[i].id == id) {
+        return productsData[i]
+      }
+    }
+  }
+
+  return false
+
 }
 
 function setListeners() {
@@ -123,17 +126,28 @@ function updateCartUI() {
     html = "<p>Cart is Empty</p>"
   }
 
-  cartBody.innerHTML = html
-  localStorage.setItem(CART_KEY,JSON.stringify(cart)) 
-  setListeners()
+  if (cartBody != null) {
+    cartBody.innerHTML = html
+    setListeners()
+  }
+  localStorage.setItem(CART_KEY, JSON.stringify(cart))
 }
 
-function addProductInCart({ name, id, price, categoryID }) {
+function addProductInCart({ name, id, price, categoryID, image }) {
 
-  if (findItemInCart(id) !== false) return
+  if (price == null) {
+    console.log("PRODUCT PRICE IS NULL")
+    return
+  }
+  if (findItemInCart(id) !== false) {
+    console.log("PRODUCT ALREADY EXISTS IN CART")
+    return
+  }
 
-  cart.push({ id, name, categoryID, price, quantity: 1 })
+  cart.push({ id, name, categoryID, price, quantity: 1, image })
+  console.log("PRODUCT ADDED IN CART")
   updateCartCount()
+  updateCartUI()
 }
 
 function findItemInCart(id) {
