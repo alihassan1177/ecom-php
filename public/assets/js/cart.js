@@ -1,5 +1,6 @@
 const CART_KEY = "cart"
 
+
 const EventListeners = {
   "increment-btn": (id) => increaseQuantity(id),
   "decrement-btn": (id) => decreaseQuantity(id),
@@ -21,12 +22,38 @@ addToCartBtns.forEach(btn => {
   })
 })
 
+let cartTotal = 0
+
 const cart = JSON.parse(localStorage.getItem(CART_KEY)) || items
 const cartCountElement = document.querySelector("#cart-item-count")
+const cartTotalElement = document.querySelector("#cart-total")
+const cartSubTotalElement = document.querySelector("#cart-sub-total")
+setCartTotal()
+
+
 updateCartCount()
 
 const cartBody = document.querySelector("#cart-body")
 updateCartUI()
+
+function setCartTotal() {
+  if (cartTotalElement === null || cartSubTotalElement === null) {
+    console.log("CART TOTAL ELEMENT IS NULL")
+    return
+  }
+  if (cart.length < 0) {
+    console.log("NO ITEMS IN CART")
+    return
+  }
+
+  let total = 0
+  for (let i = 0; i < cart.length; ++i) {
+    const cartItem = cart[i]
+    total += (cartItem.quantity * cartItem.price)
+  }
+  cartTotalElement.innerHTML = `$${total + 10}`
+  cartSubTotalElement.innerHTML = `$${total}`
+}
 
 function attachListener(btn) {
   const id = btn.dataset.id
@@ -129,6 +156,7 @@ function updateCartUI() {
   if (cartBody != null) {
     cartBody.innerHTML = html
     setListeners()
+    setCartTotal()
   }
   localStorage.setItem(CART_KEY, JSON.stringify(cart))
 }
