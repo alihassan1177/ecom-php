@@ -102,6 +102,22 @@ function decreaseQuantity(id) {
   updateCartUI()
 }
 
+function saveCartToServer(){
+  // TODO : Save Cart to Server by Fetch Request using debounce
+}
+
+function debounce(callback, delay) {
+  let timer
+  return function() {
+    let context = this
+    let args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      callback.apply(context, args)
+    }, delay)
+  }
+}
+
 function removeItemFromCart(id) {
   let index;
   for (let i = 0; i < cart.length; ++i) {
@@ -113,6 +129,7 @@ function removeItemFromCart(id) {
 
   cart.splice(index, 1)
   updateCartUI()
+  updateCartCount()
 }
 
 function createCartItemUI({ id, name, quantity, price, image }) {
