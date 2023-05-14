@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\models;
 
 class Category
 {

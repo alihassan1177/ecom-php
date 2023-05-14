@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
 use App\Controller;
+use App\Database;
 
 class AdminController extends Controller
 {

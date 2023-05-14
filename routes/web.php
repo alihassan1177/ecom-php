@@ -1,7 +1,7 @@
 <?php
 
 use App\Router;
-use App\AdminController;
+use App\controllers\AdminController;
 use App\CustomerController;
 use App\Functions;
 use App\HomeController;
