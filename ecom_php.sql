@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 28, 2023 at 05:12 PM
+-- Generation Time: May 14, 2023 at 07:19 PM
 -- Server version: 8.0.31-0ubuntu0.22.04.1
 -- PHP Version: 8.1.12
 
@@ -144,8 +144,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `short_description`, `description`, `category_id`, `quantity`, `price`) VALUES
-(11, 'Esports Wear', '/uploads/1682057062sublimated-soccer-team-uniform-football-jersey-custom-american-football-jersey.jpg', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 0, NULL, NULL),
-(12, 'Person', NULL, NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 0, NULL, NULL);
+(11, 'Football Jersey', '/uploads/1682057062sublimated-soccer-team-uniform-football-jersey-custom-american-football-jersey.jpg', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 39, NULL, 10),
+(12, 'Person', NULL, NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 37, NULL, 20);
 
 -- --------------------------------------------------------
 
@@ -158,6 +158,21 @@ CREATE TABLE `site_settings` (
   `name` varchar(255) NOT NULL,
   `image` longtext NOT NULL,
   `favicon` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `phone` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -207,6 +222,12 @@ ALTER TABLE `site_settings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -220,7 +241,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -250,6 +271,12 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `site_settings`
 --
 ALTER TABLE `site_settings`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 

@@ -29,10 +29,15 @@ class UserController extends Controller
       return;
     }
 
+    if (strlen($password) < 8) {
+      $this->response(json_encode(["password"=> "Password should be 8 characters long"]), false);
+      return;
+    }    
+
     $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = $email");
 
     if (count($user) > 0) {
-      $this->response("User Already Exists with Email : " . $email, false);
+      $this->response(json_encode(["email" => "User Already Exists with Email : " . $email]), false);
       return;
     }
 
