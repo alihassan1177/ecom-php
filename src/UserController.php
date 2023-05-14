@@ -3,61 +3,64 @@
 namespace App;
 
 use App\Controller;
+use App\Validator;
 
 class UserController extends Controller
 {
 
   public function register()
   {
-    $name =     filter_var($_POST["name"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $email =    filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
-    $password = filter_var($_POST["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $address =  filter_var($_POST["address"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $phone =    filter_var($_POST["phone"],  FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $phone = $_POST["phone"];
+    $address = $_POST["address"];
 
-    if (empty($name) || empty($email) || empty($password) || empty($address) || empty($phone)) {
-      $this->response("All Fields are Required", false);
-      return;
-    } 
+    $validate = Validator::validateInput([
+      "email" => $email,
+      "name" => $name,
+      "password" => $password,
+      "address" => $address,
+      "phone" => $phone
+    ]);
 
-    $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = $email");  
-
-    if(count($user) > 0){
-      $this->response("User Already Exists with Email : ".$email, false); 
+    if (count($validate["errors"]) > 0) {
+      $this->response(json_encode($validate["errors"]), false);
       return;
     }
- 
+
+    $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = $email");
+
+    if (count($user) > 0) {
+      $this->response("User Already Exists with Email : " . $email, false);
+      return;
+    }
+
     $sql = "";
-    Database::onlyExecuteQuery($sql);  
-  
+    Database::onlyExecuteQuery($sql);
+
     $this->response("New User Created Successfully", true);
     return;
   }
 
+
   public function login()
   {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
 
-    $email =    filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
-    $password = filter_var($_POST["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $validate = Validator::validateInput(["email" => $email, "password" => $password]);
 
-    if (empty($email) || empty($password)) {
-      $this->response("All Fields are Required", false);
+    if (count($validate["errors"]) > 0) {
+      $this->response(json_encode($validate["errors"]), false);
       return;
     }
 
-    $sql = "";
-    $user = Database::getResultsByQuery($sql); 
-
-    if(count($user) > 0){
-      $this->response("User Logged In Succesfully", true);
-      return;
-    }
-
-    $this->response("User Credentials not Matched", false);
+    $this->response(json_encode(["email" => $email, "password" => $password]), true);
     return;
   }
 
-  public function singleUser()
+  public function dashboard()
   {
   }
 }

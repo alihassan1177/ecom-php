@@ -86,6 +86,13 @@ $productsByCategory = ProductCategoryController::getProductsByCategory($products
 
 //$productsByCategory  = getProductsByCategory($products, 37);
 
-print_r($productsByCategory);
+//print_r($productsByCategory);
 
 //print_r($results);
+
+
+$var = "" == false;
+var_dump($var);
+
+
+

@@ -9,7 +9,7 @@
                     <div style="border-radius: 5px;" class="col-lg-6 mx-auto bg-white shadow-lg">
                         <div class="p-lg-5 px-4 py-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Admin Panel</h1>
                             </div>
                             <form class="user">
                                 <div class="form-group">

@@ -16,6 +16,7 @@ use App\TestController;
 use App\ContactController;
 use App\ClientController;
 use App\MarketingController;
+use App\UserController;
 
 $router = new Router();
 
@@ -135,6 +136,8 @@ $router->get("/checkout", [ShopController::class, "checkout"]);
 $router->get("/login", [ClientController::class, "login"]);
 $router->get("/register", [ClientController::class, "register"]);
 
+$router->post("/user/login", [UserController::class, "login"]);
+$router->post("/user/register", [UserController::class, "register"]);
 
 // 404 Page
 $router->addNotFoundCallback(function () {

@@ -1,17 +1,13 @@
 <?php
 
 $placeholderImage = "/img/product-placeholder.png";
-
+$placeholderFavicon = "/assets/images/fav-icon.png";
 $settings = $data["data"]["settings"];
 
 ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800 flex-fill">Site Settings</h1>
-  <a href="/admin/posts/categories" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
-    <i class="fas fa-filter fa-sm text-white-50"></i> Post Categories</a>
-  <a href="/admin/posts/new" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-    <i class="fas fa-plus fa-sm text-white-50"></i> Add new Post</a>
 </div>
 
 <div class="card shadow mb-4">
@@ -27,7 +23,7 @@ $settings = $data["data"]["settings"];
       </div>
         <div class="col-md-3">
           <label class="form-label">Site Favicon</label>
-          <img style="max-width: 300px;" class="d-block w-100" src="<?= $placeholderImage ?>" alt="Site Logo">          
+          <img style="max-width: 200px;" class="d-block w-100" src="<?= $placeholderFavicon ?>" alt="Site Logo">          
           <input type="file"  class="form-control" >
         </div>
         <div class="col-md-4">
