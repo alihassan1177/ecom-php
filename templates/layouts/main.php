@@ -204,9 +204,6 @@
   <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
   <script src="/client/lib/easing/easing.min.js"></script>
-  <!-- Contact Javascript File -->
-  <script src="/client/mail/jqBootstrapValidation.min.js"></script>
-  <script src="/client/mail/contact.js"></script>
 
   <!-- Template Javascript -->
   <script src="/client/js/main.js"></script>

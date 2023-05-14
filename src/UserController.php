@@ -8,6 +8,7 @@ use App\Validator;
 class UserController extends Controller
 {
 
+  private const BCRYPT_COST_COUNT = 12;
   public function register()
   {
     $name = $_POST["name"];
@@ -30,9 +31,9 @@ class UserController extends Controller
     }
 
     if (strlen($password) < 8) {
-      $this->response(json_encode(["password"=> "Password should be 8 characters long"]), false);
+      $this->response(json_encode(["password" => "Password should be 8 characters long"]), false);
       return;
-    }    
+    }
 
     $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = $email");
 
@@ -41,7 +42,15 @@ class UserController extends Controller
       return;
     }
 
-    $sql = "";
+    // Hash Password
+    $securedPassword = password_hash($password, PASSWORD_BCRYPT, ["cost" => self::BCRYPT_COST_COUNT]);
+
+    $filteredName = $validate["values"]["name"];
+    $filteredAddress = $validate["values"]["address"];
+    $filteredPhone = $validate["values"]["phone"];
+
+    // Fix SQL Syntax error
+    $sql = "INSERT INTO `users`(`name`, `email`, `password`, `address`, `phone`) VALUES ('$filteredName','$email','$securedPassword','$filteredAddress','$filteredPhone')";
     Database::onlyExecuteQuery($sql);
 
     $this->response("New User Created Successfully", true);
