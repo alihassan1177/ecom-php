@@ -2,8 +2,7 @@
     - Implement Path Params in URL
 
 ## Potential Bugs
-    - Admin Searchbar
-        Cannot search "products" with capital "P" 
+ 
 
 ## Products
     - Products Variations
