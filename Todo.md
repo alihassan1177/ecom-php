@@ -8,7 +8,7 @@
         Cannot search "products" with capital "P" 
 
 ## Products
-    - Products Varitions
+    - Products Variations
     - Multiple Images View (Frontend and Backend)
     - Filter Products on Frontend
 
