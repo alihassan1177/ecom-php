@@ -24,13 +24,13 @@ To run this application locally, ensure that you have the following software ins
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/ecommerce-app.git
+git clone https://github.com/alihassan1177/ecom-php.git
 ```
 
 2. Change into the project directory:
 
 ```
-cd ecommerce-app
+cd ecom-php
 ```
 
 3. Create a new MySQL database for the application.
