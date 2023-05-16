@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
-use App\Database;
+use App\controllers\Controller;
+use App\core\Database;
 
 class TestController extends Controller
 {

@@ -1,10 +1,11 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Functions;
+use App\controllers\Functions;
 
-class Controller{
+class Controller
+{
     protected function renderView(array $pageInfo, string $template, string $layout, array $data = [])
     {
         $params["page-info"] = $pageInfo;

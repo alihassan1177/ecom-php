@@ -1,7 +1,7 @@
 <?php
 
-use App\Functions;
-use App\ProductCategoryController;
+use App\controllers\Functions;
+use App\controllers\ProductCategoryController;
 
 $banners = $data["data"]["banners"];
 $categories = $data["data"]["categories"];

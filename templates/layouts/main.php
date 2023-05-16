@@ -5,9 +5,9 @@
 
   <?php
 
-  use App\Functions;
-  use App\Category;
-  use App\Database;
+  use App\controllers\Functions;
+  use App\controllers\Category;
+  use App\controllers\Database;
 
   Functions::PageHead($data);
 

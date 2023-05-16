@@ -1,19 +1,19 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
+use App\controllers\Controller;
 
-class CustomerController extends Controller{
-    public function index(array $params)
-    {
+class CustomerController extends Controller
+{
+  public function index(array $params)
+  {
     //   $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
     //   $products = Database::getResultsByQuery("SELECT * FROM `products` ORDER BY `id` DESC");
     //   $params["categories"] = $categories;
     //   $params["products"] = $products;
-  
-      $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
-      $this->renderView($pageInfo, "admin/customers/index", "admin", $params);
-    }
-  
+
+    $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
+    $this->renderView($pageInfo, "admin/customers/index", "admin", $params);
+  }
 }

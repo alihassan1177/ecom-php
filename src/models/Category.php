@@ -51,17 +51,15 @@ class Category
             if (count($children) == (count($categories) - 1)) {
                 return;
             }
-            for ($i=0; $i <= count($children); $i++) { 
+            for ($i = 0; $i <= count($children); $i++) {
                 $child = $children[$i];
-                for ($j=0; $j <= count($categories); $j++) { 
+                for ($j = 0; $j <= count($categories); $j++) {
                     $category = $categories[$j];
                     if ($category["id"] == $child["id"] || $category["id"] == $id) {
                         unset($categories[$j]);
                     }
                 }
             }
-    
-    
         }
         return $categories;
     }

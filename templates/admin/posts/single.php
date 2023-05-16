@@ -1,6 +1,6 @@
 <?php
 
-use App\PostCategoryController;
+use App\controllers\PostCategoryController;
 
 $post = $data["data"]["post"];
 $categories = $data["data"]["categories"];

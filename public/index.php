@@ -2,9 +2,9 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use App\Database;
+use App\core\Database;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
 
 Database::connect();

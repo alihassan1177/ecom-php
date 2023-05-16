@@ -1,10 +1,11 @@
 <?php
 
-namespace App\controllers;
+namespace App\controllers\controllers;
 
-use App\Controller;
+use App\controllers\Controller;
 
-class ClientController extends Controller {
+class ClientController extends Controller
+{
     public function login()
     {
         $pageInfo = ["title" => "Login"];
@@ -14,6 +15,6 @@ class ClientController extends Controller {
     public function register()
     {
         $pageInfo = ["title" => "Register"];
-        $this->renderView($pageInfo, "client/auth/register", "main");        
+        $this->renderView($pageInfo, "client/auth/register", "main");
     }
 }

@@ -1,11 +1,12 @@
-<?php 
+<?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
-use App\Database;
+use App\controllers\Controller;
+use App\core\Database;
 
-class HomeController extends Controller{
+class HomeController extends Controller
+{
     public function index(array $params)
     {
         $products = Database::getResultsByQuery("SELECT * FROM `products`");
@@ -16,7 +17,7 @@ class HomeController extends Controller{
         $params["products"] = $products;
         $params["categories"] = $categories;
 
-        $pageInfo = ["title"=>"Home"];
-        $this->renderView($pageInfo, "client/home/index", "main", $params);   
+        $pageInfo = ["title" => "Home"];
+        $this->renderView($pageInfo, "client/home/index", "main", $params);
     }
 }

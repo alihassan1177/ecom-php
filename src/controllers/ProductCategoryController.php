@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
-use App\Category;
+use App\controllers\Controller;
+use App\models\Category;
+use App\core\Database;
 
 class ProductCategoryController extends Controller
 {
@@ -133,7 +134,7 @@ class ProductCategoryController extends Controller
         $children = Category::categoryHasChildren($categories, $categoryID);
         $selfProducts = self::prodsByCategory($products, $categoryID);
         $result = self::getProducts($children, $products);
-        $result = array_merge( $selfProducts, ...$result);
+        $result = array_merge($selfProducts, ...$result);
         return $result;
     }
 
@@ -148,7 +149,7 @@ class ProductCategoryController extends Controller
                 if (count($category) > 0) {
                     $category = $category[0];
                     $categoryHasProducts = self::getProductsByCategory($products, $categories, $category["id"]);
-                    $categoryHasChildren = self::categoryHasChildren($categories, $category["id"]);
+                    $categoryHasChildren = Category::categoryHasChildren($categories, $category["id"]);
                     if (count($categoryHasProducts) > 0 || $categoryHasChildren != false) {
                         $this->response("Unable to Delete Category : " . $category["name"] . " has data", false);
                         return;

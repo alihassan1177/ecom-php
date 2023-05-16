@@ -1,6 +1,6 @@
 <?php
 
-use App\Category;
+use App\controllers\Category;
 
 $product = $data["data"]["product"][0];
 $categories = $data["data"]["categories"];
@@ -23,35 +23,33 @@ $categories = $data["data"]["categories"];
         <div class="col-md-6">
             <label for="parent" class="form-label">Product Category</label>
             <select class="form-control" name="category_id">
-                <option 
-                <?php echo $product["category_id"] == 0 ? "selected" : "" ?>
-                value="0">Uncategorized</option>
-                <?php 
-                    foreach ($categories as $data){
-                        $categoryID = $data["id"];
-                        $fullCatname = Category::getCategoryName($categories, $categoryID);
-                        $categoryName = implode(Category::$categorySeprator, $fullCatname);
-                       
-                        if ($product["category_id"] == $data["id"]) {
-                            echo "<option selected value='$categoryID'>$categoryName</option>";
-                        }else{
-                            echo "<option value='$categoryID'>$categoryName</option>";
-                        }
-                    } 
+                <option <?php echo $product["category_id"] == 0 ? "selected" : "" ?> value="0">Uncategorized</option>
+                <?php
+                foreach ($categories as $data) {
+                    $categoryID = $data["id"];
+                    $fullCatname = Category::getCategoryName($categories, $categoryID);
+                    $categoryName = implode(Category::$categorySeprator, $fullCatname);
+
+                    if ($product["category_id"] == $data["id"]) {
+                        echo "<option selected value='$categoryID'>$categoryName</option>";
+                    } else {
+                        echo "<option value='$categoryID'>$categoryName</option>";
+                    }
+                }
                 ?>
             </select>
         </div>
         <div class="col-md-6">
             <label for="image" class="form-label">Product Image</label>
-            <?php 
-        
-                if ($product["image"] != "") {
-                    $path = $product["image"];
-                    $name = $product["name"];
-                    echo "<img src='$path' alt='$name' />";
-                }else{
-                    echo "<p class='text-danger'>Product has no Image</p>";
-                }
+            <?php
+
+            if ($product["image"] != "") {
+                $path = $product["image"];
+                $name = $product["name"];
+                echo "<img src='$path' alt='$name' />";
+            } else {
+                echo "<p class='text-danger'>Product has no Image</p>";
+            }
 
             ?>
             <input type="file" class="form-control" name="image" id="image">
@@ -105,8 +103,8 @@ $categories = $data["data"]["categories"];
     const submitBtn = document.querySelector("#submit-btn")
 
     const alert = document.querySelector("#alert")
-    
-    
+
+
     submitBtn.addEventListener("click", async (e) => {
         alert.classList.add("d-none")
         e.preventDefault()

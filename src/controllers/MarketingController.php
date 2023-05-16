@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
-use App\File;
+use App\controllers\Controller;
+use App\controllers\File;
+use App\core\Database;
 
 class MarketingController extends Controller
 {
@@ -118,12 +119,11 @@ class MarketingController extends Controller
           $this->response("Banner updated Successfully", true);
           return;
         }
-
       }
     }
 
     $this->response("Banner ID is not Valid", false);
-    return; 
+    return;
   }
 
   public function createBanner()

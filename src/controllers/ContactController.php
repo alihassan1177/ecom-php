@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
+use App\controllers\Controller;
 
-class ContactController extends Controller {
+class ContactController extends Controller
+{
 
     public function index()
     {
         $pageInfo = ["title" => "Contact"];
         $this->renderView($pageInfo, "client/contact/index", "main");
     }
-
 }

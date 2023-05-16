@@ -1,7 +1,7 @@
 <?php
 
-use App\Category;
-use App\ProductCategoryController;
+use App\controllers\Category;
+use App\controllers\ProductCategoryController;
 
 $categories = $data["data"]["categories"];
 $products = $data["data"]["products"];

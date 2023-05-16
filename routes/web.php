@@ -1,22 +1,22 @@
 <?php
 
-use App\Router;
+use App\core\Router;
 use App\controllers\AdminController;
-use App\CustomerController;
-use App\Functions;
-use App\HomeController;
-use App\OrderController;
-use App\ProductController;
-use App\ProductCategoryController;
-use App\PostController;
-use App\PostCategoryController;
-use App\ShopController;
-use App\SiteController;
-use App\TestController;
-use App\ContactController;
-use App\ClientController;
-use App\MarketingController;
-use App\UserController;
+use App\controllers\CustomerController;
+use App\controllers\Functions;
+use App\controllers\HomeController;
+use App\controllers\OrderController;
+use App\controllers\ProductController;
+use App\controllers\ProductCategoryController;
+use App\controllers\PostController;
+use App\controllers\PostCategoryController;
+use App\controllers\ShopController;
+use App\controllers\SiteController;
+use App\controllers\TestController;
+use App\controllers\ContactController;
+use App\controllers\ClientController;
+use App\controllers\MarketingController;
+use App\controllers\UserController;
 
 $router = new Router();
 
@@ -33,7 +33,8 @@ function ProductRoutes()
     $router->post("/admin/products/update", [ProductController::class, "updateProduct"]);
 }
 
-function ProductCategoryRoutes(){
+function ProductCategoryRoutes()
+{
     global $router;
     // Product Category Routes
     $router->get("/admin/products/categories", [ProductCategoryController::class, "categories"]);
@@ -87,12 +88,13 @@ function CustomerRoutes()
     $router->get("/admin/customers", [CustomerController::class, "index"]);
 }
 
-function MarketingRoutes(){
+function MarketingRoutes()
+{
     global $router;
-    $router->get("/admin/banners",[MarketingController::class, "banners"]);
-    $router->get("/admin/banners/new",[MarketingController::class, "newBanner"]);
-    $router->post("/admin/banners/create",[MarketingController::class, "createBanner"]);
-    $router->get("/admin/banners/edit",[MarketingController::class, "editBanner"]);
+    $router->get("/admin/banners", [MarketingController::class, "banners"]);
+    $router->get("/admin/banners/new", [MarketingController::class, "newBanner"]);
+    $router->post("/admin/banners/create", [MarketingController::class, "createBanner"]);
+    $router->get("/admin/banners/edit", [MarketingController::class, "editBanner"]);
     $router->get("/admin/banners/details", [MarketingController::class, "singleBanner"]);
     $router->get("/admin/banners/edit", [MarketingController::class, "editBanner"]);
     $router->post("/admin/banners/delete", [MarketingController::class, "deleteBanner"]);

@@ -1,6 +1,6 @@
 <?php
 
-use App\Category;
+use App\controllers\Category;
 
 $categories = $data["data"]["categories"];
 
@@ -25,7 +25,7 @@ $categories = $data["data"]["categories"];
             <?php foreach ($categories as $category) :
                 $fullCatname = Category::getCategoryName($categories, $category["id"]);
             ?>
-                <option value="<?= $category["id"] ?>"><?= implode(Category::$categorySeprator, $fullCatname)?></option>
+                <option value="<?= $category["id"] ?>"><?= implode(Category::$categorySeprator, $fullCatname) ?></option>
             <?php endforeach; ?>
         </select>
     </div>

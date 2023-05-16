@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\controllers;
 
-use App\Controller;
-use App\Validator;
+use App\controllers\Controller;
+use App\controllers\Validator;
+use App\core\Database;
 
 class UserController extends Controller
 {

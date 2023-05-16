@@ -1,6 +1,6 @@
 <?php
 
-use App\Category;
+use App\controllers\Category;
 
 $categories = $data["data"]["categories"];
 
@@ -22,10 +22,10 @@ $categories = $data["data"]["categories"];
         <label for="parent" class="form-label">Post Category</label>
         <select name="category_id" class="form-control" id="parent">
             <option value="0">Uncategorized</option>
-            <?php foreach ($categories as $category) : 
-                    $fullCatname = Category::getCategoryName($categories, $category["id"]);
-                ?>
-                
+            <?php foreach ($categories as $category) :
+                $fullCatname = Category::getCategoryName($categories, $category["id"]);
+            ?>
+
                 <option value="<?= $category["id"] ?>"><?php echo implode(Category::$categorySeprator, $fullCatname); ?></option>
             <?php endforeach; ?>
         </select>

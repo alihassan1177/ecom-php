@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\models;
 
-use App\Database;
+use App\core\Database;
 
 class Model
 {
@@ -10,11 +10,11 @@ class Model
 
     public static function all()
     {
-        return Database::query("SELECT * FROM `" . self::$table_name . "`;");
+        return Database::getResultsByQuery("SELECT * FROM `" . self::$table_name . "`;");
     }
 
     public static function findByEmail(string $email)
     {
-        return Database::query("SELECT * FROM `" . self::$table_name . "` WHERE `email` = '$email';");
+        return Database::getResultsByQuery("SELECT * FROM `" . self::$table_name . "` WHERE `email` = '$email';");
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\ProductCategoryController;
+use App\controllers\ProductCategoryController;
 
 $category = $data["data"]["category"];
 $placeholderImage = "/img/product-placeholder.png";

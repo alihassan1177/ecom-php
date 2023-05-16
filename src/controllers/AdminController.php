@@ -2,8 +2,8 @@
 
 namespace App\controllers;
 
-use App\Controller;
-use App\Database;
+use App\controllers\Controller;
+use App\core\Database;
 
 class AdminController extends Controller
 {
