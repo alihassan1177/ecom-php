@@ -60,6 +60,7 @@ class AdminController extends Controller
   private function searchResults(string $query)
   {
     $query = htmlentities($query);
+    $query = strtolower($query);
 
     if ($query == "products") {
       $products = Database::getResultsByQuery("SELECT * FROM `products`");

@@ -2,8 +2,6 @@
     - Implement Path Params in URL
 
 ## Potential Bugs
-    - Admin Login
-        No Error Message on Login Failure
     - Admin Searchbar
         Cannot search "products" with capital "P" 
 
