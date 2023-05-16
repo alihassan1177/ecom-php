@@ -3,7 +3,7 @@
 namespace App\controllers;
 
 use App\controllers\Controller;
-use App\controllers\File;
+use App\utils\File;
 use App\core\Database;
 
 class MarketingController extends Controller
@@ -48,7 +48,7 @@ class MarketingController extends Controller
         $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
         if (count($banner) > 0) {
           $params["banner"] = $banner[0];
-          $pageInfo = ["title" => $banner["heading"], "description" => $banner["heading"]];
+          $pageInfo = ["title" => "", "description" => ""];
           $this->renderView($pageInfo, "admin/marketing/banners/details", "admin", $params);
           return;
         }
