@@ -135,7 +135,7 @@ function removeItemFromCart(id) {
 function createCartItemUI({ id, name, quantity, price, image }) {
   const html = `
           <tr>
-            <td class="align-middle"><img src="${image}" alt="${name}" style="width: 50px;">${name}</td>
+            <td class="align-middle"><img src="/img/product-placeholder.png" alt="${name}" style="width: 50px;">${name}</td>
             <td class="align-middle">$${price}</td>
             <td class="align-middle">
               <div class="input-group quantity mx-auto" style="width: 100px;">

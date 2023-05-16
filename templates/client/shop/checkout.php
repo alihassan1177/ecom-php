@@ -196,12 +196,14 @@
 
   function productListItemUI({
     name,
-    price
+    price,
+    quantity
   }) {
     const html = `
- <div class="d-flex justify-content-between">
-                        <p>${name}</p>
-                        <p>$${price}</p>
+ <div style="gap:10px" class="d-flex justify-content-between">
+                        <p style="flex:1;">${name}</p>
+                        <p><b>P</b>: $${price}</p>
+                        <p><b>Q</b>: ${quantity}</p>
                     </div>
 `
     return html
