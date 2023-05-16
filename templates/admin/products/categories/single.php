@@ -1,6 +1,6 @@
 <?php
 
-use App\controllers\ProductCategoryController;
+use App\models\Category;
 
 $category = $data["data"]["category"];
 $placeholderImage = "/img/product-placeholder.png";
@@ -33,7 +33,7 @@ $productsByCategory = $data["data"]["productsByCategory"];
                 <div class="mb-3">
                     <p class="mb-1"><strong>Sub Categories:</strong></p>
                     <?php
-                    $childCategories = ProductCategoryController::categoryHasChildren($categories, $category["id"]);
+                    $childCategories = Category::categoryHasChildren($categories, $category["id"]);
                     if ($childCategories != false) {
                         $categoryNames = [];
                         foreach ($childCategories as $childCategory) {
@@ -73,7 +73,7 @@ $productsByCategory = $data["data"]["productsByCategory"];
                             $i = 0;
                             foreach ($productsByCategory as $product) :
                                 $i++;
-                                $categoryName = ProductCategoryController::getCategoryName($categories, $product["category_id"]);
+                                $categoryName = Category::getCategoryName($categories, $product["category_id"]);
                             ?>
                                 <tr>
                                     <td><?= $i ?></td>

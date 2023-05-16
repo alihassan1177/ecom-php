@@ -2,7 +2,7 @@
 
 namespace App\controllers;
 
-use App\controllers\Functions;
+use App\utils\Functions;
 
 class Controller
 {

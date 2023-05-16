@@ -1,6 +1,6 @@
 <?php
 
-use App\controllers\Category;
+use App\models\Category;
 
 $categories = $data["data"]["categories"];
 $post = $data["data"]["post"];
@@ -22,7 +22,7 @@ $post = $data["data"]["post"];
     <div class="col-md-6">
         <label for="parent" class="form-label">Post Category</label>
         <select name="category_id" class="form-control" id="parent">
-            <option <?php echo $product["category_id"] == 0 ? "selected" : "" ?> value="0">Uncategorized</option>
+            <option <?php echo $post["category_id"] == 0 ? "selected" : "" ?> value="0">Uncategorized</option>
             <?php
             foreach ($categories as $data) {
                 $categoryID = $data["id"];

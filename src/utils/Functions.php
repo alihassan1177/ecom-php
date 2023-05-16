@@ -1,20 +1,20 @@
 <?php
 
-namespace App\controllers;
+namespace App\utils;
 
 class Functions
 {
   public static function getTemplate(string $name, array $data = [])
   {
     ob_start();
-    require_once __DIR__ . "/../templates/$name.php";
+    require_once __DIR__ . "/../../templates/$name.php";
     return ob_get_clean();
   }
 
   public static function getLayout(string $name, string $template, array $data)
   {
     ob_start();
-    require_once __DIR__ . "/../templates/layouts/$name.php";
+    require_once __DIR__ . "/../../templates/layouts/$name.php";
     $layout = ob_get_clean();
     $page = str_replace("{{content}}", $template, $layout);
     echo $page;

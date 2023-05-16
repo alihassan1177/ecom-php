@@ -10,7 +10,7 @@
 
   <?php
 
-  use App\controllers\Functions;
+  use App\utils\Functions;
 
   Functions::PageHead($data);
 

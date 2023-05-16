@@ -3,7 +3,7 @@
 use App\core\Router;
 use App\controllers\AdminController;
 use App\controllers\CustomerController;
-use App\controllers\Functions;
+use App\utils\Functions;
 use App\controllers\HomeController;
 use App\controllers\OrderController;
 use App\controllers\ProductController;

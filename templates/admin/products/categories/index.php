@@ -1,6 +1,6 @@
 <?php
 
-use App\controllers\Category;
+use App\models\Category;
 use App\controllers\ProductCategoryController;
 
 $categories = $data["data"]["categories"];

@@ -1,6 +1,6 @@
 <?php
 
-use App\controllers\Functions;
+use App\utils\Functions;
 
 $product = $data["data"]["product"];
 $categories = $data["data"]["categories"];
