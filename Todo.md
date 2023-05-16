@@ -3,6 +3,9 @@
 
 ## Potential Bugs
  
+## Users
+    - Create Register and Login for users
+    - Create Dashboard for Users
 
 ## Products
     - Products Variations
