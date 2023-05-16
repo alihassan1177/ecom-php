@@ -102,8 +102,19 @@ function decreaseQuantity(id) {
   updateCartUI()
 }
 
-function saveCartToServer(){
-  // TODO : Save Cart to Server by Fetch Request using debounce
+async function saveCartToServer(){
+  const formData = new FormData()
+
+  formData.append("cart", cart)
+  formData.append("checkout", false)
+
+  const request = await fetch("/saveCart", {
+    method : "POST",
+    body : formData 
+  })
+  const response = await request.json()
+
+  console.log(response)
 }
 
 function debounce(callback, delay) {
@@ -193,6 +204,7 @@ function addProductInCart({ name, id, price, categoryID, image }) {
   console.log("PRODUCT ADDED IN CART")
   updateCartCount()
   updateCartUI()
+  saveCartToServer()
 }
 
 function findItemInCart(id) {

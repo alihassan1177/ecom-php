@@ -2,6 +2,7 @@
 
 use App\core\Router;
 use App\controllers\AdminController;
+use App\controllers\CartController;
 use App\controllers\CustomerController;
 use App\utils\Functions;
 use App\controllers\HomeController;
@@ -141,6 +142,11 @@ $router->get("/register", [ClientController::class, "register"]);
 $router->post("/user/login", [UserController::class, "login"]);
 $router->post("/user/register", [UserController::class, "register"]);
 
+$router->post("/saveCart", [CartController::class, "saveCart"]);
+
+if (isset($_SESSION["client"]) && $_SESSION["client"] == true) {
+  $router->get("/getCart", [CartController::class, "getCart"]);
+}
 // 404 Page
 $router->addNotFoundCallback(function () {
     echo Functions::getTemplate("404");
