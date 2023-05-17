@@ -56,7 +56,6 @@ class UserController extends Controller
     return;
   }
 
-
   public function login()
   {
     $email = $_POST["email"];
@@ -83,11 +82,27 @@ class UserController extends Controller
       return;
     }
 
+    $_SESSION["client"] = true;
+    $_SESSION["user"] = $user;
     $this->response(json_encode(["email" => $email, "password" => $password]), true);
     return;
   }
 
-  public function dashboard()
+  public function dashboard(array $params)
   {
+    $user = $_SESSION["user"];
+    $userId = $user["id"];
+    $carts = Database::getResultsByQuery("SELECT * FROM `cart` WHERE `user_id` = $userId");
+
+    $params["carts"] = $carts;
+
+    $pageInfo = ["title" => "Dashboard", "description" => "Dashboard Page"];
+    $this->renderView($pageInfo, "client/dashboard/index", "main", $params);
+  }
+
+
+  public function logout()
+  {
+    session_destroy();
   }
 }

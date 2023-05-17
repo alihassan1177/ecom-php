@@ -145,7 +145,9 @@ $router->post("/user/register", [UserController::class, "register"]);
 $router->post("/saveCart", [CartController::class, "saveCart"]);
 
 if (isset($_SESSION["client"]) && $_SESSION["client"] == true) {
-  $router->get("/getCart", [CartController::class, "getCart"]);
+    $router->get("/getCart", [CartController::class, "getCart"]);
+    $router->get("/dashboard", [UserController::class, "dashboard"]);
+    $router->get("/logout", [UserController::class, "logout"]);
 }
 // 404 Page
 $router->addNotFoundCallback(function () {

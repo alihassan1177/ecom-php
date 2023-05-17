@@ -15,16 +15,17 @@ class CartController extends Controller
     if (isset($_SESSION["client"]) && $_SESSION["client"] == true) {
       $cart = $_POST["cart"];
       $checkout  = false;
-      $userID = $_SESSION["clientID"];
+      $loggedInUser = $_SESSION["user"];
+      $userID = $loggedInUser["id"];
 
       $sql = "INSERT INTO `cart`(`cart`, `checkout`, `user_id`) VALUES ('$cart','$checkout','$userID')";
 
       $result = Database::onlyExecuteQuery($sql);
 
       if ($result != false) {
-       $this->response("Cart Saved Successfully", true); 
-        return;     
-      }   
+        $this->response("Cart Saved Successfully", true);
+        return;
+      }
       $this->response("User cart not Saved", false);
       return;
     }

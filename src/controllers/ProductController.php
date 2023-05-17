@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\controllers\Controller;
 use App\core\Database;
+use App\utils\File;
 
 class ProductController extends Controller
 {
