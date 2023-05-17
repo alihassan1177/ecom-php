@@ -3,7 +3,7 @@
 namespace App\controllers;
 
 use App\controllers\Controller;
-use App\controllers\Validator;
+use App\utils\Validator;
 use App\core\Database;
 
 class UserController extends Controller
@@ -36,21 +36,19 @@ class UserController extends Controller
       return;
     }
 
-    $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = $email");
+    $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = '$email'");
 
     if (count($user) > 0) {
       $this->response(json_encode(["email" => "User Already Exists with Email : " . $email]), false);
       return;
     }
 
-    // Hash Password
     $securedPassword = password_hash($password, PASSWORD_BCRYPT, ["cost" => self::BCRYPT_COST_COUNT]);
 
     $filteredName = $validate["values"]["name"];
     $filteredAddress = $validate["values"]["address"];
     $filteredPhone = $validate["values"]["phone"];
 
-    // Fix SQL Syntax error
     $sql = "INSERT INTO `users`(`name`, `email`, `password`, `address`, `phone`) VALUES ('$filteredName','$email','$securedPassword','$filteredAddress','$filteredPhone')";
     Database::onlyExecuteQuery($sql);
 
@@ -68,6 +66,20 @@ class UserController extends Controller
 
     if (count($validate["errors"]) > 0) {
       $this->response(json_encode($validate["errors"]), false);
+      return;
+    }
+
+    $user = Database::getResultsByQuery("SELECT * FROM `users` WHERE `email` = '$email'");
+
+    if (count($user) <= 0) {
+      $this->response("User does not exists with Email : " . $email, false);
+      return;
+    }
+
+    $user = $user[0];
+
+    if (!password_verify($password, $user["password"])) {
+      $this->response("Incorrect Password", false);
       return;
     }
 

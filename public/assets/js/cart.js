@@ -189,6 +189,8 @@ function updateCartUI() {
   localStorage.setItem(CART_KEY, JSON.stringify(cart))
 }
 
+const saveCart = debounce(saveCartToServer, 3000)
+
 function addProductInCart({ name, id, price, categoryID, image }) {
 
   if (price == null) {
@@ -204,7 +206,7 @@ function addProductInCart({ name, id, price, categoryID, image }) {
   console.log("PRODUCT ADDED IN CART")
   updateCartCount()
   updateCartUI()
-  saveCartToServer()
+  saveCart()
 }
 
 function findItemInCart(id) {
