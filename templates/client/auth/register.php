@@ -6,7 +6,11 @@
   <div class="row px-xl-5">
     <div class="col-lg-6 mx-auto mb-5">
       <div class="contact-form">
-        <div id="success"></div>
+        <div id="success" class="d-none alert alert-success"></div>
+        <div id="error-holder" class="d-none alert alert-danger" role="alert">
+          <ul id="error-list">
+          </ul>
+        </div>
         <form id="register-form" novalidate="novalidate">
           <div class="control-group">
             <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
@@ -44,23 +48,44 @@
 
 <script>
   const registerForm = document.querySelector("#register-form")
-
   const inputs = registerForm.querySelectorAll("input")
 
+  const errorHolder = document.querySelector("#error-holder")
+  const errorList = document.querySelector("#error-list")
+  const successHolder = document.querySelector("#success")
+
   async function sendRequest() {
+    errorHolder.classList.add("d-none")
+    successHolder.classList.add("d-none")
+
     const formData = new FormData()
     inputs.forEach(input => {
       formData.append(input.id, input.value)
     })
     const request = await fetch("/user/register", {
       method: "POST",
-      body : formData
+      body: formData
     })
     const response = await request.json()
-    console.log(response)
+    if (response.status == true) {
+      successHolder.innerHTML = response.message
+      successHolder.classList.remove("d-none")
+
+      window.location.href = "/login"
+
+    } else {
+      const errors = JSON.parse(response.message)
+      let html = ""
+      Object.keys(errors).forEach(key => {
+        const errorListItem = `<li>${key.toLocaleUpperCase()} ${errors[key]}</li>`
+        html += errorListItem
+      })
+      errorList.innerHTML = html
+      errorHolder.classList.remove("d-none")
+    }
   }
 
-  registerForm.addEventListener("submit", async(e) => {
+  registerForm.addEventListener("submit", async (e) => {
     e.preventDefault()
     await sendRequest()
   })

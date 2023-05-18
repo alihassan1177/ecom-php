@@ -7,7 +7,11 @@
     <div class="col-lg-6 mx-auto mb-5">
 
       <div class="contact-form">
-        <div id="success"></div>
+        <div id="success" class="d-none alert alert-success"></div>
+        <div id="error-holder" class="d-none alert alert-danger" role="alert">
+          <ul id="error-list">
+          </ul>
+        </div>
         <form id="login-form">
           <div class="control-group">
             <input type="email" class="form-control" id="email" placeholder="Email" data-validation-required-message="Please enter your email" />
@@ -35,6 +39,11 @@
   const passwordInput = document.querySelector("#password")
   const submitBtn = document.querySelector("#submit-btn")
 
+  const errorHolder = document.querySelector("#error-holder")
+  const errorList = document.querySelector("#error-list")
+  const successHolder = document.querySelector("#success")
+
+
   async function sendRequest() {
     const formData = new FormData()
     formData.append("email", emailInput.value)
@@ -46,7 +55,22 @@
     })
 
     const response = await request.json()
-    console.log(JSON.parse(response.message))
+    if (response.status == true) {
+      successHolder.innerHTML = response.message
+      successHolder.classList.remove("d-none")
+
+      window.location.href = "/dashboard"
+
+    } else {
+      const errors = JSON.parse(response.message)
+      let html = ""
+      Object.keys(errors).forEach(key => {
+        const errorListItem = `<li>${key.toLocaleUpperCase()} ${errors[key]}</li>`
+        html += errorListItem
+      })
+      errorList.innerHTML = html
+      errorHolder.classList.remove("d-none")
+    }
   }
 
   form.addEventListener("submit", async (e) => {

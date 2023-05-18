@@ -115,8 +115,14 @@
               <a href="/contact" class="nav-item nav-link">Contact</a>
             </div>
             <div class="navbar-nav ml-auto py-0">
-              <a href="/login" class="nav-item nav-link">Login</a>
-              <a href="/register" class="nav-item nav-link">Register</a>
+              <?php
+              if (isset($_SESSION["client"]) && $_SESSION["client"] == true) :
+              ?>
+                <a href="/dashboard" class="nav-item nav-link">Dashboard</a>
+              <?php else : ?>
+                <a href="/login" class="nav-item nav-link">Login</a>
+                <a href="/register" class="nav-item nav-link">Register</a>
+              <?php endif; ?>
             </div>
           </div>
         </nav>
