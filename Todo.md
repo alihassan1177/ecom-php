@@ -6,6 +6,9 @@
 ## Users
     - Create Dashboard for Users
 
+## Admin Panel
+    - Order Processing
+
 ## Products
     - Products Variations
     - Multiple Images View (Frontend and Backend)
