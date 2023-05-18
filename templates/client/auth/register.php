@@ -28,6 +28,15 @@
             <input type="text" class="form-control" id="address" placeholder="Address" required="required" data-validation-required-message="Please enter a Address" />
             <p class="help-block text-danger"></p>
           </div>
+          <div class="col-md-6 form-group">
+            <label>Country</label>
+            <select class="custom-select">
+              <option selected>United States</option>
+              <option>Afghanistan</option>
+              <option>Albania</option>
+              <option>Algeria</option>
+            </select>
+          </div>
           <div class="control-group">
             <input type="text" class="form-control" id="phone" placeholder="Phone No" required="required" data-validation-required-message="Please enter a Phone Number" />
             <p class="help-block text-danger"></p>
