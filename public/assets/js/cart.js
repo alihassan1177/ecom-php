@@ -117,18 +117,6 @@ async function saveCartToServer(){
   console.log(response)
 }
 
-function debounce(callback, delay) {
-  let timer
-  return function() {
-    let context = this
-    let args = arguments
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      callback.apply(context, args)
-    }, delay)
-  }
-}
-
 function removeItemFromCart(id) {
   let index;
   for (let i = 0; i < cart.length; ++i) {
