@@ -8,7 +8,6 @@
   use App\utils\Functions;
   use App\models\Category;
   use App\core\Database;
-  use App\data\CountryApi;
 
   Functions::PageHead($data);
 
@@ -18,6 +17,18 @@
 
   echo "<script>
   const productsData = $productsDataJSON
+    function debounce(callback, delay) {
+      let timer
+      return function() {
+        let context = this
+        let args = arguments
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          callback.apply(context, args)
+        }, delay)
+      }
+    }
+ 
   </script>";
 
   ?>
