@@ -1,3 +1,13 @@
+<?php
+
+use App\data\CountryApi;
+
+$countries = CountryApi::getCountries();
+$countries = json_decode($countries);
+
+?>
+
+
 <!-- Contact Start -->
 <div class="container-fluid pt-5">
   <div class="text-center mb-4">
@@ -30,25 +40,28 @@
           <div class="form-group col-md-6">
             <label>Country</label>
             <select id="select-country" class="custom-select">
-              <option value="">--- SELECT COUNTRY ---</option>
+              <option selected>--SELECT COUNTRY--</option>
+              <?php
+
+              foreach ($countries as $country) {
+                $countryId = $country->id;
+                $countryName = $country->name;
+                echo "<option value='$countryId'>$countryName</option>";
+              }
+
+              ?>
             </select>
           </div>
           <div class="form-group col-md-6">
             <label>State</label>
-            <select class="custom-select">
-              <option selected>United States</option>
-              <option>Afghanistan</option>
-              <option>Albania</option>
-              <option>Algeria</option>
+            <select id="select-state" class="custom-select">
+              <option value="">--SELECT STATE--</option>
             </select>
           </div>
           <div class="form-group col-12">
             <label>City</label>
-            <select class="custom-select">
-              <option selected>United States</option>
-              <option>Afghanistan</option>
-              <option>Albania</option>
-              <option>Algeria</option>
+            <select id="select-city" class="custom-select">
+              <option value="">--SELECT CITY--</option>
             </select>
           </div>
 
@@ -88,6 +101,8 @@
   const totalInputs = inputs.length
 
   const selectCountry = document.querySelector("#select-country")
+  const selectState = document.querySelector("#select-state")
+  const selectCity = document.querySelector("#select-city")
 
   for (let i = 0; i < totalInputs; i++) {
     const element = inputs[i];
@@ -98,24 +113,58 @@
       element.addEventListener("input", (e) => {
         if (e.target.value != "") {
           inputs[i + 1].disabled = false
+        } else {
+          inputs[i + 1].disabled = true
         }
       })
     }
   }
 
-  async function getCountryInfo() {
-    try {
-      const request = await fetch("/countries")
-      const response = await request.json()
-      if (response.status == true) {
-        console.log(JSON.parse(response.message))
-      }
+  selectState.addEventListener("change", async (e) => {
+    const countryId = selectCountry.value
+    const stateId = e.target.value
 
-    } catch (e) {}
+    await getCitiesOfState(countryId, stateId)
+  })
+
+  async function getCitiesOfState(countryId, stateId) {
+    const request = await fetch(`/cities?countryId=${countryId}&stateId=${stateId}`)
+    const response = await request.json();
+    const data = JSON.parse(response.message)
+
+    let html = "<option>--SELECT CITY--</option>"
+    if (data.length > 0) {
+      data.forEach(city => {
+        html += `<option value="${city.id}">${city.name}</option>`
+      })
+    } else {
+      html += `<option value="0">Not on the List</option>`
+    }
+
+    selectCity.innerHTML = html
   }
 
-  getCountryInfo()
+  selectCountry.addEventListener("input", async (e) => {
+    const countryId = e.target.value
+    await getStatesOfCountry(countryId)
+  })
 
+  async function getStatesOfCountry(countryId) {
+    const request = await fetch(`/states?countryId=${countryId}`)
+    const response = await request.json();
+    const data = JSON.parse(response.message)
+
+    let html = "<option>--SELECT STATE--</option>"
+    if (data.length > 0) {
+      data.forEach(state => {
+        html += `<option value="${state.id}">${state.name}</option>`
+      })
+    } else {
+      html += `<option value="0">Not on the List</option>`
+    }
+    selectState.innerHTML = html
+
+  }
 
   async function sendRequest() {
     errorHolder.classList.add("d-none")

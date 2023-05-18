@@ -142,6 +142,7 @@ $router->get("/countries", [CountryController::class, "getCountries"]);
 $router->get("/states", [CountryController::class, "getStates"]);
 $router->get("/cities", [CountryController::class, "getCities"]);
 
+
 if (isset($_SESSION["client"]) && $_SESSION["client"] == true) {
     $router->get("/getCart", [CartController::class, "getCart"]);
     $router->get("/dashboard", [UserController::class, "dashboard"]);
