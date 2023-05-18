@@ -11,25 +11,30 @@
           <ul id="error-list">
           </ul>
         </div>
-        <form id="register-form" novalidate="novalidate">
-          <div class="control-group">
+        <form id="register-form" class="row" novalidate="novalidate">
+          <div class="control-group col-12">
+            <label>Name</label>
             <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
             <p class="help-block text-danger"></p>
           </div>
-          <div class="control-group">
+          <div class="control-group col-12">
+            <label>Email</label>
             <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
             <p class="help-block text-danger"></p>
           </div>
-          <div class="control-group">
+          <div class="control-group col-12">
+            <label>Password</label>
             <input type="password" class="form-control" id="password" placeholder="Password" required="required" data-validation-required-message="Please enter a password" />
             <p class="help-block text-danger"></p>
           </div>
-          <div class="control-group">
-            <input type="text" class="form-control" id="address" placeholder="Address" required="required" data-validation-required-message="Please enter a Address" />
-            <p class="help-block text-danger"></p>
-          </div>
-          <div class="col-md-6 form-group">
+          <div class="form-group col-md-6">
             <label>Country</label>
+            <select id="select-country" class="custom-select">
+              <option value="">--- SELECT COUNTRY ---</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label>State</label>
             <select class="custom-select">
               <option selected>United States</option>
               <option>Afghanistan</option>
@@ -37,11 +42,28 @@
               <option>Algeria</option>
             </select>
           </div>
-          <div class="control-group">
+          <div class="form-group col-12">
+            <label>City</label>
+            <select class="custom-select">
+              <option selected>United States</option>
+              <option>Afghanistan</option>
+              <option>Albania</option>
+              <option>Algeria</option>
+            </select>
+          </div>
+
+          <div class="control-group col-12">
+            <label>Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Address" required="required" data-validation-required-message="Please enter a Address" />
+            <p class="help-block text-danger"></p>
+          </div>
+
+          <div class="control-group col-12">
+            <label>Phone Number</label>
             <input type="text" class="form-control" id="phone" placeholder="Phone No" required="required" data-validation-required-message="Please enter a Phone Number" />
             <p class="help-block text-danger"></p>
           </div>
-          <div>
+          <div class="col-12">
             <button class="btn btn-primary py-2 px-4" type="submit" id="submit-btn">Register</button>
           </div>
         </form>
@@ -55,13 +77,45 @@
 <!-- Contact End -->
 
 
-<script>
+<script type="module">
   const registerForm = document.querySelector("#register-form")
-  const inputs = registerForm.querySelectorAll("input")
+  const inputs = registerForm.querySelectorAll("input, select, button")
 
   const errorHolder = document.querySelector("#error-holder")
   const errorList = document.querySelector("#error-list")
   const successHolder = document.querySelector("#success")
+
+  const totalInputs = inputs.length
+
+  const selectCountry = document.querySelector("#select-country")
+
+  for (let i = 0; i < totalInputs; i++) {
+    const element = inputs[i];
+    if (inputs[i + 1] != undefined) {
+      inputs[i + 1].disabled = true
+    }
+    if (element.tagName == "SELECT" || element.tagName == "INPUT") {
+      element.addEventListener("input", (e) => {
+        if (e.target.value != "") {
+          inputs[i + 1].disabled = false
+        }
+      })
+    }
+  }
+
+  async function getCountryInfo() {
+    try {
+      const request = await fetch("/countries")
+      const response = await request.json()
+      if (response.status == true) {
+        console.log(JSON.parse(response.message))
+      }
+
+    } catch (e) {}
+  }
+
+  getCountryInfo()
+
 
   async function sendRequest() {
     errorHolder.classList.add("d-none")

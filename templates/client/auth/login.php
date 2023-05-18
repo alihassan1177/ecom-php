@@ -14,10 +14,12 @@
         </div>
         <form id="login-form">
           <div class="control-group">
+            <label>Email</label>
             <input type="email" class="form-control" id="email" placeholder="Email" data-validation-required-message="Please enter your email" />
             <p class="help-block text-danger"></p>
           </div>
           <div class="control-group">
+            <label>Password</label>
             <input type="password" class="form-control" id="password" placeholder="Password" required="required" data-validation-required-message="Please enter a subject" />
             <p class="help-block text-danger"></p>
           </div>

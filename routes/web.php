@@ -2,6 +2,7 @@
 
 use App\core\Router;
 use App\controllers\AdminController;
+use App\controllers\api\CountryController;
 use App\controllers\CartController;
 use App\controllers\CustomerController;
 use App\utils\Functions;
@@ -137,6 +138,9 @@ $router->get("/cart", [ShopController::class, "cart"]);
 $router->get("/checkout", [ShopController::class, "checkout"]);
 
 $router->post("/saveCart", [CartController::class, "saveCart"]);
+$router->get("/countries", [CountryController::class, "getCountries"]);
+$router->get("/states", [CountryController::class, "getStates"]);
+$router->get("/cities", [CountryController::class, "getCities"]);
 
 if (isset($_SESSION["client"]) && $_SESSION["client"] == true) {
     $router->get("/getCart", [CartController::class, "getCart"]);

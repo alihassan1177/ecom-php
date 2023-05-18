@@ -1,8 +1,9 @@
 <?php
 
-use App\controllers\Category;
-use App\controllers\Database;
+use App\models\Category;
+use App\core\Database;
 use App\controllers\ProductCategoryController;
+use App\data\CountryApi;
 
 $categories = $data["data"]["categories"];
 $postCategories = $data["data"]["postCategories"];
@@ -24,7 +25,6 @@ function getProductsByCategory($products, $id)
 }
 
 
-echo "<pre>";
 
 //print_r($children);
 
@@ -80,9 +80,6 @@ function getCategoriesExceptChildren(array $categories, int $id)
 // $query = mysqli_query($conn, "SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%e%')");
 // $results = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-$results = Database::getResultsByQuery("SELECT * FROM `ecom`.`products` WHERE (CONVERT(`name` USING utf8) LIKE '%e%')");
-
-$productsByCategory = ProductCategoryController::getProductsByCategory($products, $categories, 37);
 
 //$productsByCategory  = getProductsByCategory($products, 37);
 
@@ -90,6 +87,10 @@ $productsByCategory = ProductCategoryController::getProductsByCategory($products
 
 //print_r($results);
 
+//header("Content-Type: application/json");
 
-$var = "" == false;
-var_dump($var);
+$data = CountryApi::getCountries();
+$json = json_decode($data);
+
+echo "<pre>";
+print_r($json);
