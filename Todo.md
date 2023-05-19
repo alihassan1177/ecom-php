@@ -41,3 +41,4 @@
 
 ## Client Pages
     - Dynamic About Us
+    - Instagram integration
