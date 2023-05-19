@@ -1,5 +1,4 @@
 ## Core
-    - Implement Path Params in URL
 
 ## Potential Bugs
  
