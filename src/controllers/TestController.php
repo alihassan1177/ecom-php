@@ -23,4 +23,9 @@ class TestController extends Controller
         $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
         $this->renderView($pageInfo, "test", "test", $params);
     }
+
+  public function pathParams($params) {     
+    echo "<pre>";
+    print_r($params);
+  }
 }

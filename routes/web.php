@@ -159,4 +159,8 @@ $router->addNotFoundCallback(function () {
     echo Functions::getTemplate("404");
 });
 
+// Implementing Path Params
+$router->get("/url/{id:\d+}", [TestController::class, "pathParams"]);
+$router->get("/profile/{id:\d+}/{username}", [TestController::class, "pathParams"]);
+
 $router->run();
