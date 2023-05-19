@@ -9,7 +9,7 @@ class Router
   private const METHOD_GET = "GET";
   private $notFoundCallback;
 
-  private array $routeParams;
+  private array $routeParams = [];
 
   public function run()
   {
@@ -36,7 +36,7 @@ class Router
 
     if (!$callback) {
 
-      $callback = $this->getCallback($requestPath);
+      $callback = $this->getCallbackWithPathParams($requestPath);
 
       if (!$callback) {
         $callback = $this->notFoundCallback;
@@ -52,7 +52,7 @@ class Router
     call_user_func_array($callback, [array_merge($_GET, $_POST, $this->routeParams)]);
   }
 
-  public function getCallback($url)
+  public function getCallbackWithPathParams($url)
   {
     $url = trim($url, '/');
     $getRoutes = [];
