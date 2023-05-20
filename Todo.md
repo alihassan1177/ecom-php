@@ -1,6 +1,7 @@
 ## Core
 
 ## Potential Bugs
+  - Path params does not work with "-" separator in URL 
  
 ## Users
     - Create Dashboard for Users
