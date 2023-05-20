@@ -17,13 +17,19 @@ class UserController extends Controller
     $password = $_POST["password"];
     $phone = $_POST["phone"];
     $address = $_POST["address"];
+    $countryId = $_POST["select-country"];
+    $stateId = $_POST["select-state"];
+    $cityId = $_POST["select-city"];
 
     $validate = Validator::validateInput([
       "email" => $email,
       "name" => $name,
       "password" => $password,
       "address" => $address,
-      "phone" => $phone
+      "phone" => $phone,
+      "city"=>$cityId,
+      "country"=>$countryId,
+      "state"=>$stateId
     ]);
 
     if (count($validate["errors"]) > 0) {
@@ -49,7 +55,9 @@ class UserController extends Controller
     $filteredAddress = $validate["values"]["address"];
     $filteredPhone = $validate["values"]["phone"];
 
-    $sql = "INSERT INTO `users`(`name`, `email`, `password`, `address`, `phone`) VALUES ('$filteredName','$email','$securedPassword','$filteredAddress','$filteredPhone')";
+    $fullAddress = json_encode(["countryId" => $countryId, "stateId" => $stateId, "cityId" => $cityId, "address" => $filteredAddress]);
+
+    $sql = "INSERT INTO `users`(`name`, `email`, `password`, `address`, `phone`) VALUES ('$filteredName','$email','$securedPassword','$fullAddress','$filteredPhone')";
     Database::onlyExecuteQuery($sql);
 
     $this->response("New User Created Successfully", true);

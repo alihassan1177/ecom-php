@@ -10,7 +10,7 @@ $countries = json_decode($countries);
 
 <!-- Contact Start -->
 <div class="container-fluid pt-5">
-  <div class="text-center mb-4">
+  <div class="text-center mb-3">
     <h2 class="section-title px-5"><span class="px-2">Create new Account</span></h2>
   </div>
   <div class="row px-xl-5">
@@ -174,16 +174,18 @@ $countries = json_decode($countries);
     inputs.forEach(input => {
       formData.append(input.id, input.value)
     })
+
     const request = await fetch("/user/register", {
       method: "POST",
       body: formData
     })
+
     const response = await request.json()
     if (response.status == true) {
       successHolder.innerHTML = response.message
       successHolder.classList.remove("d-none")
 
-      window.location.href = "/login"
+       //window.location.href = "/login"
 
     } else {
       const errors = JSON.parse(response.message)
