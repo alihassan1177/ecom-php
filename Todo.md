@@ -1,7 +1,8 @@
 ## Core
-
+    - Change DB Connection from `mysqli_connect()` to `PDO`
+    - Add Query Builder in Database 
 ## Potential Bugs
-  - Path params does not work with "-" separator in URL 
+    - Path params does not work with "-" separator in URL 
  
 ## Users
     - Create Dashboard for Users
