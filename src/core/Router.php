@@ -81,7 +81,6 @@ class Router
       }
 
       $routeRegex = "@^" . preg_replace_callback('/\{\w+(:([^}]+))?}/', fn ($m) => isset($m[2]) ? "({$m[2]})" : '(\w+)', $routePath) . "$@";
-
       if (preg_match_all($routeRegex, $url, $valueMatches)) {
         $values = [];
         $totalMatches = count($valueMatches);

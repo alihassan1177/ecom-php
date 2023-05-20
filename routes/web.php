@@ -128,8 +128,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] == true) {
 // Client Routes
 $router->get("/", [HomeController::class, "index"]);
 $router->get("/shop", [ShopController::class, "index"]);
-$router->get("/shop/details", [ShopController::class, "details"]);
-$router->get("/shop/details", [ShopController::class, "singleProduct"]);
+$router->get("/shop/{slug}", [ShopController::class, "singleProduct"]);
 $router->get("/shop/category", [ShopController::class, "singleCategory"]);
 
 
