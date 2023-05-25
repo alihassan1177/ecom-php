@@ -1,13 +1,13 @@
 ## Core
     - Change DB Connection from `mysqli_connect()` to `PDO`
     - Add Query Builder in Database 
+
 ## Potential Bugs
     - Path params does not work with "-" separator in URL 
  
 ## Users
     - Create Dashboard for Users
     - Use CountryApi for user location on checkout
-    - Use Select2 for filter country results
 
 ## Admin Panel
     - Order Processing

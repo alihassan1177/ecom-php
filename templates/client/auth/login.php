@@ -64,12 +64,10 @@
       window.location.href = "/dashboard"
 
     } else {
-      const errors = JSON.parse(response.message)
+      const errors = response.message
       let html = ""
-      Object.keys(errors).forEach(key => {
-        const errorListItem = `<li>${key.toLocaleUpperCase()} ${errors[key]}</li>`
-        html += errorListItem
-      })
+      const errorListItem = `<li>${errors}</li>`
+      html += errorListItem
       errorList.innerHTML = html
       errorHolder.classList.remove("d-none")
     }
