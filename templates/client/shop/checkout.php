@@ -1,10 +1,27 @@
 <?php
 
+use App\data\CountryApi;
+use App\controllers\api\CountryController;
+
+$countryController = new CountryController();
+
+$countries = CountryApi::getCountries();
+$countries = json_decode($countries);
+
 $name = isset($_SESSION["user"]) ? $_SESSION["user"]["name"] : "";
 $email = isset($_SESSION["user"]) ? $_SESSION["user"]["email"] : "";
 $address = isset($_SESSION["user"]) ? $_SESSION["user"]["address"] : "";
 $phone = isset($_SESSION["user"]) ? $_SESSION["user"]["phone"] : "";
 
+$address = json_decode($address);
+
+$states = [];
+$cities = [];
+
+if ($address != null) {
+  $states = $countryController->getStatesByParams($address->countryId);
+  $cities = $countryController->getCitiesByParams($address->countryId, $address->stateId);
+}
 ?>
 
 <!-- Checkout Start -->
@@ -28,35 +45,85 @@ $phone = isset($_SESSION["user"]) ? $_SESSION["user"]["phone"] : "";
           </div>
           <div class="col-md-6 form-group">
             <label>Address Line 1</label>
-            <input class="form-control" type="text" placeholder="123 Street" value="<?= $address ?>">
+            <input class="form-control" type="text" placeholder="123 Street" value="<?= $address->address ?>">
           </div>
-          <div class="col-md-6 form-group">
+          <div class="form-group col-md-6">
             <label>Country</label>
-            <select class="custom-select">
-              <option selected>United States</option>
-              <option>Afghanistan</option>
-              <option>Albania</option>
-              <option>Algeria</option>
+            <select id="select-country" class="custom-select">
+              <option>--SELECT COUNTRY--</option>
+              <?php
+
+              foreach ($countries as $country) {
+                $countryId = $country->id;
+                $countryName = $country->name;
+                if ($address->countryId == $countryId) {
+                  echo "<option selected value='$countryId'>$countryName</option>";
+                } else {
+                  echo "<option value='$countryId'>$countryName</option>";
+                }
+              }
+
+              ?>
             </select>
           </div>
-          <div class="col-md-6 form-group">
-            <label>City</label>
-            <input class="form-control" type="text" placeholder="New York">
-          </div>
-          <div class="col-md-6 form-group">
+
+          <div class="form-group col-md-6">
             <label>State</label>
-            <input class="form-control" type="text" placeholder="New York">
+            <select id="select-state" class="custom-select">
+              <option value="">--SELECT STATE--</option>
+              <?php
+
+              if (count($states) > 0) {
+                foreach ($states as $state) {
+                  $stateId = $state->id;
+                  $stateName = $state->name;
+                  if ($address->stateId == $stateId) {
+                    echo "<option selected value='$stateId'>$stateName</option>";
+                  } else {
+                    echo "<option value='$stateId'>$stateName</option>";
+                  }
+                }
+              }
+
+              ?>
+            </select>
           </div>
+          <div class="form-group col-md-6">
+            <label>City</label>
+            <select id="select-city" class="custom-select">
+              <option value="">--SELECT CITY--</option>
+              <?php
+
+              if (count($cities) > 0) {
+                foreach ($cities as $city) {
+                  $cityId = $city->id;
+                  $cityName = $city->name;
+                  if ($address->cityId == $cityId) {
+                    echo "<option selected value='$cityId'>$cityName</option>";
+                  } else {
+                    echo "<option value='$cityId'>$cityName</option>";
+                  }
+                }
+              }
+
+              ?>
+
+            </select>
+          </div>
+
+
           <div class="col-md-6 form-group">
             <label>ZIP Code</label>
             <input class="form-control" type="text" placeholder="123">
           </div>
+          <?php if(!isset($_SESSION["client"])): ?> 
           <div class="col-md-12 form-group">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="newaccount">
               <label class="custom-control-label" for="newaccount">Create an account</label>
             </div>
           </div>
+          <?php endif; ?>
 
         </div>
       </div>
@@ -154,5 +221,56 @@ $phone = isset($_SESSION["user"]) ? $_SESSION["user"]["phone"] : "";
                     </div>
 `
     return html
+  }
+
+
+  const selectCountry = document.querySelector("#select-country")
+  const selectState = document.querySelector("#select-state")
+  const selectCity = document.querySelector("#select-city")
+
+  selectState.addEventListener("change", async (e) => {
+    const countryId = selectCountry.value
+    const stateId = e.target.value
+
+    await getCitiesOfState(countryId, stateId)
+  })
+
+  async function getCitiesOfState(countryId, stateId) {
+    const request = await fetch(`/cities?countryId=${countryId}&stateId=${stateId}`)
+    const response = await request.json();
+    const data = JSON.parse(response.message)
+
+    let html = "<option>--SELECT CITY--</option>"
+    if (data.length > 0) {
+      data.forEach(city => {
+        html += `<option value="${city.id}">${city.name}</option>`
+      })
+    } else {
+      html += `<option value="0">Not on the List</option>`
+    }
+
+    selectCity.innerHTML = html
+  }
+
+  selectCountry.addEventListener("input", async (e) => {
+    const countryId = e.target.value
+    await getStatesOfCountry(countryId)
+  })
+
+  async function getStatesOfCountry(countryId) {
+    const request = await fetch(`/states?countryId=${countryId}`)
+    const response = await request.json();
+    const data = JSON.parse(response.message)
+
+    let html = "<option>--SELECT STATE--</option>"
+    if (data.length > 0) {
+      data.forEach(state => {
+        html += `<option value="${state.id}">${state.name}</option>`
+      })
+    } else {
+      html += `<option value="0">Not on the List</option>`
+    }
+    selectState.innerHTML = html
+
   }
 </script>
