@@ -26,7 +26,7 @@
     - Offers
 
 ## Cart
-    - Manage cart on Server
+    - Change cart status on checkout
 
 ## Payment
     - Integrate Payment Gateways (Frontend and Backend)
