@@ -91,6 +91,7 @@ function increaseQuantity(id) {
   const item = findItemInCart(id)
   item.quantity += 1
   updateCartUI()
+  saveCart()
 }
 
 function decreaseQuantity(id) {
@@ -100,13 +101,14 @@ function decreaseQuantity(id) {
   }
   item.quantity -= 1
   updateCartUI()
+  saveCart()
 }
 
 async function saveCartToServer(){
   const formData = new FormData()
 
-  formData.append("cart", cart)
-  formData.append("checkout", false)
+  formData.append("cart", JSON.stringify(cart))
+  formData.append("checkout", "false")
 
   const request = await fetch("/saveCart", {
     method : "POST",
@@ -134,7 +136,7 @@ function removeItemFromCart(id) {
 function createCartItemUI({ id, name, quantity, price, image }) {
   const html = `
           <tr>
-            <td class="align-middle"><img src="/img/product-placeholder.png" alt="${name}" style="width: 50px;">${name}</td>
+            <td class="align-middle"><img style="width:40px; height:40px; object-fit:cover" src="${image != "" ? image : "/img/product-placeholder.png"}" alt="${name}" style="width: 50px;">${name}</td>
             <td class="align-middle">$${price}</td>
             <td class="align-middle">
               <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -178,6 +180,7 @@ function updateCartUI() {
 }
 
 const saveCart = debounce(saveCartToServer, 3000)
+saveCart()
 
 function addProductInCart({ name, id, price, categoryID, image }) {
 
