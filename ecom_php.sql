@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 14, 2023 at 07:19 PM
+-- Generation Time: May 27, 2023 at 10:48 AM
 -- Server version: 8.0.31-0ubuntu0.22.04.1
 -- PHP Version: 8.1.12
 
@@ -59,6 +59,26 @@ CREATE TABLE `banners` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int NOT NULL,
+  `cart` longtext NOT NULL,
+  `checkout` varchar(255) NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `cart`, `checkout`, `user_id`) VALUES
+(4, '[{\"id\":\"11\",\"name\":\"Football Jersey\",\"price\":\"10\",\"quantity\":6,\"image\":\"/uploads/1682057062sublimated-soccer-team-uniform-football-jersey-custom-american-football-jersey.jpg\"}]', '', 4);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -74,9 +94,14 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `parent`, `image`) VALUES
-(37, 'Sportswear', 0, ''),
-(38, 'Game', 37, ''),
-(39, 'Pubg', 38, '');
+(44, 'Sports Wear', 0, ''),
+(45, 'Casual Wear', 0, ''),
+(46, 'Fitness Wear', 0, ''),
+(47, 'Football Uniform', 44, NULL),
+(48, 'Shirt', 47, NULL),
+(49, 'Cricket', 44, NULL),
+(50, 'Cycling', 44, NULL),
+(51, 'Swimming', 44, NULL);
 
 -- --------------------------------------------------------
 
@@ -117,10 +142,7 @@ CREATE TABLE `post_categories` (
 --
 
 INSERT INTO `post_categories` (`id`, `name`, `parent`) VALUES
-(11, 'text', 0),
-(12, 'word', 11),
-(13, 'Third', 12),
-(14, 'Gaming', 0);
+(13, 'adasd', 1);
 
 -- --------------------------------------------------------
 
@@ -138,14 +160,6 @@ CREATE TABLE `products` (
   `quantity` int DEFAULT NULL,
   `price` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `image`, `short_description`, `description`, `category_id`, `quantity`, `price`) VALUES
-(11, 'Football Jersey', '/uploads/1682057062sublimated-soccer-team-uniform-football-jersey-custom-american-football-jersey.jpg', NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 39, NULL, 10),
-(12, 'Person', NULL, NULL, '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 37, NULL, 20);
 
 -- --------------------------------------------------------
 
@@ -176,6 +190,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `address`, `phone`) VALUES
+(3, 'Junaid Mughal', 'jdmughal@gmail.com', '$2y$12$1lDJHP54p.YcoDn.l7DZke/k.QYG.F9zM7gpMhMwjVp021ANah/Bu', '{\"countryId\":\"167\",\"stateId\":\"3176\",\"cityId\":\"85720\",\"address\":\"Haji Pura\"}', '030060906'),
+(4, 'Ali Hassan', 'thealihassan.dev@gmail.com', '$2y$12$BtvFv6VDAnxsie5rZTqdousbG4RDs4unnBEWKczBSugUdNWrHhVAC', '{\"countryId\":\"167\",\"stateId\":\"3176\",\"cityId\":\"85720\",\"address\":\"Janjua Palace Head Marala Road\"}', '03442524552');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -189,6 +211,12 @@ ALTER TABLE `admin`
 -- Indexes for table `banners`
 --
 ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -244,10 +272,16 @@ ALTER TABLE `banners`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -259,13 +293,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `post_categories`
 --
 ALTER TABLE `post_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `site_settings`
@@ -277,7 +311,7 @@ ALTER TABLE `site_settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
