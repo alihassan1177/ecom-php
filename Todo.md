@@ -7,7 +7,6 @@
  
 ## Users
     - Create Dashboard for Users
-    - Use CountryApi for user location on checkout
 
 ## Admin Panel
     - Order Processing
