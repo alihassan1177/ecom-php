@@ -119,6 +119,8 @@ class Functions
     $productID = $product["id"];
     $productImage = $product["image"] != "" ? $product["image"]  : $placeholderImage;
 
+    $slug = strtolower(str_replace(" ","_", $productName." ".$productID));
+
     echo <<<HTML
      <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
           <div class="card product-item border-0 mb-4">
@@ -133,7 +135,7 @@ class Functions
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-between bg-light border">
-              <a href="/shop/details?id=$productID" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+              <a href="/shop/$slug" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
               <a href="" data-id="$productID" id="add-to-cart" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
             </div>
           </div>

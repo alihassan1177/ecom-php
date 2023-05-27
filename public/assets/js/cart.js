@@ -131,6 +131,7 @@ function removeItemFromCart(id) {
   cart.splice(index, 1)
   updateCartUI()
   updateCartCount()
+  saveCart()
 }
 
 function createCartItemUI({ id, name, quantity, price, image }) {
