@@ -6,7 +6,6 @@
     - Path params does not work with "-" separator in URL 
  
 ## Users
-    - Create Dashboard for Users
 
 ## Admin Panel
     - Order Processing

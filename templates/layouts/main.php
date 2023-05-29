@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"> 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
   <!-- Libraries Stylesheet -->
   <link href="/client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -61,7 +61,13 @@
       <div class="col-lg-6 col-12 text-left">
         <form action="">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for products">
+            <input list="suggestions" type="text" class="form-control" placeholder="Search for products">
+            <datalist id="suggestions">
+              <option>Products</option>
+              <option>Categories</option>
+              <option>Posts</option>
+            </datalist>
+
             <div class="input-group-append">
               <span class="input-group-text bg-transparent text-primary">
                 <i class="fa fa-search"></i>

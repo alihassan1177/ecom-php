@@ -41,7 +41,6 @@ foreach ($countries as $country) {
     $addressString .= ", $country->name";
   }
 }
-
 ?>
 
 <div class="container">
