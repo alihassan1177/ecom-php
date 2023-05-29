@@ -136,6 +136,8 @@ $router->get("/contact", [ContactController::class, "index"]);
 $router->get("/cart", [ShopController::class, "cart"]);
 $router->get("/checkout", [ShopController::class, "checkout"]);
 
+$router->post("/order", [OrderController::class, "createOrder"]);
+
 $router->post("/saveCart", [CartController::class, "saveCart"]);
 $router->get("/countries", [CountryController::class, "getCountries"]);
 $router->get("/states", [CountryController::class, "getStates"]);

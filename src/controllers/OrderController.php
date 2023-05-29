@@ -17,4 +17,8 @@ class OrderController extends Controller
     $pageInfo = ["title" => "Products", "description" => "Products Page Admin Panel"];
     $this->renderView($pageInfo, "admin/orders/index", "admin", $params);
   }
+
+  public function createOrder(){
+   $this->response(json_encode($_POST), true); 
+  }
 }

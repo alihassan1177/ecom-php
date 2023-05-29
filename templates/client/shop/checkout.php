@@ -8,6 +8,7 @@ $countryController = new CountryController();
 $countries = CountryApi::getCountries();
 $countries = json_decode($countries);
 
+$id = isset($_SESSION["user"]) ? $_SESSION["user"]["id"] : "";
 $name = isset($_SESSION["user"]) ? $_SESSION["user"]["name"] : "";
 $email = isset($_SESSION["user"]) ? $_SESSION["user"]["email"] : "";
 $address = isset($_SESSION["user"]) ? $_SESSION["user"]["address"] : "";
@@ -30,21 +31,21 @@ if ($address != null) {
     <div class="col-lg-8">
       <div class="mb-4">
         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
-        <div class="row">
+        <div id="checkout-form" class="row">
           <div class="col-md-12 form-group">
             <label>Name</label>
-            <input class="form-control" type="text" placeholder="John Doe" value="<?= $name ?>">
+            <input id="name" class="form-control" type="text" placeholder="John Doe" value="<?= $name ?>">
           </div>
           <div class="col-md-6 form-group">
             <label>E-mail</label>
-            <input class="form-control" type="text" placeholder="example@email.com" value="<?= $email ?>">
+            <input id="email" class="form-control" type="email" placeholder="example@email.com" value="<?= $email ?>">
           </div>
           <div class="col-md-6 form-group">
             <label>Mobile No</label>
-            <input class="form-control" type="text" placeholder="+123 456 789" value="<?= $phone ?>">
+            <input id="phone" class="form-control" type="text" placeholder="+123 456 789" value="<?= $phone ?>">
           </div>
           <div class="col-md-6 form-group">
-            <label>Address Line 1</label>
+            <label>Address</label>
             <input class="form-control" type="text" placeholder="123 Street" value="<?= $address->address ?>">
           </div>
           <div class="form-group col-md-6">
@@ -114,7 +115,7 @@ if ($address != null) {
 
           <div class="col-md-6 form-group">
             <label>ZIP Code</label>
-            <input class="form-control" type="text" placeholder="123">
+            <input id="zip" class="form-control" type="text" placeholder="123">
           </div>
           <?php if(!isset($_SESSION["client"])): ?> 
           <div class="col-md-12 form-group">
@@ -180,7 +181,7 @@ if ($address != null) {
           </div>
         </div>
         <div class="card-footer border-secondary bg-transparent">
-          <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+          <button id="order-btn" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
         </div>
       </div>
     </div>
@@ -274,3 +275,27 @@ if ($address != null) {
 
   }
 </script>
+
+<script>
+    const checkoutForm = document.querySelector("#checkout-form")
+    const inputs = checkoutForm.querySelectorAll("input, select")
+    const orderBtn = document.querySelector("#order-btn")
+
+    const formData = new FormData()
+    orderBtn.addEventListener("click", async()=>{
+      inputs.forEach(input => {
+        formData.append(input.id, input.value)
+      })
+
+      const request = await fetch("/order", {
+        method : "POST",
+        body : formData
+      })
+
+      const response = await request.json()
+      console.log(response)
+    })
+
+
+</script>
+

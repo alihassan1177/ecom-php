@@ -103,7 +103,6 @@
             <div class="navbar-nav mr-auto py-0">
               <a href="/" class="nav-item nav-link">Home</a>
               <a href="/shop" class="nav-item nav-link">Shop</a>
-              <a href="/shop/details" class="nav-item nav-link">Shop Detail</a>
               <?php if ($categories != null && count($categories) > 0) : ?>
                 <div class="nav-item dropdown">
                   <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
