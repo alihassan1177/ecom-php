@@ -46,7 +46,7 @@ if ($address != null) {
           </div>
           <div class="col-md-6 form-group">
             <label>Address</label>
-            <input class="form-control" type="text" placeholder="123 Street" value="<?= $address->address ?>">
+            <input class="form-control" id="address" type="text" placeholder="123 Street" value="<?= $address->address ?>">
           </div>
           <div class="form-group col-md-6">
             <label>Country</label>
@@ -117,13 +117,13 @@ if ($address != null) {
             <label>ZIP Code</label>
             <input id="zip" class="form-control" type="text" placeholder="123">
           </div>
-          <?php if(!isset($_SESSION["client"])): ?> 
-          <div class="col-md-12 form-group">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="newaccount">
-              <label class="custom-control-label" for="newaccount">Create an account</label>
+          <?php if (!isset($_SESSION["client"])) : ?>
+            <div class="col-md-12 form-group">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="newaccount">
+                <label class="custom-control-label" for="newaccount">Create an account</label>
+              </div>
             </div>
-          </div>
           <?php endif; ?>
 
         </div>
@@ -163,20 +163,20 @@ if ($address != null) {
         <div class="card-body">
           <div class="form-group">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="paypal">
-              <label class="custom-control-label" for="paypal">Paypal</label>
+              <input type="radio" checked class="custom-control-input" value="1" name="payment" id="p">
+              <label class="custom-control-label" for="p">Paypal</label>
             </div>
           </div>
           <div class="form-group">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-              <label class="custom-control-label" for="directcheck">Direct Check</label>
+              <input type="radio" class="custom-control-input" value="2" name="payment" id="dc">
+              <label class="custom-control-label" for="dc">Direct Check</label>
             </div>
           </div>
           <div class="">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-              <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+              <input type="radio" class="custom-control-input" value="3" name="payment" id="bt">
+              <label class="custom-control-label" for="bt">Bank Transfer</label>
             </div>
           </div>
         </div>
@@ -274,28 +274,29 @@ if ($address != null) {
     selectState.innerHTML = html
 
   }
-</script>
 
-<script>
-    const checkoutForm = document.querySelector("#checkout-form")
-    const inputs = checkoutForm.querySelectorAll("input, select")
-    const orderBtn = document.querySelector("#order-btn")
+  const checkoutForm = document.querySelector("#checkout-form")
+  const inputs = checkoutForm.querySelectorAll("input, select")
+  const orderBtn = document.querySelector("#order-btn")
 
-    const formData = new FormData()
-    orderBtn.addEventListener("click", async()=>{
-      inputs.forEach(input => {
+  const formData = new FormData()
+  orderBtn.addEventListener("click", async () => {
+    inputs.forEach(input => {
+      if (input.type == "radio") {
+        formData.append(input.name, input.value)
+      } else {
         formData.append(input.id, input.value)
-      })
-
-      const request = await fetch("/order", {
-        method : "POST",
-        body : formData
-      })
-
-      const response = await request.json()
-      console.log(response)
+      }
     })
 
+    formData.append("items", JSON.stringify(selectedCart))
 
+    const request = await fetch("/order", {
+      method: "POST",
+      body: formData
+    })
+
+    const response = await request.json()
+    console.log(response);
+  })
 </script>
-
