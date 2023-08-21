@@ -39,6 +39,7 @@
 
 <body class="overflow-hidden" id="page-top">
 
+
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -218,6 +219,10 @@
 
           </ul>
 
+          <div style="z-index: 10; top:80px; right:40px" id="notification" class=" position-fixed">
+            
+          </div>
+
         </nav>
         <!-- End of Topbar -->
 
@@ -316,6 +321,29 @@
         }
       })
     })
+  </script>
+
+
+  <!-- Notfications -->
+  <script>
+    let conn = new WebSocket('ws://localhost:8080');
+    const notificationBox = document.querySelector("#notification")
+    conn.onopen = function(e) {
+      console.log("Connection established!");
+    };
+
+    conn.onmessage = function(e) {
+      let message = e.data
+
+      if (message == "New Order Created") {
+        notificationBox.innerHTML += `<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>New Order Created</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>`
+      }
+    };
   </script>
 
 

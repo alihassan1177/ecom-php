@@ -1,5 +1,6 @@
 ## Admin Panel
     - Order Processing
+    - Add notification on New Order
 
 ## Products
     - Products Variations

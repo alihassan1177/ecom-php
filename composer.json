@@ -3,7 +3,8 @@
     "type": "project",
     "minimum-stability": "stable",
     "require": {
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "cboden/ratchet": "^0.4.4"
     },
     "autoload": {
         "psr-4": {

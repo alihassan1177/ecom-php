@@ -5,9 +5,7 @@ namespace App\controllers;
 use App\controllers\Controller;
 use App\core\Database;
 use App\enums\OrderStatus;
-use App\enums\PaymentTypes;
 use App\utils\Validator;
-
 
 class OrderController extends Controller
 {
@@ -24,6 +22,10 @@ class OrderController extends Controller
 
   public function createOrder()
   {
+
+    $this->response("Order Created Successfully", true);
+    return;
+
     $name = $_POST["name"];
     $email = $_POST["email"];
     $zipCode = $_POST["zip"];

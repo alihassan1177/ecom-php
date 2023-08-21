@@ -50,104 +50,104 @@
 </head>
 
 <body>
-  <!-- Topbar Start -->
-  <div class="container-fluid">
-    <div class="row align-items-center py-3 px-xl-5">
-      <div class="col-lg-3 d-none d-lg-block">
-        <a href="/" class="text-decoration-none">
-          <h1 style="display: inline;" class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
-        </a>
-      </div>
-      <div class="col-lg-6 col-12 text-left">
-        <form action="">
-          <div class="input-group">
-            <input list="suggestions" type="text" class="form-control" placeholder="Search for products">
-            <datalist id="suggestions">
-              <option>Products</option>
-              <option>Categories</option>
-              <option>Posts</option>
-            </datalist>
+  <div class="container-fluid sticky-top bg-white shadow-sm">
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+      <div class="row align-items-center py-3 px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+          <a href="/" class="text-decoration-none">
+            <h1 style="display: inline;" class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
+          </a>
+        </div>
+        <div class="col-lg-6 col-12 text-left">
+          <form action="">
+            <div class="input-group">
+              <input list="suggestions" type="text" class="form-control" placeholder="Search for products">
+              <datalist id="suggestions">
+                <option>Products</option>
+                <option>Categories</option>
+                <option>Posts</option>
+              </datalist>
 
-            <div class="input-group-append">
-              <span class="input-group-text bg-transparent text-primary">
-                <i class="fa fa-search"></i>
-              </span>
+              <div class="input-group-append">
+                <span class="input-group-text bg-transparent text-primary">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-lg-3 col-12 mt-1 mt-lg-0 text-right">
-        <a href="/cart" class="btn border">
-          <i class="fas fa-shopping-cart text-primary"></i>
-          <span id="cart-item-count" class="badge">0</span>
-        </a>
+          </form>
+        </div>
+        <div class="col-lg-3 col-12 mt-1 mt-lg-0 text-right">
+          <a href="/cart" class="btn border">
+            <i class="fas fa-shopping-cart text-primary"></i>
+            <span id="cart-item-count" class="badge">0</span>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Topbar End -->
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid">
+      <div class="row border-top px-xl-5">
 
+        <div style="padding:0.50rem" class="col-12">
+          <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+            <a href="/" class="text-decoration-none d-block d-lg-none">
+              <h1 class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+              <div class="navbar-nav mr-auto py-0">
+                <a href="/" class="nav-item nav-link">Home</a>
+                <a href="/shop" class="nav-item nav-link">Shop</a>
+                <?php if ($categories != null && count($categories) > 0) : ?>
+                  <div class="nav-item dropdown">
+                    <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                      <?php
 
-  <!-- Navbar Start -->
-  <div class="container-fluid">
-    <div class="row border-top px-xl-5">
+                      for ($i = 0; $i < count($categories); $i++) {
+                        $category = $categories[$i];
+                        $id = $category["id"];
+                        $categoryName = Category::getCategoryName($categories, $category["id"]);
+                        $fullCatname = implode(Category::$categorySeprator, $categoryName);
 
-      <div style="padding:0.50rem" class="col-12">
-        <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-          <a href="/" class="text-decoration-none d-block d-lg-none">
-            <h1 class="m-0 display-5 font-weight-semi-bold"><?= $_ENV["SITE_NAME"] ?></h1>
-          </a>
-          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-            <div class="navbar-nav mr-auto py-0">
-              <a href="/" class="nav-item nav-link">Home</a>
-              <a href="/shop" class="nav-item nav-link">Shop</a>
-              <?php if ($categories != null && count($categories) > 0) : ?>
+                        echo "<a href='/shop/category?id=$id' class='dropdown-item'>$fullCatname</a>";
+                      }
+
+                      ?>
+                    </div>
+                  </div>
+                <?php endif; ?>
                 <div class="nav-item dropdown">
-                  <a href="/shop/category" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                   <div class="dropdown-menu rounded-0 m-0">
-                    <?php
-
-                    for ($i = 0; $i < count($categories); $i++) {
-                      $category = $categories[$i];
-                      $id = $category["id"];
-                      $categoryName = Category::getCategoryName($categories, $category["id"]);
-                      $fullCatname = implode(Category::$categorySeprator, $categoryName);
-
-                      echo "<a href='/shop/category?id=$id' class='dropdown-item'>$fullCatname</a>";
-                    }
-
-                    ?>
+                    <a href="/cart" class="dropdown-item">Shopping Cart</a>
+                    <a href="/checkout" class="dropdown-item">Checkout</a>
                   </div>
                 </div>
-              <?php endif; ?>
-              <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu rounded-0 m-0">
-                  <a href="/cart" class="dropdown-item">Shopping Cart</a>
-                  <a href="/checkout" class="dropdown-item">Checkout</a>
-                </div>
+                <a href="/contact" class="nav-item nav-link">Contact</a>
               </div>
-              <a href="/contact" class="nav-item nav-link">Contact</a>
+              <div class="navbar-nav ml-auto py-0">
+                <?php
+                if (isset($_SESSION["client"]) && $_SESSION["client"] == true) :
+                ?>
+                  <a href="/dashboard" class="nav-item nav-link">Dashboard</a>
+                <?php else : ?>
+                  <a href="/login" class="nav-item nav-link">Login</a>
+                  <a href="/register" class="nav-item nav-link">Register</a>
+                <?php endif; ?>
+              </div>
             </div>
-            <div class="navbar-nav ml-auto py-0">
-              <?php
-              if (isset($_SESSION["client"]) && $_SESSION["client"] == true) :
-              ?>
-                <a href="/dashboard" class="nav-item nav-link">Dashboard</a>
-              <?php else : ?>
-                <a href="/login" class="nav-item nav-link">Login</a>
-                <a href="/register" class="nav-item nav-link">Register</a>
-              <?php endif; ?>
-            </div>
-          </div>
-        </nav>
+          </nav>
 
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
   <?php
 
   if ($_SERVER["REQUEST_URI"] != "/") {
@@ -158,7 +158,6 @@
 
   <!-- Content Begin -->
   {{content}}
-
 
   <!-- Footer Start -->
   <div class="container-fluid bg-secondary text-dark mt-5 pt-5">

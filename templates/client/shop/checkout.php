@@ -275,6 +275,20 @@ if ($address != null) {
 
   }
 
+  let conn = new WebSocket('ws://localhost:8080');
+
+  conn.onopen = function() {
+    console.log("Connection established!");
+  }
+
+  conn.onmessage = function(e) {
+    console.log(e.data);
+  };
+
+  function sendOrderNotificationToAdmin() {
+    conn.send("New Order Created")
+  };
+
   const checkoutForm = document.querySelector("#checkout-form")
   const inputs = checkoutForm.querySelectorAll("input, select")
   const orderBtn = document.querySelector("#order-btn")
@@ -298,5 +312,7 @@ if ($address != null) {
 
     const response = await request.json()
     console.log(response);
+
+    sendOrderNotificationToAdmin()
   })
 </script>
