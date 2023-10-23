@@ -9,9 +9,9 @@ class HomeController extends Controller
 {
     public function index(array $params)
     {
-        $products = Database::getResultsByQuery("SELECT * FROM `products` LIMIT 8");
-        $banners = Database::getResultsByQuery("SELECT * FROM `banners`");
-        $categories = Database::getResultsByQuery("SELECT * FROM `categories` LIMIT 6;");
+        $products = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` LIMIT 8");
+        $banners = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners`");
+        $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories` LIMIT 6;");
 
         $params["banners"] = $banners;
         $params["products"] = $products;

@@ -20,7 +20,7 @@ use App\controllers\ClientController;
 use App\controllers\MarketingController;
 use App\controllers\UserController;
 
-$router = new Router();
+$router = Router::getInstance();
 
 function ProductRoutes()
 {

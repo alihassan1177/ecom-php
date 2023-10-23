@@ -12,7 +12,7 @@ try {
     exit();
 }
 
-Database::connect();
+Database::getInstance();
 
 session_start();
 

@@ -2,8 +2,12 @@
 
 namespace App\core;
 
+use App\traits\Singleton;
+
 class Router
 {
+  use Singleton;
+
   private array $handlers;
   private const METHOD_POST = "POST";
   private const METHOD_GET = "GET";

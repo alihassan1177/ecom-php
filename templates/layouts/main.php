@@ -11,8 +11,8 @@
 
   Functions::PageHead($data);
 
-  $categories = Database::getResultsByQuery("SELECT * FROM `categories`;");
-  $products = Database::getResultsByQuery("SELECT * FROM `products`;");
+  $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories`;");
+  $products =   Database::getInstance()->getResultsByQuery("SELECT * FROM `products`;");
   $productsDataJSON = json_encode($products);
 
   echo "<script>
