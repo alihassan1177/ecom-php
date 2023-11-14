@@ -10,8 +10,8 @@ class ProductController extends Controller
 {
   public function index(array $params)
   {
-    $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
-    $products = Database::getResultsByQuery("SELECT * FROM `products` ORDER BY `id` DESC");
+    $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories`");
+    $products = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` ORDER BY `id` DESC");
     $params["categories"] = $categories;
     $params["products"] = $products;
 
@@ -24,9 +24,9 @@ class ProductController extends Controller
     if (isset($_GET["id"]) && $_GET["id"] != "") {
       $id = $_GET["id"];
       if (is_int(intval($id))) {
-        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+        $product = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
         if (count($product) > 0) {
-          $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+          $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories`");
           $params["categories"] = $categories;
           // Get First Element of Array
           $product = array_shift($product);
@@ -43,7 +43,7 @@ class ProductController extends Controller
 
   public function newProduct(array $params)
   {
-    $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+    $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories`");
     $params["categories"] = $categories;
     $pageInfo = ["title" => "New Product", "description" => "Products Page Admin Panel"];
     $this->renderView($pageInfo, "admin/products/new", "admin", $params);
@@ -55,7 +55,7 @@ class ProductController extends Controller
     if (empty($categoryID)) {
       $categoryID = 0;
     } elseif ($categoryID !== 0) {
-      $availableCategories = Database::getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $categoryID;");
+      $availableCategories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories` WHERE `id` = $categoryID;");
       if (count($availableCategories) == 0) {
         $this->response("Selected Category not Available : " . $categoryID, false);
         return;
@@ -123,7 +123,7 @@ class ProductController extends Controller
     $values = rtrim($values, ",");
 
     $sql = sprintf("INSERT INTO `%s`(%s) VALUES (%s);", $table, $tableColumnNames, $values);
-    Database::onlyExecuteQuery($sql);
+    Database::getInstance()->onlyExecuteQuery($sql);
   }
 
   public function deleteProduct()
@@ -131,14 +131,14 @@ class ProductController extends Controller
     if (isset($_POST["id"]) && $_POST["id"] != "") {
       $id = $_POST["id"];
       if (is_int(intval($id))) {
-        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id;");
+        $product = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id;");
         $product = $product[0];
         if (count($product) > 0) {
           $oldImagePath = __DIR__ . "/../public" . $product["image"];
           if (file_exists($oldImagePath) && $product["image"] != "") {
             unlink($oldImagePath);
           }
-          Database::onlyExecuteQuery("DELETE FROM `products` WHERE `id` = $id;");
+          Database::getInstance()->onlyExecuteQuery("DELETE FROM `products` WHERE `id` = $id;");
           $this->response("Product Deleted Successfully", true);
           return;
         }
@@ -153,8 +153,8 @@ class ProductController extends Controller
     if (isset($_GET["id"]) && $_GET["id"] != "") {
       $id = $_GET["id"];
       if (is_int(intval($id))) {
-        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
-        $categories = Database::getResultsByQuery("SELECT * FROM `categories`");
+        $product = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+        $categories = Database::getInstance()->getResultsByQuery("SELECT * FROM `categories`");
         $params["product"] = $product;
         $params["categories"] = $categories;
         $pageInfo = ["title" => "Edit Category"];
@@ -184,7 +184,7 @@ class ProductController extends Controller
     $pairs = rtrim($pairs, ",");
 
     $sql = sprintf("UPDATE `%s` SET %s WHERE `id` = $id;", $table, $pairs);
-    Database::onlyExecuteQuery($sql);
+    Database::getInstance()->onlyExecuteQuery($sql);
   }
 
   public function updateProduct()
@@ -208,7 +208,7 @@ class ProductController extends Controller
           return;
         }
 
-        $product = Database::getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
+        $product = Database::getInstance()->getResultsByQuery("SELECT * FROM `products` WHERE `id` = $id");
         $product  = $product[0];
         $imageURL = "";
         if (!empty($productImage)) {

@@ -11,8 +11,8 @@ class OrderController extends Controller
 {
   public function index(array $params)
   {
-    $orders = Database::getResultsByQuery("SELECT * FROM `orders`");
-    $users = Database::getResultsByQuery("SELECT `id`,`name` FROM `users`");
+    $orders = Database::getInstance()->getResultsByQuery("SELECT * FROM `orders`");
+    $users =  Database::getInstance()->getResultsByQuery("SELECT `id`,`name` FROM `users`");
     $params["orders"] = $orders;
     $params["users"] = $users;
 

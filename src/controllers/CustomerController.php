@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
   public function index(array $params)
   {
-    $users = Database::getResultsByQuery("SELECT * FROM `users`");
+    $users = Database::getInstance()->getResultsByQuery("SELECT * FROM `users`");
     //   $products = Database::getResultsByQuery("SELECT * FROM `products` ORDER BY `id` DESC");
     $params["users"] = $users;
     //   $params["products"] = $products;

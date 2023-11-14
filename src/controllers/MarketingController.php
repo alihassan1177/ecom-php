@@ -10,7 +10,7 @@ class MarketingController extends Controller
 {
   public function banners(array $params)
   {
-    $banners = Database::getResultsByQuery("SELECT * FROM `banners`;");
+    $banners = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners`;");
     $params["banners"] = $banners;
     $pageInfo = ["title" => "Banners"];
     $this->renderView($pageInfo, "admin/marketing/banners/index", "admin", $params);
@@ -28,7 +28,7 @@ class MarketingController extends Controller
     if (isset($_GET["id"]) && $_GET["id"] != "") {
       $id = $_GET["id"];
       if (is_int(intval($id))) {
-        $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
+        $banner = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
         $params["banner"] = $banner[0];
         $pageInfo = ["title" => "Edit Banner"];
         $this->renderView($pageInfo, "admin/marketing/banners/edit", "admin", $params);
@@ -45,7 +45,7 @@ class MarketingController extends Controller
     if (isset($_GET["id"]) && $_GET["id"] != "") {
       $id = $_GET["id"];
       if (is_int(intval($id))) {
-        $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
+        $banner = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
         if (count($banner) > 0) {
           $params["banner"] = $banner[0];
           $pageInfo = ["title" => "", "description" => ""];
@@ -63,13 +63,13 @@ class MarketingController extends Controller
     if (isset($_POST["id"]) && $_POST["id"] != "") {
       $id = $_POST["id"];
       if (is_int(intval($id))) {
-        $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id;");
+        $banner = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id;");
         if (count($banner) > 0) {
           $oldImagePath = __DIR__ . "/../public" . $banner["image"];
           if (file_exists($oldImagePath) && $banner["image"] != "") {
             unlink($oldImagePath);
           }
-          Database::onlyExecuteQuery("DELETE FROM `banners` WHERE `id` = $id;");
+          Database::getInstance()->onlyExecuteQuery("DELETE FROM `banners` WHERE `id` = $id;");
           $this->response("Banner Deleted Successfully", true);
           return;
         }
@@ -107,7 +107,7 @@ class MarketingController extends Controller
           return;
         }
 
-        $banner = Database::getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
+        $banner = Database::getInstance()->getResultsByQuery("SELECT * FROM `banners` WHERE `id` = $id");
         if (count($banner) > 0) {
           $banner = $banner[0];
           $oldImagePath = __DIR__ . "/../public" . $banner["image"];
@@ -115,7 +115,7 @@ class MarketingController extends Controller
             unlink($oldImagePath);
           }
           // Update Query
-          Database::onlyExecuteQuery("UPDATE `banners` SET `heading`='$heading',`sub_heading`='$subHeading',`image`='$imageURL',`btn_link`='$btnLink',`btn_text`='$btnText' WHERE `id` = $id;");
+          Database::getInstance()->onlyExecuteQuery("UPDATE `banners` SET `heading`='$heading',`sub_heading`='$subHeading',`image`='$imageURL',`btn_link`='$btnLink',`btn_text`='$btnText' WHERE `id` = $id;");
           $this->response("Banner updated Successfully", true);
           return;
         }
@@ -151,7 +151,7 @@ class MarketingController extends Controller
       return;
     }
 
-    Database::onlyExecuteQuery("INSERT INTO `banners`(`heading`, `sub_heading`, `image`, `btn_link`, `btn_text`) VALUES ('$heading','$subHeading','$imageURL','$btnLink','$btnText')");
+    Database::getInstance()->onlyExecuteQuery("INSERT INTO `banners`(`heading`, `sub_heading`, `image`, `btn_link`, `btn_text`) VALUES ('$heading','$subHeading','$imageURL','$btnLink','$btnText')");
 
     $this->response("Banner Created Successfully", true);
     return;
